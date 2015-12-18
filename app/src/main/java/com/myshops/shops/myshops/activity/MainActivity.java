@@ -1,4 +1,4 @@
-package com.myshops.shops.myshops;
+package com.myshops.shops.myshops.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.myshops.shops.myshops.R;
 
 public class MainActivity extends AppCompatActivity {
 
