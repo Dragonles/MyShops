@@ -15,26 +15,78 @@
             android:textSize="14sp"
             android:text="开通店铺"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/kaitong_img"/>
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/fontcolor"
-            android:text="上传店铺照片"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/xiantiao"/>
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/kaitong_img"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/fontcolor"
+                    android:text="上传店铺照片"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/xiantiao"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/kaitong_img"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/fontcolor"
+                    android:text="手持身份证"/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/xiantiao"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:hint="真实姓名:"
+                android:layout_weight="5"
+                android:background="@drawable/login_edittext_style"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -49,7 +101,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="12sp"
-            android:hint="输入店铺名称"
+            android:inputType="number"
+            android:hint="身份证号码:"
             android:layout_weight="5"
             android:background="@drawable/login_edittext_style"/>
         <TextView
@@ -68,10 +121,11 @@
             android:layout_weight="1"/>
         <EditText
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="12sp"
-            android:hint="店铺介绍"
+            android:hint="手机号:"
+            android:inputType="number"
             android:layout_weight="5"
             android:background="@drawable/login_edittext_style"/>
         <TextView
@@ -88,19 +142,64 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-        <Button
+        <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="12sp"
-            android:hint="立即开店"
+            android:hint="登录密码:"
             android:layout_weight="5"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@color/style_color"/>
+            android:background="@drawable/login_edittext_style"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:hint="店铺介绍"
+                android:layout_weight="5"
+                android:background="@drawable/login_edittext_style"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:hint="立即开店"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@color/style_color"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
 </LinearLayout>

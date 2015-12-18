@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/public_background"
-    tools:context=".fragment.MyGoodsFragment">
+    android:background="@color/public_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,26 +16,17 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:background="@color/public_toolbar_color" >
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/back"
-                android:background="@null"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/ib_mygoods_back" />
 
             <RadioGroup
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/radio_group_mygoods_shape"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/imageButton"
-                android:layout_toRightOf="@+id/ib_mygoods_back">
+                android:layout_centerVertical="true">
 
                 <RadioButton
                     android:layout_width="0dp"
@@ -75,18 +65,6 @@
                     android:gravity="center"
                     android:button="@null"/>
             </RadioGroup>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imageButton"
-                android:background="@null"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/iconfont_search" />
 
         </RelativeLayout>
         

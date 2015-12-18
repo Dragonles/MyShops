@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mmessage.setOnClickListener(this);
         mper.setOnClickListener(this);
         mhome.setOnClickListener(this);
-        mper.setOnClickListener(this);
         mdingdan.setOnClickListener(this);
 
         mfm = getSupportFragmentManager();
@@ -99,14 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mfm.findFragmentByTag("message")!=null){
                 ftt.show(mfm.findFragmentByTag("message"));
             }else{
-                MessageFragment ff = new MessageFragment();
+                GoodsFragment ff = new GoodsFragment();
                 ftt.add(R.id.fragment_parent,ff,"message");
             }
         }else if (id == R.id.per){   //我的
             if (mfm.findFragmentByTag("per")!=null){
                 ftt.show(mfm.findFragmentByTag("per"));
             }else{
-                GoodsFragment nf = new GoodsFragment();
+                MessageFragment nf = new MessageFragment();
                 //add(父布局ID，Fragment，Tag);
                 ftt.add(R.id.fragment_parent,nf,"per");
             }
