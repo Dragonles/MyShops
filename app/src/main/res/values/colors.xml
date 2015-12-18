@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!--增庆开始-->
+    <color name="public_toolbar_color">#ef5b5b</color>
+    <color name="public_line_color">#4F4A4A</color>
+    <color name="public_font_color">#64595c</color>
+    <color name="public_background">#eceaec</color>
+    <color name="public_warn_color">#3cf723</color>
+    <!--增庆结束-->
 </resources>
