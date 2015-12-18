@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import com.myshops.shops.myshops.R;
 
-
 public class GoodsFragment extends Fragment {
+
     public GoodsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,8 @@ public class GoodsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goods, container, false);
+        return inflater.inflate(R.layout.fragment_my_goods, container, false);
     }
+
 
 }
