@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alter.myshop.MMyDingdanActivity">
+
+    <RelativeLayout
+        android:id="@+id/rly_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp">
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_alldingdan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部订单"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_daifahuo"
+            android:layout_below="@+id/btn_alldingdan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待发货"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_yifahuo"
+            android:layout_below="@+id/btn_daifahuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已发货"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_yiwanacheng"
+            android:layout_below="@+id/btn_yifahuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已完成"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_weifukuan"
+            android:layout_below="@+id/btn_yiwanacheng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未付款"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_weishouhuo"
+            android:layout_below="@+id/btn_weifukuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未收货"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_tuikuanzhong"
+            android:layout_below="@+id/btn_weishouhuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退款中"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_yituikuan"
+            android:layout_below="@+id/btn_tuikuanzhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已退款"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_yiquxiao"
+            android:layout_below="@+id/btn_yituikuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已取消"
+            android:background="@null"/>
+
+    </RelativeLayout>
+
+    </ScrollView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rly_right"
+        android:layout_toRightOf="@+id/rly_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
