@@ -16,4 +16,7 @@
     <color name="public_background">#eceaec</color>
     <color name="public_warn_color">#3cf723</color>
     <!--增庆结束-->
+
+    <color name="dian">#ef5b5b</color>
+    <color name="nodian">#2c2c2c</color>
 </resources>
