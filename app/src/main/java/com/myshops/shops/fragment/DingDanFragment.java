@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.myshops.shops.adapter.JinhuoAdapter;
+import com.myshops.shops.myshops.JinHuoActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
 
 public class DingDanFragment extends Fragment {
 
-    Button btn_tiaozhuan;
+    Button btn_tiaozhuan,btn_tiaozhuan2;
 
     public DingDanFragment() {
         // Required empty public constructor
@@ -33,6 +35,8 @@ public class DingDanFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_ding_dan, container, false);
 
         btn_tiaozhuan = (Button) v.findViewById(R.id.btn_tiaozhuan);
+
+
         btn_tiaozhuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +44,8 @@ public class DingDanFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
 
         return v;
     }

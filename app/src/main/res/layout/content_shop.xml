@@ -70,6 +70,7 @@
             android:layout_height="match_parent"
             android:background="@color/xiantiao"/>
         <LinearLayout
+            android:id="@+id/lly_jinhupjilu"
             android:layout_width="0dp"
             android:padding="20dp"
             android:gravity="center"
