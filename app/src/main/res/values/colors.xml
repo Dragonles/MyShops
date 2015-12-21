@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="holo_blue">#FF33E5B5</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="white">#FFFFFF</color>
-    <color name="style_color">#ef5b5b</color>
-    <color name="huise">#ECEAEC</color>
-    <color name="xiantiao">#DFDEDE</color>
-    <color name="fontcolor">#64595c</color>
+<color name="colorPrimary">#3F51B5</color>
+<color name="colorPrimaryDark">#303F9F</color>
+<color name="colorAccent">#FF4081</color>
+<color name="white">#FFFFFF</color>
+<color name="style_color">#ef5b5b</color>
+<color name="huise">#ECEAEC</color>
+<color name="xiantiao">#DFDEDE</color>
+<color name="fontcolor">#64595c</color>
     <!--增庆开始-->
     <color name="public_toolbar_color">#ef5b5b</color>
     <color name="public_line_color">#4F4A4A</color>
