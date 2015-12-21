@@ -30,21 +30,36 @@
             android:label="@string/title_activity_shop_prove"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ShopInfoActivity"
-            android:label="@string/title_activity_shop_prove"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".MainActivity"
             android:label="ff"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
+        <activity
+            android:name=".LeadActivity"
+            android:label="@string/title_activity_lead"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GouwucheActivity"
+            android:label="@string/title_activity_gowu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".JinHuoActivity"
+            android:label="@string/title_activity_jin_huo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShouRuZhiChuActivity"
+            android:label="@string/title_activity_shou_ru_zhi_chu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".XiaoShouJiLuActivity"
+            android:label="@string/title_activity_xiao_shou_ji_lu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShangpinFenleiActivity"
+            android:label="@string/title_activity_shangpin_fenlei"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

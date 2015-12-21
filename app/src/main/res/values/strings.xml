@@ -1,9 +1,20 @@
 <resources>
     <string name="app_name">卖卖</string>
     <string name="action_settings">Settings</string>
-
+    <string name="fenlei">分类</string>
+    <string name="bianji">编辑</string>
+    <string name="xiaoshoujilu">销售记录</string>
+    <string name="shouruyuzhichu">我的收入/支出</string>
+    <string name="jinhuojilu">进货记录</string>
+    <string name="gouwuche">购物车</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_open">open</string>
     <string name="title_activity_shop_prove">prove</string>
+    <string name="title_activity_lead">LeadActivity</string>
+    <string name="title_activity_gowu">GowuActivity</string>
+    <string name="title_activity_jin_huo">JinHuoActivity</string>
+    <string name="title_activity_shou_ru_zhi_chu">ShouRuZhiChuActivity</string>
+    <string name="title_activity_xiao_shou_ji_lu">XiaoShouJiLuActivity</string>
+    <string name="title_activity_shangpin_fenlei">ShangpinFenleiActivity</string>
 </resources>
