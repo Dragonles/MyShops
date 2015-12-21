@@ -22,7 +22,7 @@ public class ShanActivity extends AppCompatActivity {
                     /*
                     * 延迟3秒后跳转引导页（LeadActivity）
                     * */
-                    Intent intent =new Intent(ShanActivity.this,MainActivity.class);
+                    Intent intent =new Intent(ShanActivity.this,LeadActivity.class);
                     ShanActivity.this.startActivity(intent);
                     ShanActivity.this.finish();
                     break;
