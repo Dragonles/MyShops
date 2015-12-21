@@ -9,7 +9,7 @@
         android:id="@+id/iv_tupian"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/tupian"/>
+        android:src="@drawable/tupians"/>
 
     <TextView
         android:id="@+id/tv_name"
