@@ -1,7 +1,9 @@
-package com.myshops.shops.myshops.activity;
+package com.myshops.shops.myshops;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.myshops.shops.myshops.R;
 
 public class MMyDingdanActivity extends Activity {
 
