@@ -1,5 +1,6 @@
 package com.myshops.shops.myshops;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,10 +23,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager mfm;
     FragmentTransaction ftt;
     RadioButton mhome,mmessage,mper,mdingdan;
+    public String usernamefromlogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        usernamefromlogin = intent.getStringExtra("username");
+
         mhome = (RadioButton)findViewById(R.id.home);//主页的单选按钮
         mmessage = (RadioButton)findViewById(R.id.message);//信息的单选按钮
         mper = (RadioButton)findViewById(R.id.per);//个人的单选按钮

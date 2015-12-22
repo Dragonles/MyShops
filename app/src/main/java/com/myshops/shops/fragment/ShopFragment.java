@@ -9,14 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.myshops.shops.myshops.MainActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import org.xutils.view.annotation.ViewInject;
+
 public class ShopFragment extends Fragment {
+
+
+
     Button buttons;
     ImageButton mgoinfo;
+    @ViewInject(R.id.tv_shop_username)
+    private TextView tv_shop_username;
     public ShopFragment() {
         // Required empty public constructor
     }
