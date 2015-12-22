@@ -13,7 +13,7 @@ import java.util.List;
 
 public class XiaoShouJiLuActivity extends AppCompatActivity {
     List<Shouruyuzhichu> list = new ArrayList<>();
-    @ViewInject(R.id.listView)
+    @ViewInject(R.id.xiaoshou_listView)
     private  ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
