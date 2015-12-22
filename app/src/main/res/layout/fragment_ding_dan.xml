@@ -3,12 +3,167 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.myshops.shops.fragment.DingDanFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="4" />
+        tools:context="com.example.alter.myshop.MMyDingdanActivity">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:id="@+id/top_linea"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/style_color">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="我的订单"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rly_left"
+            android:layout_below="@id/top_linea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/xiantiao"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_alldingdan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="全部订单"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_daifahuo"
+                            android:layout_below="@+id/btn_alldingdan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="待发货"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_yifahuo"
+                            android:layout_below="@+id/btn_daifahuo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已发货"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_yiwanacheng"
+                            android:layout_below="@+id/btn_yifahuo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已完成"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_weifukuan"
+                            android:layout_below="@+id/btn_yiwanacheng"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="未付款"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_weishouhuo"
+                            android:layout_below="@+id/btn_weifukuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="未收货"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_tuikuanzhong"
+                            android:layout_below="@+id/btn_weishouhuo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="退款中"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_yituikuan"
+                            android:layout_below="@+id/btn_tuikuanzhong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已退款"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+                        <Button
+                            android:id="@+id/btn_yiquxiao"
+                            android:layout_below="@+id/btn_yituikuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已取消"
+                            android:background="@null"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/xiantiao"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/xiantiao"/>
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:id="@+id/listViews"
+                        android:layout_height="match_parent"></ListView>
+                </LinearLayout>
+            </ScrollView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/btn_tiaozhuan"
