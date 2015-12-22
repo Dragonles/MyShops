@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.myshops.shops.untils.HttpUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -51,44 +52,50 @@ public class LoginActivity extends AppCompatActivity {
         map.put("loginPwd", loginPassword);
         map.put("clientType", "android");
 
-        HttpUtils.httpPost(pa,map, new Callback.CommonCallback<String>() {
+        HttpUtils.httputilsPost(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
-                Log.i("aa", result + "");
-                String code = "";
-                String message = "";
-                String username = "";
-                String token = "";
-                String userType = "";
+                Log.i("aaaa", result + "");
+
+
                 SharedPreferences preferences = getSharedPreferences("muser", Context.MODE_PRIVATE);
+
                 try {
+                    Log.i("codessss","走1");
                     JSONObject jsonObject = new JSONObject(result);
-                    code = jsonObject.getString("code");
-                    message = jsonObject.getString("message");
+                    Log.i("codessss","走2");
+                    String code = jsonObject.getString("code");
+                    String message = jsonObject.getString("message");
                     JSONObject data = jsonObject.getJSONObject("data");
-                    username = data.getString("username");
-                    token = data.getString("token");
-                    userType = data.getString("userType");
+                    String username = data.getString("username");
+                    String token = data.getString("token");
+                    String userType = data.getString("userType");
                     SharedPreferences.Editor editor = preferences.edit();
-                    //存入数据
-                    editor.putString("phone",username );
-                    editor.putString("userType",userType);
-                    //提交
-                    editor.commit();
+
+                    if ("200".equals(code)){
+                        //存入数据
+                        editor.putString("phone",username );
+                        editor.putString("userType",userType);
+                        //提交
+                        editor.commit();
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        intent.putExtra("username",username);
+                        startActivity(intent);
+                           Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
+                    }
 
 
 
-                } catch (JSONException e) {
+
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if ("200".equals(code)){
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                 //   Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(LoginActivity.this, "登陆信息错误", Toast.LENGTH_SHORT).show();
-                }
+
+
 
             }
 
@@ -105,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onFinished() {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
                 Log.i("aa",x.app()+"");
             }
         });
