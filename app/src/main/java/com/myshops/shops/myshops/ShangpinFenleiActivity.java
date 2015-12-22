@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ShangpinFenleiActivity extends AppCompatActivity {
     List<String> items = new ArrayList<>();
-    @ViewInject(R.id.listView)
+    @ViewInject(R.id.fenlei_listView)
     private  ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

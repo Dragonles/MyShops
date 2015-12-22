@@ -45,8 +45,6 @@ public class DingDanFragment extends Fragment {
             }
         });
 
-
-
         return v;
     }
 }

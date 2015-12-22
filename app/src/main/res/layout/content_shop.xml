@@ -93,6 +93,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/lly_shouru"
             android:layout_width="0dp"
             android:padding="20dp"
             android:gravity="center"

@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 
 import com.myshops.shops.myshops.JinHuoActivity;
 import com.myshops.shops.myshops.R;
+import com.myshops.shops.myshops.ShouRuZhiChuActivity;
+
 public class ShopFragment extends Fragment {
     Button buttons;
-    LinearLayout lly_jinhuojilu;
+    LinearLayout lly_jinhuojilu,lly_shouru;
     public ShopFragment() {
         // Required empty public constructor
     }
@@ -32,10 +34,20 @@ public class ShopFragment extends Fragment {
         Toolbar toolbar = (Toolbar)v.findViewById(R.id.toolbar);
 
         lly_jinhuojilu = (LinearLayout) v.findViewById(R.id.lly_jinhupjilu);
+        lly_shouru = (LinearLayout) v.findViewById(R.id.lly_shouru);
+
         lly_jinhuojilu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), JinHuoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        lly_shouru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShouRuZhiChuActivity.class);
                 startActivity(intent);
             }
         });

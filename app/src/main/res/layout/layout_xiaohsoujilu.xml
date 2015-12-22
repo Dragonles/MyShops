@@ -39,7 +39,8 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:layout_height="wrap_content"
-                    android:text="价格："/>
+                    android:text="价格："
+                    android:paddingBottom="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
@@ -69,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
-                android:text="数量："/>
+                android:text="数量："
+                android:paddingBottom="10dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:textSize="18sp"
