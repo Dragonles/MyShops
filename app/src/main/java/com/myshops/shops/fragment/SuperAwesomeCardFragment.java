@@ -76,7 +76,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             String types = "/Api/exeQuery";
             HashMap<String,String> map = new HashMap<>();
             map.put("sql",sql);
-            HttpUtils.httpPost(types, map, new Callback.CommonCallback<String>() {
+            HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
                     System.out.println("onSuccess" + s.toString());
