@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
         android:textColor="#B4AAAD"
         android:textSize="14sp"
         android:text="很好，非常好" />

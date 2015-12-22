@@ -1,4 +1,4 @@
-package com.myshops.shops.myshops.activity;
+package com.myshops.shops.myshops;
 
 import android.app.Activity;
 import android.os.Bundle;

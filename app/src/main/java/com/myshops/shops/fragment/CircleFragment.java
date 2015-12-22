@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.myshops.shops.myshops.R;
 
 /**
- * 卖家 ———— 微店商圈框架
+ * 卖家 ———— 微店商圈框架  （隐藏 暂不使用）
  * */
 public class CircleFragment extends Fragment {
 
