@@ -1,6 +1,7 @@
 package com.myshops.shops.untils;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.MD5;
@@ -14,6 +15,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by Vonte on 2015/12/16.
@@ -44,6 +48,21 @@ public class HttpUtils {
         map.put("sign",MD5.md5(qingqiu));
         params.addQueryStringParameter("sign",map.get("sign"));
         //返回JSON数据
+
+        int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+        Log.i("aa",currentapiVersion+"");
+        if(currentapiVersion<=20){
+            try {
+                SSLContext sslcontext = SSLContext.getInstance("TLSv1");
+                sslcontext.init(null,null, null);
+                SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslcontext.getSocketFactory());
+                params.setSslSocketFactory(NoSSLv3Factory);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+
         x.http().post(params,callback);
     }
 }
