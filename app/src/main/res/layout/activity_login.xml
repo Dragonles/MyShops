@@ -52,10 +52,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:maxLines="1"
+                    android:id="@+id/et_login_phonenum"
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:hint="手机号"
-                    android:inputType="phone"
+
                     android:background="@null"/>
                 <TextView
                     android:layout_width="0dp"
@@ -94,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:maxLines="1"
+                    android:id="@+id/et_login_pwd"
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:hint="请输入密码"
@@ -131,12 +133,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:maxLines="1"
                     android:padding="10dp"
                     android:textSize="14sp"
+                    android:id="@+id/btn_login_submit"
                     android:text="登录"
                     android:textColor="@color/white"
-                    android:inputType="textPassword"
                     android:background="@color/style_color"/>
             </LinearLayout>
             <TextView

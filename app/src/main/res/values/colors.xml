@@ -17,8 +17,13 @@
     <color name="public_warn_color">#3cf723</color>
     <!--增庆结束-->
 
-    <!--hao Start-->
     <color name="dian">#ef5b5b</color>
     <color name="nodian">#2c2c2c</color>
-    <!--hao End-->
+    <color name="toolbar">#ef5b5b</color>
+    <color name="ziti_color">#ffffff</color>
+    <color name="jinhuo_color1">#989898</color>
+    <color name="jinhuo_color2">#726A6A</color>
+    <color name="jinhuo_color3">#3E3F41</color>
+    <color name="jinhuo_color4">#EF5B5B</color>
+    <color name="xian1">#ECEAEC</color>
 </resources>

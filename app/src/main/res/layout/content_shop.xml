@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="14sp"
+                android:id="@+id/tv_shop_username"
                 android:gravity="center"
                 android:textColor="@color/fontcolor"
                 android:text="华府小苍"/>
@@ -42,6 +43,7 @@
             <ImageButton
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:id="@+id/shop_info"
                 android:background="@drawable/back"/>
         </LinearLayout>
     </LinearLayout>
@@ -117,6 +119,46 @@
                 android:layout_height="wrap_content"
                 android:text="进货市场"
                 android:textColor="@color/fontcolor"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/xiantiao"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实体店认证"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:gravity="right"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未认证>"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
     <TextView
