@@ -47,7 +47,7 @@ public class OderAdpter extends BaseAdapter {
         {
             holder= new ViewHolder();
             convertView= LayoutInflater.from(context).inflate(R.layout.order_item,null);
-            holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
+          //  holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
             holder.uname=(TextView)convertView.findViewById(R.id.uname);
             holder.flag=(TextView)convertView.findViewById(R.id.falg_fahuo);
             holder.goodsname=(TextView)convertView.findViewById(R.id.goods_name);
@@ -59,13 +59,13 @@ public class OderAdpter extends BaseAdapter {
         else {
             holder=(ViewHolder)convertView.getTag();
         }
-        holder.goodimg.setBackgroundResource(list.get(position).getGoodimg());
-        holder.uname.setText(list.get(position).getUname());
-        holder.flag.setText(list.get(position).getFlag());
-        holder.goodsname.setText(list.get(position).getGoodname());
-        holder.number.setText(list.get(position).getNumbers());
-        holder.flag_stad.setText(list.get(position).getFlag_satd());
-        holder.money.setText(list.get(position).getMmoney());
+//       holder.goodimg.set(list.get(position).getGoodsThums());
+        holder.uname.setText(list.get(position).getUsername());
+       // holder.flag.setText(list.get(position).getFlag());
+        holder.goodsname.setText(list.get(position).getGoodsName());
+        holder.number.setText(list.get(position).getGoodsNums());
+        holder.flag_stad.setText(list.get(position).getOrderStatus()+"");
+        holder.money.setText(list.get(position).getTotalMoney());
         return convertView;
     }
     class ViewHolder
