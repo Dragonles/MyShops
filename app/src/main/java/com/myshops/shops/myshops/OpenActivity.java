@@ -30,7 +30,7 @@ import me.nereo.imagechoose.MultiImageSelectorActivity;
 @ContentView(R.layout.activity_open)
 public class OpenActivity extends AppCompatActivity {
 
-    String storepicture = "",userpicture = "",username = "",useridcard = "",userphonenum = "",userpwd = "",userstore = "";
+    String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",useremail = "",userpwd = "",userstore = "";
     private  static  final int REQUEST_IMAGE=2;
     private String mStoreFilePath = "",mUserFilePath = "";//图片路径
     static int where = 0; // 区分店铺图片和用户图片
@@ -44,35 +44,34 @@ public class OpenActivity extends AppCompatActivity {
     // 店铺照片  用户手持身份证照片
     @ViewInject(R.id.iv_open_storepicture)
     private ImageView iv_open_storepicture;
+    //用户头像
     @ViewInject(R.id.iv_open_userpicture)
     private ImageView iv_open_userpicture;
-    // 用户真实姓名  用户身份证号  用户手机号 验证码  用户登录密码  店铺介绍
-    @ViewInject(R.id.et_open_username)
-    private EditText et_open_username;
-
-    @ViewInject(R.id.et_open_useridcard)
-    private EditText et_open_useridcard;
-
+    //店铺名称
+    @ViewInject(R.id.et_open_userstorname)
+    private EditText et_open_userstorname;
+    //手机号
     @ViewInject(R.id.et_open_userphonenum)
     private EditText et_open_userphonenum;
-
-    @ViewInject(R.id.et_open_verifycode)
-    private EditText et_open_verifycode;
-
+    //邮箱地址
+    @ViewInject(R.id.et_open_useremailaddress)
+    private EditText et_open_useremailaddress;
+    //用户登录密码
     @ViewInject(R.id.et_open_userpwd)
     private EditText et_open_userpwd;
-
+    //店铺介绍
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
 
     @Event(R.id.btn_open_submit)
     private void LoginSubmitEvent(View view){
+        is_submit = 0;
 
         storepicture = mStoreFilePath;
         userpicture = mUserFilePath;
-        username = et_open_username.getText().toString();
-        useridcard = et_open_useridcard.getText().toString();
+        userstorename = et_open_userstorname.getText().toString();
         userphonenum = et_open_userphonenum.getText().toString();
+        useremail = et_open_useremailaddress.getText().toString();
         userpwd = et_open_userpwd.getText().toString();
         userstore = et_open_userstore.getText().toString();
 
@@ -82,45 +81,53 @@ public class OpenActivity extends AppCompatActivity {
         if (!("".equals(userpicture))){
             is_submit += 1;
         }
-        if (!("".equals(username))){
-            is_submit += 1;
-        }
-        if (isIdCard(useridcard)){
+        if (!("".equals(userstorename))){
             is_submit += 1;
         }
         if (isMobileNO(userphonenum)){
             is_submit += 1;
         }
+        if (isEmail(useremail)){
+            is_submit += 1;
+        }
         if (isPassWord(userpwd)){
             is_submit += 1;
         }
+        if (!("".equals(userstore))){
+            is_submit += 1;
+        }
 
-        if (is_submit == 6){
+        if (is_submit == 7){
             // 内容填写完毕  提交注册
-            String sql = null;
-            sql = "select userName from wst_users";
+            String sqlusers = null;
+            String sqlshops = null;
+            sqlusers = "select loginPwd,userName,userPhone from wst_users where userId = 82";
+          //  sqlusers = "insert into wst_users (userPhone ,userEmail ,loginPwd ) values ('"+userphonenum+"', '"+useremail+"','"+userpwd+"')";
+            sqlshops = "INSERT INTO wst_users (shopName ,shopImg ,statusRemarks) VALUES ('"+userstorename+"','"+storepicture+"','"+userstore+"')";
             String types = "/Api/exeQuery";
             HashMap<String,String> map = new HashMap<>();
-            map.put("sql",sql);
+            map.put("sql",sqlusers);
+          //  map.put("sqlshops",sqlshops);
             HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
-                    System.out.println("onSuccess"+s.toString());
+                    Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
+                    Log.i("onSuccess",s.toString());
                 }
 
                 @Override
                 public void onError(Throwable throwable, boolean b) {
-                    System.out.println("onError"+throwable.toString());
+                    Log.i("onError",throwable.toString());
                 }
 
                 @Override
                 public void onCancelled(CancelledException e) {
-
+                    Log.i("onError","走这里1");
                 }
 
                 @Override
                 public void onFinished() {
-
+                    Log.i("onError","走这里2");
                 }
             });
 
@@ -128,37 +135,30 @@ public class OpenActivity extends AppCompatActivity {
             Toast.makeText(OpenActivity.this,"请填写完整信息",Toast.LENGTH_SHORT).show();
         }
 
-
-
     }
-
-
 
     // 正则判断是否为正确的手机号格式
     public boolean isMobileNO(String mobiles) {
         Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
-
         return m.matches();
     }
-    // 正则判断是否为正确的身份证格式
-    public boolean isIdCard(String mobiles) {
-        Pattern p = Pattern.compile("(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x)$)");
+
+    // 正则判断是否为正确的邮箱格式
+    public boolean isEmail(String mobiles) {
+        Pattern p = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
         Matcher m = p.matcher(mobiles);
-
         return m.matches();
     }
+
     // 判断密码格式是否正确
     public boolean isPassWord(String pwd){
-
         int pwdlength = pwd.length();
-
-        if (pwdlength < 6 && pwdlength >= 20){
+        if (pwdlength > 5 && pwdlength <= 20){
             // 密码长度为 6-20 位
             return true;
         }
         return false;
-
     }
 
     public void ChooseStorePicture(View view){
@@ -184,7 +184,6 @@ public class OpenActivity extends AppCompatActivity {
         startActivityForResult(intent,REQUEST_IMAGE);
         where = 2;
     }
-
 
     //返回图片路径方法
     @Override
