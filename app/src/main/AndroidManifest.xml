@@ -56,10 +56,6 @@
             android:name=".XiaoShouJiLuActivity"
             android:label="@string/title_activity_xiao_shou_ji_lu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ShangpinFenleiActivity"
-            android:label="@string/title_activity_shangpin_fenlei"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
