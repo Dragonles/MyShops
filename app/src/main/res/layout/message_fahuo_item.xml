@@ -14,7 +14,7 @@
             android:id="@+id/iv_tupian"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/tupian"/>
+            android:background="@drawable/tupians"/>
 
         <TextView
             android:id="@+id/tv_name"

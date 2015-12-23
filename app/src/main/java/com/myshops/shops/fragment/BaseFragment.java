@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import org.xutils.x;
 
 /**
- * Created by Administrator on 2015/12/21.
+ * Created by wyouflf on 15/11/4.
  */
 public class BaseFragment extends Fragment {
 
@@ -29,4 +29,3 @@ public class BaseFragment extends Fragment {
         }
     }
 }
-

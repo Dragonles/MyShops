@@ -97,6 +97,7 @@
                         android:background="@color/public_line_color"/>
 
                     <RelativeLayout
+                        android:id="@+id/rly_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -110,16 +111,14 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
-
-                        <ImageButton
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/go"
-                            android:background="@null"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
-                            android:id="@+id/ib_shopinfo_shopname_go" />
+                            android:id="@+id/ib_shopinfo_shopname_go"
+                            android:text="店铺名称"/>
 
                     </RelativeLayout>
 
@@ -129,6 +128,7 @@
                         android:background="@color/public_line_color"/>
 
                     <RelativeLayout
+                        android:id="@+id/rly_phone"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -144,15 +144,14 @@
                             android:id="@+id/textView13" />
 
 
-                        <ImageButton
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/go"
-                            android:background="@null"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
-                            android:id="@+id/ib_settle_invoice_go" />
+                            android:id="@+id/ib_settle_invoice_go"
+                            android:text="客服电话"/>
 
                     </RelativeLayout>
 
@@ -162,6 +161,7 @@
                         android:background="@color/public_line_color"/>
 
                     <RelativeLayout
+                        android:id="@+id/rly_zhuying"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -177,15 +177,37 @@
                             android:id="@+id/textView14" />
 
 
-                        <ImageButton
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/go"
-                            android:background="@null"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
-                            android:id="@+id/ib_shopinfo_sellwhat_go" />
+                            android:id="@+id/ib_shopinfo_sellwhat_go"
+                            android:text="主营项目"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/public_line_color"/>
+
+                    <RelativeLayout
+                        android:id="@+id/rly_mima"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="修改密码"
+                            android:textColor="@color/public_font_color"
+                            android:textSize="15sp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/textView15" />
 
                     </RelativeLayout>
 
