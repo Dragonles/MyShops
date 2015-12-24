@@ -26,6 +26,7 @@ import java.util.HashMap;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
+    public static String token;
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     JSONObject data = jsonObject.getJSONObject("data");
                     String username = data.getString("username");
-                    String token = data.getString("token");
+                    token = data.getString("token");
                     String userType = data.getString("userType");
                     SharedPreferences.Editor editor = preferences.edit();
 
