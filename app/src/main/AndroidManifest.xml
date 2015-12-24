@@ -2,20 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.myshops.shops.myshops">
 
+    <uses-sdk android:minSdkVersion="4" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-sdk android:minSdkVersion="4"></uses-sdk>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
+        android:name="com.myshops.shops.untils.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/mais_logo"
         android:label="@string/app_name"
-        android:name=".MyApplication"
         android:supportsRtl="true"
-        android:name="com.myshops.shops.untils.MyApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ShanActivity"
@@ -27,8 +30,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:value="567756e9e0f55a9b61005d78" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="567756e9e0f55a9b61005d78" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Wandoujia" />
+
         <activity
             android:name=".OpenActivity"
             android:label="@string/title_activity_open"
@@ -44,23 +53,21 @@
         <activity
             android:name=".LeadActivity"
             android:label="@string/title_activity_lead"
-            android:theme="@style/MyFullscreen">
-
-        </activity>
+            android:theme="@style/MyFullscreen"></activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
-        <activity android:name="me.nereo.imagechoose.MultiImageSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".ShopInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="me.nereo.imagechoose.MultiImageSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShopInfoActivity"
             android:label="ff"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".AddShangpinActivity"
+            android:label="@string/title_activity_add_shangpin"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

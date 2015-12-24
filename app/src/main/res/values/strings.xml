@@ -5,6 +5,7 @@
     <string name="bianji">编辑</string>
     <string name="xiaoshoujilu">销售记录</string>
     <string name="shouruyuzhichu">我的收入/支出</string>
+    <string name="tianjia">添加商品</string>
     <string name="jinhuojilu">进货记录</string>
     <string name="gouwuche">购物车</string>
     <string name="xinjianfenlei">新建分类</string>
@@ -20,4 +21,5 @@
     <string name="title_activity_xiao_shou_ji_lu">XiaoShouJiLuActivity</string>
     <string name="title_activity_shangpin_fenlei">ShangpinFenleiActivity</string>
     <string name="title_activity_goods">GoodsActivity</string>
+    <string name="title_activity_add_shangpin">AddShangpinActivity</string>
 </resources>
