@@ -76,11 +76,12 @@
             android:textColor="@color/public_font_color"
             android:textSize="14sp"
             android:text="2015-12-12"/>
-        <TextView
+        <Button
             android:id="@+id/txt_hufu"
             android:layout_below="@id/txt_pinjia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#FFF"
             android:padding="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
@@ -121,6 +122,7 @@
             android:id="@+id/btn_submit"
             android:layout_weight="1"
             android:layout_alignParentRight="true"
+            android:background="@color/style_color"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
