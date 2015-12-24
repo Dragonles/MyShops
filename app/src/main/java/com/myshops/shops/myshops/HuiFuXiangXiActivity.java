@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.myshops.shops.adapter.HuiFuXiangXiAdapter;
 import com.myshops.shops.myshops.R;
+import com.myshops.shops.untils.ToastUtil;
 
 import org.xutils.view.annotation.ContentView;
 
@@ -28,9 +29,9 @@ import java.util.List;
 public class HuiFuXiangXiActivity extends AppCompatActivity {
 
     ImageView user_img;
-    TextView username, txt_pinjia, txt_datas,txt_hufu;
+    TextView username, txt_pinjia, txt_datas;
     EditText edit_pinglun;
-    Button btn_submit;
+    Button btn_submit,btn_hufu;
     ListView listview_pinlun;
     List<String> pinglunList = new ArrayList<>();
     String pingluns;
@@ -44,12 +45,20 @@ public class HuiFuXiangXiActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.username);  //评论者名称
         txt_pinjia = (TextView) findViewById(R.id.txt_pinjia);  //评价内容
         txt_datas = (TextView) findViewById(R.id.txt_datas);  //评论时间
-        txt_hufu = (TextView) findViewById(R.id.txt_hufu);  //回复TextView
+        btn_hufu = (Button) findViewById(R.id.txt_hufu);  //回复TextView
         edit_pinglun = (EditText) findViewById(R.id.edit_pinglun);  //评论输入框
         btn_submit = (Button) findViewById(R.id.btn_submit);  //提交按钮
         listview_pinlun = (ListView) findViewById(R.id.listview_pinlun);  //回复评论列表
 
+        //回复按钮
+        btn_hufu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+
+        //提交评论按钮
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +70,7 @@ public class HuiFuXiangXiActivity extends AppCompatActivity {
                     btnsubmit();
                     Log.i("AAAA","*///***////*"+pinglunList.size()+"////"+pinglunList.get(0));
                 }else {
+                    ToastUtil.ToastLongs(getApplicationContext(), "输入评论内容不能为空");
                     Log.i("AAAA","777777777777777");
                 }
 
@@ -69,6 +79,9 @@ public class HuiFuXiangXiActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 提交按钮方法
+     * */
     public void btnsubmit(){
         Log.i("AAAA","**"+pingluns+"****88888");
         hfxxAdapter = new HuiFuXiangXiAdapter(getApplicationContext(), pinglunList);

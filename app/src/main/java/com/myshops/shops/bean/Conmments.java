@@ -15,7 +15,7 @@ public class Conmments {
     private String shuliang; //购买的商品数量
     private String danjia; //商品单价
 
-    public Conmments(String buyproduct, String danjia, String shuliang, String usercomments, String username, String usericon) {
+    public Conmments(String username, String danjia, String shuliang, String usercomments, String buyproduct, String usericon) {
         this.buyproduct = buyproduct;
         this.danjia = danjia;
         this.shuliang = shuliang;
