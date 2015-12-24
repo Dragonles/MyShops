@@ -18,7 +18,7 @@
                 android:layout_gravity="center"
                 android:layout_height="48dip"
                 android:layout_alignParentTop="true"
-                app:pstsIndicatorHeight="1dp"
+                app:pstsIndicatorHeight="2dp"
                 app:pstsIndicatorColor="#e9461a"
                 />
 

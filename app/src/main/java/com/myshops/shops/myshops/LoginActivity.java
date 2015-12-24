@@ -8,6 +8,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,13 +29,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        x.view().inject(this);
     }
+
+    public static String token;
 
     @ViewInject(R.id.et_login_phonenum)
     private EditText et_login_phonenum;
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     JSONObject data = jsonObject.getJSONObject("data");
                     String username = data.getString("username");
-                    String token = data.getString("token");
+                    token = data.getString("token");
                     String userType = data.getString("userType");
                     SharedPreferences.Editor editor = preferences.edit();
 
@@ -77,12 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                         //存入数据
                         editor.putString("phone",username );
                         editor.putString("userType",userType);
+                        editor.putString("tokens",token);
                         //提交
                         editor.commit();
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                         intent.putExtra("username",username);
                         startActivity(intent);
-                           Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                     } else{
                         Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
                     }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="8dp"
@@ -17,8 +18,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:id="@+id/linearout_radioButton"
             android:gravity="center">
+
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -26,9 +29,16 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="14sp"
                 android:textColor="#2c2c2c"
-                android:text="购买用户名"
-                android:id="@+id/dianpu_name"
+                android:text="客户："
+
                 android:layout_toRightOf="@+id/radioButton_dianpu"/>
+            <TextView
+                android:id="@+id/dianpu_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#2c2c2c"
+                android:text="购买用户名"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:background="#FFF"
         android:layout_below="@+id/gouwuche_top"
         android:paddingLeft="10dp">
         <CheckBox
@@ -68,10 +79,12 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/img_shangpin"
+            android:background="@drawable/icon_picfill"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/radioButton_shangpin"/>
         <LinearLayout
+            android:id="@+id/linears1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -107,32 +120,70 @@
                     android:textSize="14sp"
                     android:textColor="#2c2c2c"
                     android:text="单价："/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/shangpin_danjia"
-                    android:textColor="#f00"
-                    android:text="100元/件"/>
+                 <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shangpin_danjia"
+                android:textColor="#f00"
+                android:text="100元/件"/>
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp">
                 <TextView
+                    android:id="@+id/txt_shuliangs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="#2c2c2c"
                     android:text="数量："/>
                 <TextView
+                    android:layout_toRightOf="@id/txt_shuliangs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/shangpin_shuliang"
                     android:textSize="14sp"
                     android:textColor="#2c2c2c"
                     android:text="19"/>
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_ddzhuangtai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:textSize="14sp"
+                    android:textColor="#2c2c2c"
+                    android:text="未发货"/>
+            </RelativeLayout>
         </LinearLayout>
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_below="@id/linears1"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_beizhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#2c2c2c"
+                android:text="备注:"/>
+            <TextView
+                android:id="@+id/txt_beizhus"
+                android:layout_alignLeft="@id/txt_beizhu"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:padding="3dp"
+                android:text="   无"
+                android:textSize="14sp"
+                android:textColor="#2c2c2c"
+                android:layout_below="@id/txt_beizhu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Conmments;
 import com.myshops.shops.myshops.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -63,7 +64,8 @@ public class ClientFragmentAdapter extends BaseAdapter {
         Log.i("aaaa","********2222********");vh.txt_pingjia.setText(conmmentsList.get(position).getUserlevel());
         vh.txt_pingjia.setText(conmmentsList.get(position).getComment());
         vh.txt_username.setText(conmmentsList.get(position).getUsername());
-
+        Picasso.with(context).load(conmmentsList.get(position).getUsericon()).into(vh.img_shangpin);
+//        vh.img_shangpin.setImageResource(conmmentsList.get(position).getUsericon());
         vh.shangpin_name_left.setText(conmmentsList.get(position).getBuyproduct());
         vh.shangpin_danjia.setText(conmmentsList.get(position).getDanjia());
         vh.shangpin_shuliang.setText(conmmentsList.get(position).getShuliang()+"");
@@ -71,7 +73,9 @@ public class ClientFragmentAdapter extends BaseAdapter {
         return convertView;
     }
     class ViewHolder {
+        //商品头像
         ImageView img_shangpin;
-        TextView txt_username, txt_pingjia, shangpin_name_left, shangpin_danjia, shangpin_shuliang;
+        //买家名称  评价类型  商品名称   商品单价  商品数量  商品订单状态   买家备注
+        TextView txt_username, txt_pingjia, shangpin_name_left, shangpin_danjia, shangpin_shuliang, txt_ddzhuangtai, txt_beizhus;
     }
 }

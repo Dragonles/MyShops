@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.myshops.shops.adapter.EvaluateAdapter;
 import com.myshops.shops.bean.Conmments;
 import com.myshops.shops.myshops.HuiFuXiangXiActivity;
+import com.myshops.shops.myshops.LoginActivity;
 import com.myshops.shops.untils.HttpUtils;
 
 import org.xutils.common.Callback;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 滑动
+ * 消息种中心 -- 评价管理 -- 评价类型 （全部评价、好评、中评、差评）
  * */
 public class SuperAwesomeCardFragment extends Fragment {
 
@@ -67,15 +68,23 @@ public class SuperAwesomeCardFragment extends Fragment {
                 .getDisplayMetrics());
 
         Log.i("brands", "成功");
-
+        Log.i("SuperonSuccess","* create的时候 **a的值：**"+a);
         if (a != 0) {
-
+            Log.i("SuperonSuccess","***a的值：**"+a);
         }else {
-            Log.i("onSuccess","******cha  xun  sql****");
-            String sql = "select * from wst_goods_appraises";
-            String types = "/Api/exeQuery";
+            a = 1;
+            Log.i("SuperonSuccess","* 查询数据的时候的时候 **a的值：**"+a);
+            //查询数据
+            String tokens = LoginActivity.token;
+            Log.i("onSuccess","****///ss/**cha  xun  sql****  "+tokens);
+           // "select * from wst_goods_appraises"
+            //"select * from wst_goods_appraises where userId in(select userId from wst_user_token where token = '"+tokens+"')"
+
+//            String sql = "select * from `wst_goods_appraises`a join `wst_user_token`b on a.userId = b.suerId and wst_user_token.token = '"+tokens+"'";
+            String types = "/AllOrders/findMessage";
             HashMap<String,String> map = new HashMap<>();
-            map.put("sql",sql);
+            map.put("token",LoginActivity.token);
+            Log.i("token",LoginActivity.token);
             HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
@@ -100,15 +109,16 @@ public class SuperAwesomeCardFragment extends Fragment {
             });
 
 
-
+            //假数据
             list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","好评"));
-            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","差评"));
+//            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","差评"));
+
         }
 
         evaAdapter = new EvaluateAdapter(list,getContext());
 //        evaAdapter.notifyDataSetChanged();
         listView.setAdapter(evaAdapter);
-        a = 1;
+
 
 
 
