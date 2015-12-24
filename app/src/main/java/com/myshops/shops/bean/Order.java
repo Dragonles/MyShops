@@ -4,81 +4,71 @@ package com.myshops.shops.bean;
  * Created by Administrator on 2015/12/21.
  */
 public class Order  {
-    private String uname; //买家名称
-    private String flag; //发货状态
-    private String goodname;//商品名称
-    private String numbers;//购买数量
-    private String mmoney;//交易金额
-    private String flag_satd;//交易状态
-    private int goodimg;//商品图片
+    private String username; //买家名称
+   // private String orderStatus; //发货状态
+    private String goodsName;//商品名称
+    private String goodsNums;//购买数量
+    private String totalMoney;//交易金额
+    private int orderStatus;//交易状态
+    private String goodsThums;//商品图片
 
-    public String getUname() {
-        return uname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getGoodname() {
-        return goodname;
+    public String getGoodsThums() {
+        return goodsThums;
     }
 
-    public void setGoodname(String goodname) {
-        this.goodname = goodname;
+    public void setGoodsThums(String goodsThums) {
+        this.goodsThums = goodsThums;
     }
 
-    public String getFlag_satd() {
-        return flag_satd;
+    public String getGoodsNums() {
+        return goodsNums;
     }
 
-    public String getFlag() {
-        return flag;
+    public void setGoodsNums(String goodsNums) {
+        this.goodsNums = goodsNums;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public String getNumbers() {
-        return numbers;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
-    public void setNumbers(String numbers) {
-        this.numbers = numbers;
+    public String getTotalMoney() {
+        return totalMoney;
     }
 
-    public String getMmoney() {
-        return mmoney;
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
-    public void setMmoney(String mmoney) {
-        this.mmoney = mmoney;
+    public int getOrderStatus() {
+        return orderStatus;
     }
 
-    public String isFlag_satd() {
-        return flag_satd;
+    public void setOrderStatus(int orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public int getGoodimg() {
-        return goodimg;
+    public Order(String username, String goodsThums, String totalMoney, String goodsNums, String goodsName, int orderStatus) {
+        this.username = username;
+        this.goodsThums = goodsThums;
+        this.totalMoney = totalMoney;
+        this.goodsNums = goodsNums;
+        this.goodsName = goodsName;
+        this.orderStatus = orderStatus;
     }
 
-    public void setGoodimg(int goodimg) {
-        this.goodimg = goodimg;
-    }
-
-    public void setFlag_satd(String flag_satd) {
-        this.flag_satd = flag_satd;
-    }
-
-    public Order(String uname, String flag_satd, String mmoney, String numbers, String goodname, String flag,int goodimg) {
-        this.uname = uname;
-        this.flag_satd = flag_satd;
-        this.mmoney = mmoney;
-        this.numbers = numbers;
-        this.goodname = goodname;
-        this.flag = flag;
-        this.goodimg=goodimg;
+    public Order() {
     }
 }

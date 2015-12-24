@@ -29,7 +29,7 @@ public class LeadActivity extends AppCompatActivity {
         regist_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(LeadActivity.this,OpenActivity.class);
+                Intent intent =new Intent(LeadActivity.this,RegisterActivity.class);
                 startActivity(intent);
                 LeadActivity.this.finish();
             }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.myshops.shops.adapter.OderAdpter;
 import com.myshops.shops.bean.Order;
@@ -38,9 +39,7 @@ public class DingDanFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        lists.add(new Order("傻福小苍", "未发货", "3000", "20", "云南龙井", "已付款", R.drawable.img_head_three));
-        listView.setAdapter(new OderAdpter(getActivity(), lists));
-        String sql = "select * from wst_users";
+        String sql = "select * from wst_orders  join wst_order_goods  on wst_orders.orderId=wst_order_goods.orderId";
         String types = "/Api/exeQuery";
         HashMap<String, String> map = new HashMap<>();
         map.put("sql", sql);
@@ -49,12 +48,38 @@ public class DingDanFragment extends BaseFragment {
             public void onSuccess(String s) {
                 System.out.println("onSuccess" + s.toString());
                 Log.i("sss",s.toString());
+                try {
+                    JSONObject data = new JSONObject(s);
+                    String code = data.get("code").toString();
+                    String nessage = data.get("message").toString();
+                    JSONArray datas = (JSONArray) data.get("data");
+                    List<Order> usersList = new ArrayList<Order>();
+                    for (int i = 0; i < datas.length(); i++) {
+                        JSONObject info = datas.getJSONObject(i);
+                        Order order = new Order();
+                        order.setGoodsThums(info.get("goodsThums").toString());
+                        Log.i("img",info.get("goodsThums").toString());
+                        order.setGoodsName(info.get("goodsName").toString());
+                        order.setGoodsNums(info.get("goodsNums").toString());
+                        order.setUsername(info.get("userName").toString());
+                        order.setTotalMoney(info.get("totalMoney").toString());
+                        Integer ss=(Integer.parseInt(info.get("orderStatus").toString()));
+                        if (ss==-1){
+                            order.setOrderStatus(Integer.parseInt(info.get("orderStatus").toString()));
+                        }
+                        lists.add(order);
+                    }
+                    listView.setAdapter(new OderAdpter(getActivity(), lists));
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onError(Throwable throwable, boolean b) {
                 System.out.println("onError" + throwable.toString());
-                Log.i("sser",throwable.toString());
+                Log.i("sser",throwable.getMessage());
             }
 
             @Override
@@ -67,22 +92,6 @@ public class DingDanFragment extends BaseFragment {
 
             }
         });
-//        try {
-//            JSONObject data = new JSONObject(s);
-//            String code = data.get("code").toString();
-//            String nessage = data.get("message").toString();
-//            JSONArray datas = (JSONArray) data.get("data");
-//            List<Users> usersList = new ArrayList<Users>();
-//            for (int i = 0; i < datas.length(); i++) {
-//                JSONObject info = datas.getJSONObject(i);
-//                Users users = new Users();
-//                users.setUserName(info.get("username").toString());
-//                users.setToken(info.get("token").toString());
-//                users.setClientType(info.get("userType").toString());
-//                usersList.add(users);
-//            }
-//
-//        }
 
         //    ListView listView;
 //    public DingDanFragment() {
