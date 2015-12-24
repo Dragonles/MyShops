@@ -4,7 +4,7 @@ package com.myshops.shops.bean;
  * Created by zyh on 2015/12/17.
  */
 public class Conmments {
-    private int usericon;  //用户头像
+    private String usericon;  //用户头像
     private String username;  //用户昵称
     private String userlevel;  //用户等级
     private String usercomments;  //用户评价
@@ -12,20 +12,19 @@ public class Conmments {
     private String setmeal; //套餐
     private String date; //评价时间
     private String comment;//评论状态
+    private String shuliang; //购买的商品数量
+    private String danjia; //商品单价
 
-
-    public Conmments(int usericon, String username, String userlevel, String usercomments, String buyproduct, String setmeal, String date) {
-        this.usericon = usericon;
-        this.username = username;
-        this.userlevel = userlevel;
-        this.usercomments = usercomments;
+    public Conmments(String buyproduct, String danjia, String shuliang, String usercomments, String username, String usericon) {
         this.buyproduct = buyproduct;
-        this.setmeal = setmeal;
-        this.date = date;
+        this.danjia = danjia;
+        this.shuliang = shuliang;
+        this.usercomments = usercomments;
+        this.username = username;
+        this.usericon = usericon;
     }
 
-    public Conmments(int usericon, String username, String userlevel, String usercomments, String buyproduct, String setmeal, String date, String comment) {
-        this.usericon = usericon;
+    public Conmments( String username, String userlevel, String usercomments, String buyproduct,String setmeal, String date, String comment) {
         this.username = username;
         this.userlevel = userlevel;
         this.usercomments = usercomments;
@@ -33,16 +32,7 @@ public class Conmments {
         this.setmeal = setmeal;
         this.date = date;
         this.comment = comment;
-    }
 
-    public Conmments(String username, String userlevel, String usercomments, String buyproduct, String setmeal, String date, String comment) {
-        this.username = username;
-        this.userlevel = userlevel;
-        this.usercomments = usercomments;
-        this.buyproduct = buyproduct;
-        this.setmeal = setmeal;
-        this.date = date;
-        this.comment = comment;
     }
 
     @Override
@@ -59,6 +49,22 @@ public class Conmments {
                 '}';
     }
 
+    public String getShuliang() {
+        return shuliang;
+    }
+
+    public void setShuliang(String shuliang) {
+        this.shuliang = shuliang;
+    }
+
+    public String getDanjia() {
+        return danjia;
+    }
+
+    public void setDanjia(String danjia) {
+        this.danjia = danjia;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -67,11 +73,11 @@ public class Conmments {
         this.comment = comment;
     }
 
-    public int getUsericon() {
+    public String getUsericon() {
         return usericon;
     }
 
-    public void setUsericon(int usericon) {
+    public void setUsericon(String usericon) {
         this.usericon = usericon;
     }
 
@@ -122,12 +128,5 @@ public class Conmments {
     public void setDate(String date) {
         this.date = date;
     }
-    public Conmments(String username, String userlevel, String usercomments, String buyproduct, String setmeal, String date) {
-        this.username = username;
-        this.userlevel = userlevel;
-        this.usercomments = usercomments;
-        this.buyproduct = buyproduct;
-        this.setmeal = setmeal;
-        this.date = date;
-    }
+
 }

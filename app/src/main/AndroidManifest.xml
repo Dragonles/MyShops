@@ -19,7 +19,6 @@
         android:label="@string/app_name"
         android:name=".MyApplication"
         android:supportsRtl="true"
-        android:name="com.myshops.shops.untils.MyApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ShanActivity"
@@ -62,6 +61,9 @@
 
         </activity>
 
+        <activity
+            android:name=".HuiFuXiangXiActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity android:name="me.nereo.imagechoose.MultiImageSelectorActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
