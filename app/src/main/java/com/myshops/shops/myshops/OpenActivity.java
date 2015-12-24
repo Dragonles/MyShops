@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -56,9 +55,6 @@ public class OpenActivity extends AppCompatActivity {
     //邮箱地址
     @ViewInject(R.id.et_open_useremailaddress)
     private EditText et_open_useremailaddress;
-    //用户登录密码
-    @ViewInject(R.id.et_open_userpwd)
-    private EditText et_open_userpwd;
     //店铺介绍
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
@@ -72,7 +68,6 @@ public class OpenActivity extends AppCompatActivity {
         userstorename = et_open_userstorname.getText().toString();
         userphonenum = et_open_userphonenum.getText().toString();
         useremail = et_open_useremailaddress.getText().toString();
-        userpwd = et_open_userpwd.getText().toString();
         userstore = et_open_userstore.getText().toString();
 
         if (!("".equals(storepicture))){
