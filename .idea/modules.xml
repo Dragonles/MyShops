@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/myshops.iml" filepath="$PROJECT_DIR$/myshops.iml" />
       <module fileurl="file://$PROJECT_DIR$/sellerShop.iml" filepath="$PROJECT_DIR$/sellerShop.iml" />
       <module fileurl="file://$PROJECT_DIR$/smssdk/smssdk.iml" filepath="$PROJECT_DIR$/smssdk/smssdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/smssdk/smssdk.iml" filepath="$PROJECT_DIR$/smssdk/smssdk.iml" />
     </modules>
   </component>
 </project>
