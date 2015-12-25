@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         btn_register_phone = (Button) findViewById(R.id.btn_register_phonenum);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(x.app());
+
         btn_register_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
