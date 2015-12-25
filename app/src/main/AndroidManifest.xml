@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.myshops.shops.myshops">
+
     <uses-sdk android:minSdkVersion="4"></uses-sdk>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -12,6 +13,13 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <!-- 地图 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -30,7 +38,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:value="567756e9e0f55a9b61005d78" android:name="UMENG_APPKEY"></meta-data>
+        <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="81806349b160c7177468dbc74dc82693" />
+        <service android:name="com.amap.api.location.APSService" />
+
+        <meta-data android:value="567756e9e0f55a9b61005d78"
+            android:name="UMENG_APPKEY"/>
         <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
         <activity
             android:name=".OpenActivity"
@@ -79,6 +94,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".ChoosePlaceActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
     </application>
 

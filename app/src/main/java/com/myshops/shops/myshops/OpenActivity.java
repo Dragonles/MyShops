@@ -1,14 +1,27 @@
 package com.myshops.shops.myshops;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.renderscript.Sampler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myshops.shops.untils.HttpUtils;
@@ -19,6 +32,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,11 +49,14 @@ public class OpenActivity extends AppCompatActivity {
     static int where = 0; // 区分店铺图片和用户图片
     static int is_submit = 0; // 判断是否可以提交信息
     private double WEIDU ,JINGDU; // 经纬度
+    int curryposition = 0;
+    RadioGroup rg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+
     }
     // 店铺照片  用户手持身份证照片
     @ViewInject(R.id.iv_open_storepicture)
@@ -57,10 +74,65 @@ public class OpenActivity extends AppCompatActivity {
     @ViewInject(R.id.et_open_useremailaddress)
     private EditText et_open_useremailaddress;
     //店铺地址
+    @ViewInject(R.id.btn_open_storeaddress)
+    private Button btn_open_storeaddress;
     @Event(R.id.btn_open_storeaddress)
     private void ChoosePlaceEvent(View view){
-        Intent intent = new Intent(x.app(),ChoosePlaceActivity.class);
+        Intent intent = new Intent(OpenActivity.this,ChoosePlaceActivity.class);
         startActivityForResult(intent,3);
+    }
+    //派送范围
+    @ViewInject(R.id.btn_open_send)
+    private Button btn_open_send;
+
+    @Event(R.id.btn_open_send)
+
+    private void SendEvent(View view){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(OpenActivity.this);
+
+        rg = new RadioGroup(x.app());
+        rg.clearDisappearingChildren();
+        rg.setPadding(50 ,20 ,50 ,20);
+        final String[] rbtext = {"<1km","1<5km","5<10km","10<20km"};
+
+        rg.clearDisappearingChildren();
+        for ( int i = 0 ; i < 4 ; i++ ){
+            RadioButton rb = new RadioButton(x.app());
+            rb.setText(rbtext[i]);
+            rb.setTextColor(Color.BLACK);
+            rb.setId(i);
+            rg.addView(rb);
+        }
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                curryposition = checkedId;
+                Log.i("qqq",curryposition+"");
+            }
+        });
+
+        dialog.setView(rg);
+        dialog.setTitle("选择免费派送范围");
+        dialog.setIcon(android.R.drawable.btn_radio);
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+              btn_open_send.setText(rbtext[curryposition]);
+
+            }
+        });
+
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        dialog.show();
     }
 
     //店铺介绍
@@ -218,6 +290,7 @@ public class OpenActivity extends AppCompatActivity {
                 JINGDU = data.getDoubleExtra("jingdu",0);
                 Log.i("sss","WEIDU"+WEIDU);
                 Log.i("sss","JINGDU"+JINGDU);
+                btn_open_storeaddress.setText("修改地址");
             }
         }
     }

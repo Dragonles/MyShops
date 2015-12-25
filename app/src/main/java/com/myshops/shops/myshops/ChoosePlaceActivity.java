@@ -1,6 +1,5 @@
 package com.myshops.shops.myshops;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -45,11 +46,14 @@ public class ChoosePlaceActivity extends AppCompatActivity {
     SharedPreferences sp;
     float f = (float) 16.0;
     public static LatLng latLng;
+    Button btn_chooseplace_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_place);
+
+        btn_chooseplace_back = (Button) findViewById(R.id.btn_chooseplace_back);
 
         //在onCreat方法中给aMap对象赋值
         mapView = (MapView) findViewById(R.id.map);
@@ -72,6 +76,10 @@ public class ChoosePlaceActivity extends AppCompatActivity {
             @Override
             public void onMapClick(LatLng latLng) {
                 Log.i("onMapClick","-----onMapClick-----"+latLng+"");
+
+               Toast.makeText(ChoosePlaceActivity.this,"地址已选择，请返回",Toast.LENGTH_SHORT).show();
+                btn_chooseplace_back.setVisibility(View.VISIBLE);
+
                 //改变地图视图为自己的位置
                 ChoosePlaceActivity.this.latLng = latLng;
                 addMarkersToMap(); // 往地图上添加marker
@@ -113,7 +121,7 @@ public class ChoosePlaceActivity extends AppCompatActivity {
             public void onLocationChanged(AMapLocation amapLocation) {
                 if (amapLocation != null) {
                     if (amapLocation.getErrorCode() == 0) {
-                        Toast.makeText(ChoosePlaceActivity.this,"定位",Toast.LENGTH_SHORT).show();
+
                         //定位成功回调信息，设置相关消息
                         amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                         Log.i("vv", amapLocation.getLatitude() + "");
@@ -149,7 +157,7 @@ public class ChoosePlaceActivity extends AppCompatActivity {
                         Log.i("AmapError", amapLocation.getDistrict() + df.format(date) + amapLocation.getCity());
                         String s = amapLocation.getCity();
                         //Ttv.setText(s);
-                        Toast.makeText(ChoosePlaceActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+
                     } else {
                         //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                         Log.i("AmapError", "location Error, ErrCode:"
@@ -192,7 +200,7 @@ public class ChoosePlaceActivity extends AppCompatActivity {
 
         // 获取当前地图中心点的坐标
         float mZoom = aMap.getCameraPosition().zoom;
-        Toast.makeText(this,mZoom+"**"+mTarget,Toast.LENGTH_LONG).show();
+
         Log.i("suofanfang", mZoom + "");
 
     }
