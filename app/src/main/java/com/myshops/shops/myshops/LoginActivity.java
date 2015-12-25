@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
                 pd.dismiss();
-                SharedPreferences preferences = getSharedPreferences("muser", Context.MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("user_info", 0);
 
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if ("200".equals(code)){
                         //存入数据
-                        editor.putString("phone",username );
+                        editor.putString("NAME",username );
                         editor.putString("userType",userType);
                         //提交
                         editor.commit();
@@ -104,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
 
             }
 

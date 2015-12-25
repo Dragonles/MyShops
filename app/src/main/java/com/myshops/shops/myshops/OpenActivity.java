@@ -34,6 +34,7 @@ public class OpenActivity extends AppCompatActivity {
     private String mStoreFilePath = "",mUserFilePath = "";//图片路径
     static int where = 0; // 区分店铺图片和用户图片
     static int is_submit = 0; // 判断是否可以提交信息
+    private double WEIDU ,JINGDU; // 经纬度
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class OpenActivity extends AppCompatActivity {
     // 店铺照片  用户手持身份证照片
     @ViewInject(R.id.iv_open_storepicture)
     private ImageView iv_open_storepicture;
-    //用户头像
+    //手持身份证
     @ViewInject(R.id.iv_open_userpicture)
     private ImageView iv_open_userpicture;
     //店铺名称
@@ -55,6 +56,13 @@ public class OpenActivity extends AppCompatActivity {
     //邮箱地址
     @ViewInject(R.id.et_open_useremailaddress)
     private EditText et_open_useremailaddress;
+    //店铺地址
+    @Event(R.id.btn_open_storeaddress)
+    private void ChoosePlaceEvent(View view){
+        Intent intent = new Intent(x.app(),ChoosePlaceActivity.class);
+        startActivityForResult(intent,3);
+    }
+
     //店铺介绍
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
@@ -203,6 +211,13 @@ public class OpenActivity extends AppCompatActivity {
                     iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
                 }
 
+            }
+        } else{
+            if (resultCode == 3){
+                WEIDU = data.getDoubleExtra("weidu",0);
+                JINGDU = data.getDoubleExtra("jingdu",0);
+                Log.i("sss","WEIDU"+WEIDU);
+                Log.i("sss","JINGDU"+JINGDU);
             }
         }
     }
