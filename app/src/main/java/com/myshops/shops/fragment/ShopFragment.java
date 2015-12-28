@@ -16,42 +16,56 @@ import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-public class ShopFragment extends Fragment {
-
-
+@ContentView(R.layout.fragment_shop)
+public class ShopFragment extends BaseFragment {
 
     Button buttons;
-    ImageButton mgoinfo;
+    @Event(value = R.id.shop_info)
+    private void shop_infoClick(View v){
+        Intent intent =new Intent(getActivity(), ShopInfoActivity.class);
+        startActivity(intent);
+    }
+//    ImageButton mgoinfo;
+
     @ViewInject(R.id.tv_shop_username)
     private TextView tv_shop_username;
+
     public ShopFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tv_shop_username.setText(MainActivity.usernamefromlogin);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_shop,container,false);
-        Toolbar toolbar = (Toolbar)v.findViewById(R.id.toolbar);
-        mgoinfo=(ImageButton)v.findViewById(R.id.shop_info);
-        mgoinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(getActivity(), ShopInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-       // Activity.setSupportActionBar(toolbar);
-        return v;
-    }
+    //    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View v = inflater.inflate(R.layout.fragment_shop,container,false);
+//        Toolbar toolbar = (Toolbar)v.findViewById(R.id.toolbar);
+//        tv_shop_username.setText(MainActivity.usernamefromlogin);
+//        mgoinfo=(ImageButton)v.findViewById(R.id.shop_info);
+//        mgoinfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent =new Intent(getActivity(), ShopInfoActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//       // Activity.setSupportActionBar(toolbar);
+//        return v;
+//    }
 
 
     public void onResume() {

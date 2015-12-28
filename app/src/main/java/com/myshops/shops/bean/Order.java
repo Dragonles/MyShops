@@ -9,7 +9,7 @@ public class Order  {
     private String goodsName;//商品名称
     private String goodsNums;//购买数量
     private String totalMoney;//交易金额
-    private int orderStatus;//交易状态
+    private String orderStatus;//交易状态
     private String goodsThums;//商品图片
 
     public String getUsername() {
@@ -52,15 +52,15 @@ public class Order  {
         this.totalMoney = totalMoney;
     }
 
-    public int getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(int orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 
-    public Order(String username, String goodsThums, String totalMoney, String goodsNums, String goodsName, int orderStatus) {
+    public Order(String username, String goodsThums, String totalMoney, String goodsNums, String goodsName, String orderStatus) {
         this.username = username;
         this.goodsThums = goodsThums;
         this.totalMoney = totalMoney;

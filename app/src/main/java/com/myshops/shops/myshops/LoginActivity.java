@@ -28,11 +28,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
+    public static String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         x.view().inject(this);
     }
 
@@ -57,10 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
-
-
                 SharedPreferences preferences = getSharedPreferences("muser", Context.MODE_PRIVATE);
-
                 try {
                     Log.i("codessss","走1");
                     JSONObject jsonObject = new JSONObject(result);
@@ -69,14 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     JSONObject data = jsonObject.getJSONObject("data");
                     String username = data.getString("username");
-                    String token = data.getString("token");
+                    token = data.getString("token");
                     String userType = data.getString("userType");
                     SharedPreferences.Editor editor = preferences.edit();
-
                     if ("200".equals(code)){
                         //存入数据
                         editor.putString("phone",username );
                         editor.putString("userType",userType);
+                        editor.putString("token",token);
                         //提交
                         editor.commit();
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
@@ -86,19 +85,10 @@ public class LoginActivity extends AppCompatActivity {
                     } else{
                         Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
                     }
-
-
-
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();

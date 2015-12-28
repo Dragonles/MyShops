@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager mfm;
     FragmentTransaction ftt;
     RadioButton mhome,mmessage,mper,mdingdan;
-    public String usernamefromlogin;
+    public static  String usernamefromlogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
