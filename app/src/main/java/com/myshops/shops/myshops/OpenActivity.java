@@ -290,7 +290,7 @@ public class OpenActivity extends AppCompatActivity {
                 JINGDU = data.getDoubleExtra("jingdu",0);
                 Log.i("sss","WEIDU"+WEIDU);
                 Log.i("sss","JINGDU"+JINGDU);
-                btn_open_storeaddress.setText("修改地址");
+                btn_open_storeaddress.setText("修改位置");
             }
         }
     }

@@ -93,11 +93,14 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("userType",userType);
                         //提交
                         editor.commit();
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("username",username);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+
+                        isShopNull();
+//
+//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//                        intent.putExtra("username",username);
+//                        startActivity(intent);
+//                        LoginActivity.this.finish();
+//                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                     } else{
                         Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
                     }
@@ -128,6 +131,71 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    public void isShopNull(){
+        String pa = "/AllOrders/shopisnull ";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("token", token);
+
+        pd.show();
+
+        HttpUtils.httputilsGet(pa,map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+                Log.i("aaaa", result + "");
+                pd.dismiss();
+                SharedPreferences preferences = getSharedPreferences("user_info", 0);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String code = jsonObject.getString("code");
+//                    String message = jsonObject.getString("message");
+//                    JSONObject data = jsonObject.getJSONObject("data");
+//                    String username = data.getString("username");
+//                    token = data.getString("token");
+//                    String userType = data.getString("userType");
+//                    SharedPreferences.Editor editor = preferences.edit();
+//
+//                    if ("200".equals(code)){
+//                        //存入数据
+//                        editor.putString("NAME",username );
+//                        editor.putString("userType",userType);
+//                        //提交
+//                        editor.commit();
+//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//                        intent.putExtra("username",username);
+//                        startActivity(intent);
+//                        LoginActivity.this.finish();
+//                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+//                    } else{
+//                        Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
+//                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i("aa","onerror"+ex.getMessage() + "");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                Log.i("aa", x.app() + "");
+            }
+            @Override
+            public void onFinished() {
+                //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                Log.i("aa",x.app()+"");
+            }
+        });
+    }
 
 
 }
