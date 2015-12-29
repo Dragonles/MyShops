@@ -2,13 +2,14 @@ package com.myshops.shops.myshops;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import org.xutils.x;
 
 /**
  * Created by wyouflf on 15/11/4.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,3 +17,5 @@ public class BaseActivity extends AppCompatActivity {
         x.view().inject(this);
     }
 }
+
+
