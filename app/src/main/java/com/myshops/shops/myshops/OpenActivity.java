@@ -47,20 +47,20 @@ public class OpenActivity extends AppCompatActivity {
     @ViewInject(R.id.iv_open_userpicture)
     private ImageView iv_open_userpicture;
     // 用户真实姓名  用户身份证号  用户手机号 验证码  用户登录密码  店铺介绍
-    @ViewInject(R.id.et_open_username)
-    private EditText et_open_username;
-
-    @ViewInject(R.id.et_open_useridcard)
+//    @ViewInject(R.id.et_open_username)
+//    private EditText et_open_username;
+//
+//    @ViewInject(R.id.et_open_useridcard)
     private EditText et_open_useridcard;
 
     @ViewInject(R.id.et_open_userphonenum)
     private EditText et_open_userphonenum;
 
-    @ViewInject(R.id.et_open_verifycode)
-    private EditText et_open_verifycode;
-
-    @ViewInject(R.id.et_open_userpwd)
-    private EditText et_open_userpwd;
+//    @ViewInject(R.id.et_open_verifycode)
+//    private EditText et_open_verifycode;
+//
+//    @ViewInject(R.id.et_open_userpwd)
+//    private EditText et_open_userpwd;
 
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
@@ -70,10 +70,10 @@ public class OpenActivity extends AppCompatActivity {
 
         storepicture = mStoreFilePath;
         userpicture = mUserFilePath;
-        username = et_open_username.getText().toString();
+//        username = et_open_username.getText().toString();
         useridcard = et_open_useridcard.getText().toString();
         userphonenum = et_open_userphonenum.getText().toString();
-        userpwd = et_open_userpwd.getText().toString();
+//        userpwd = et_open_userpwd.getText().toString();
         userstore = et_open_userstore.getText().toString();
 
         if (!("".equals(storepicture))){

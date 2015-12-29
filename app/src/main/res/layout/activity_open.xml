@@ -168,7 +168,7 @@
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:id="@+id/btn_open_storeaddress"
-                    android:text="选择地址"
+                    android:text="选择位置"
                     android:textColor="@color/public_font_color"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
@@ -255,6 +255,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>
