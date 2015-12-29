@@ -1,12 +1,15 @@
 package com.myshops.shops.untils;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.MD5;
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +17,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by Vonte on 2015/12/16.
@@ -45,7 +51,18 @@ public class HttpUtils {
         params.addQueryStringParameter("sign",map.get("sign"));
         //返回JSON数据
         int currentapiVersion=android.os.Build.VERSION.SDK_INT;
-//        params.setSslSocketFactory();
+        Log.i("currentapiVersion",currentapiVersion+"");
+        if(currentapiVersion<=20){
+            try {
+                SSLContext sslcontext = SSLContext.getInstance("TLSv1");
+                sslcontext.init(null,null, null);
+                SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslcontext.getSocketFactory());
+                params.setSslSocketFactory(NoSSLv3Factory);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
         x.http().post(params,callback);
 
     }
@@ -75,6 +92,19 @@ public class HttpUtils {
         params.addQueryStringParameter("sign",map.get("sign"));
         //返回JSON数据
         x.http().get(params,callback);
+
+    }
+
+    public static void httpPostImage(String path,String token,String url,Callback.CommonCallback<String> callback){
+
+        RequestParams params = new RequestParams(Config.url+url);
+        params.addQueryStringParameter("sign",token);
+        params.setMethod(HttpMethod.POST);
+        params.addBodyParameter("image",new File(path));
+        x.http().post(params,callback);
+
+
+
 
     }
 

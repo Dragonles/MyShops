@@ -16,7 +16,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="wrap_content">
-            <ImageView
+            <com.myshops.shops.bean.CircleImageView
+                android:id="@+id/iv_userIcon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/user_img"/>
@@ -30,9 +31,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="14sp"
+                android:id="@+id/tv_shop_username"
                 android:gravity="center"
-                android:textColor="@color/fontcolor"
-                android:text="华府小苍"/>
+                android:textColor="@color/fontcolor"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/lly_xiaoshou"
             android:layout_width="0dp"
             android:padding="20dp"
             android:gravity="center"

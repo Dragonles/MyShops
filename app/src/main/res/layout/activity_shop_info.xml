@@ -82,7 +82,7 @@
                             android:layout_alignParentEnd="true"
                             android:id="@+id/ib_shopinfo_shopheader_go" />
 
-                        <ImageView
+                        <com.myshops.shops.bean.CircleImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/iconfont_bussinessmans"
