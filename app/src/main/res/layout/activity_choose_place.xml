@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="选则地址"
+            android:text="选则位置"
             android:textSize="18sp"
             android:textColor="#FFF"
             android:layout_centerVertical="true"
@@ -56,4 +56,19 @@
         android:id="@+id/btn_chooseplace_back"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:height="20dp"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@color/nodian"
+        android:alpha="0.5"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_chooseplace_place"
+        android:layout_alignTop="@+id/map"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
