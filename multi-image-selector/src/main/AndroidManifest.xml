@@ -2,7 +2,8 @@
     package="me.nereo.multi_image_selector">
 
     <application android:allowBackup="true">
-        <activity android:name="me.nereo.imagechoose.ShowActivity"></activity>
+        <activity android:name="me.nereo.imagechoose.ShowActivity"
+            android:theme="@style/MyChooseAppTheme"/>
 
     </application>
 

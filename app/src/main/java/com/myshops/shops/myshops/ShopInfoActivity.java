@@ -3,6 +3,7 @@ package com.myshops.shops.myshops;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,9 +23,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+//import com.google.android.gms.appindexing.Action;
+//import com.google.android.gms.appindexing.AppIndex;
+//import com.google.android.gms.common.api.GoogleApiClient;
 import com.myshops.shops.bean.CircleImageView;
 import com.myshops.shops.fragment.ShopFragment;
 import com.myshops.shops.untils.Config;
@@ -59,7 +60,7 @@ public class ShopInfoActivity extends AppCompatActivity {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
+//    private GoogleApiClient client;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -205,8 +206,10 @@ public class ShopInfoActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+        final SharedPreferences token = getSharedPreferences("user_info",0);
+        final String t = token.getString("token","");
+        Log.i("ShopToken",t);
 
-        final String t = LoginActivity.token;
         String sqll = "select * from wst_user_token where token = '" + t + "'";
 //        String sql = "select * from wst_users where userId = " + sqll;
         String types = "/Api/exeQuery";
@@ -349,7 +352,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                     HttpUtils.httpPostImage(sURL, t, "/ApiUp/uploadImage", new Callback.CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
-                            Log.i("uploadImage", result+ " "+t + " " + sURL);
+                            Log.i("uploadImage", result+ " "+ t + " " + sURL);
                         }
 
                         @Override
@@ -425,7 +428,7 @@ public class ShopInfoActivity extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -446,44 +449,5 @@ public class ShopInfoActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "图片选择异常", Toast.LENGTH_LONG).show();
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "ShopInfo Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.myshops.shops.myshops/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "ShopInfo Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.myshops.shops.myshops/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
+    
 }

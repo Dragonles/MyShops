@@ -69,7 +69,7 @@ public class EvaluateFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             Log.i("posid","Home_Fragment："+position);
-            position++;
+//            position++;
 //            pos = position;
             return SuperAwesomeCardFragment.newInstance(position);
         }

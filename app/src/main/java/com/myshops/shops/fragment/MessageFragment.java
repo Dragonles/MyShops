@@ -15,8 +15,24 @@ import android.widget.RadioButton;
 
 import com.myshops.shops.myshops.R;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 
+/**
+ * 消息框架
+ * */
+
+//@ContentView(R.layout.fragment_message)
 public class MessageFragment extends Fragment implements View.OnClickListener {
+
+//    @ViewInject(R.id.rb_mesg)
+//    private RadioButton rb_mesg;
+//    @ViewInject(R.id.rb_circle)
+//    private RadioButton rb_circle;
+//    @ViewInject(R.id.rb_evaluate)
+//    private RadioButton rb_evaluate;
+//    @ViewInject(R.id.rb_client)
+//    private RadioButton rb_client;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -49,6 +65,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         rb_evaluate.setOnClickListener(this);
         rb_client.setOnClickListener(this);
 
+        //得到颜色  点击和未点击状态
         dian = getResources().getColorStateList(R.color.dian);
         nodian = getResources().getColorStateList(R.color.nodian);
 
@@ -58,6 +75,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
             ChatMessageFragment cmf = new ChatMessageFragment();
             ftt.add(R.id.fragment_parent, cmf, "rb_mesg");
             ftt.commit();
+            //改变文字颜色
             rb_mesg.setTextColor(dian);
 
         }
@@ -87,6 +105,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.rb_mesg) {
             // 聊天消息
+            //改变文字颜色
             rb_mesg.setTextColor(dian);
             rb_circle.setTextColor(nodian);
             rb_evaluate.setTextColor(nodian);
@@ -100,7 +119,8 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
                 ftt.add(R.id.fragment_parent, cmf, "rb_mesg");
             }
         } else if (id == R.id.rb_circle) {
-            //微店商圈
+            //微店商圈  隐藏（暂不使用）
+            //改变文字颜色
             rb_mesg.setTextColor(nodian);
             rb_circle.setTextColor(dian);
             rb_evaluate.setTextColor(nodian);
@@ -115,6 +135,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.rb_evaluate) {
             //评价管理
+            //改变文字颜色
             rb_mesg.setTextColor(nodian);
             rb_circle.setTextColor(nodian);
             rb_evaluate.setTextColor(dian);
@@ -128,6 +149,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.rb_client) {
             //客户管理
+            //改变文字颜色
             rb_mesg.setTextColor(nodian);
             rb_circle.setTextColor(nodian);
             rb_evaluate.setTextColor(nodian);

@@ -21,21 +21,19 @@
                 android:textColor="@color/white"
                 android:text="我的订单"/>
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rly_left"
             android:layout_below="@id/top_linea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp">
-
-            <ScrollView
-                android:layout_width="wrap_content"
+            android:orientation="vertical">
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="1dp"
@@ -43,12 +41,12 @@
                         android:background="@color/xiantiao"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_alldingdan"
@@ -57,8 +55,8 @@
                             android:text="全部订单"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_daifahuo"
@@ -68,8 +66,8 @@
                             android:text="待发货"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_yifahuo"
@@ -79,8 +77,8 @@
                             android:text="已发货"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_yiwanacheng"
@@ -90,30 +88,8 @@
                             android:text="已完成"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xiantiao"/>
-                        <Button
-                            android:id="@+id/btn_weifukuan"
-                            android:layout_below="@+id/btn_yiwanacheng"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未付款"
-                            android:background="@null"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xiantiao"/>
-                        <Button
-                            android:id="@+id/btn_weishouhuo"
-                            android:layout_below="@+id/btn_weifukuan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未收货"
-                            android:background="@null"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_tuikuanzhong"
@@ -123,8 +99,8 @@
                             android:text="退款中"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
                         <Button
                             android:id="@+id/btn_yituikuan"
@@ -134,34 +110,26 @@
                             android:text="已退款"
                             android:background="@null"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
                             android:background="@color/xiantiao"/>
-                        <Button
-                            android:id="@+id/btn_yiquxiao"
-                            android:layout_below="@+id/btn_yituikuan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="已取消"
-                            android:background="@null"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xiantiao"/>
-
                     </LinearLayout>
                     <TextView
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/xiantiao"/>
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:id="@+id/listViews"
-                        android:layout_height="match_parent"></ListView>
                 </LinearLayout>
-            </ScrollView>
-
-        </RelativeLayout>
+            </HorizontalScrollView>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/xiantiao"/>
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/listViews"
+            android:layout_below="@id/rly_left"
+            android:layout_height="wrap_content"></ListView>
     </RelativeLayout>
 
 </FrameLayout>

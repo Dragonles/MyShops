@@ -54,7 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="55dp"
-        android:textColor="#B4AAAD"
+        android:layout_marginRight="55dp"
+        android:textColor="@color/fontcolor"
         android:textSize="14sp"
         android:text="很好，非常好" />
 
@@ -68,7 +69,7 @@
             android:id="@+id/txt_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#B4AAAD"
+            android:textColor="@color/fontcolor"
             android:textSize="14sp"
             android:text="铝合金井盖"/>
         <TextView
@@ -77,7 +78,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#B4AAAD"
+            android:textColor="@color/fontcolor"
             android:textSize="14sp"
             android:text="官方标配"/>
         <TextView
@@ -86,7 +87,7 @@
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#B4AAAD"
+            android:textColor="@color/fontcolor"
             android:textSize="14sp"
             android:text="2015-12-12"/>
     </RelativeLayout>
