@@ -43,13 +43,12 @@ public class Goods_chushou_Fragment extends Fragment {
         Tv_data = (TextView) v.findViewById(R.id.text_data);
         Tv_xiaoliang = (TextView) v.findViewById(R.id.text_xiaoliang);
         Tv_kucun = (TextView) v.findViewById(R.id.text_kucun);
-        btn_add = (Button) v.findViewById(R.id.btn_shopinfo_exit);
+        btn_add = (Button) v.findViewById(R.id.btn_add_shangpins);
         Tv_data.setTextColor(getResources().getColorStateList(R.color.style_color));
         HashMap<String,String> maps = new HashMap<>();
-        String selects = "select goodsId,goodsImg,goodsName,marketPrice,shopPrice,saleCount,isBook,goodsStock,createTime from wst_goods";
-        maps.put("sql",selects);
-        String url = "/Api/exeQuery";
-        HttpUtils.httputilsPost(url, maps, new Callback.CommonCallback<String>() {
+//        String selects = "select goodsId,goodsImg,goodsName,marketPrice,shopPrice,saleCount,isBook,goodsStock,createTime from wst_goods";
+//        maps.put("sql",selects);
+        HttpUtils.httputilsPost("/AddGoods/addgoods", maps, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.i("GG","结果"+result);
@@ -127,7 +126,7 @@ public class Goods_chushou_Fragment extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity()  ,AddShangpinActivity.class);
+                Intent intent = new Intent(getActivity(),AddShangpinActivity.class);
                 startActivity(intent);
             }
         });

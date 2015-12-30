@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -11,153 +11,113 @@
             android:id="@+id/linearout_img"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/jinhuo_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/add_img"
                 android:layout_marginLeft="14dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/home_baby_img"/>
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_toRightOf="@+id/linearout_img"
-            android:id="@+id/linearout_jinhuo_shuxing"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_toRightOf="@+id/jinhuo_img"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/linearout_jinhuo_title">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="15sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/jinhuo_color3"
-                        android:id="@+id/jinhuo_title"
-                        android:text="韩版卫衣外套潮"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/jinhuo_shuxing"
-                    android:layout_below="@+id/linearout_jinhuo_title"
-                    android:layout_toRightOf="@+id/jinhuo_img"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/jinhuo_color1"
-                        android:text="颜色："/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/jinhuo_color"
-                        android:textColor="@color/jinhuo_color1"
-                        android:text="深灰(现货)"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/jinhuo_color1"
-                        android:text="；尺码："/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/jinhuo_size"
-                        android:textColor="@color/jinhuo_color1"
-                        android:text=" L"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/jinhuo_color2"
-                        android:textSize="15sp"
-                        android:text="单价："/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/jinhuo_price"
-                        android:textSize="15sp"
-                        android:textColor="@color/jinhuo_color2"
-                        android:text="45"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textColor="@color/jinhuo_color2"
-                        android:text="数量："/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="15sp"
-                        android:textColor="@color/jinhuo_color2"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/jinhuo_count"
-                        android:text="30"/>
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/linearout_img"
-            android:layout_below="@+id/linearout_jinhuo_shuxing">
+            android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/jinhuo_color2"
-                    android:id="@+id/jinhuo_data"
-                    android:textSize="18sp"
-                    android:text="2015-11-11"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
-                android:paddingRight="5dp">
+                android:paddingLeft="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/jinhuo_color2"
-                    android:text="共计："/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/jinhuo_color2"
-                    android:id="@+id/jinhuo_allPrice"
-                    android:text="2000元"/>
+                    android:textSize="@dimen/right_zitiSize"
+                    android:id="@+id/add_name"
+                    android:text="进口羊毛衫进口羊毛衫"/>
             </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#f00"
+                    android:textSize="@dimen/right_zitiSize"
+                    android:text="￥"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#f00"
+                    android:id="@+id/add_shopPrice"
+                    android:textSize="@dimen/right_zitiSize"
+                    android:text="53.4"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="￥"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_marketPrice"
+                    android:text="89.0"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销量"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/add_saleCount"
+                    android:text="1245"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="收藏"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/add_isBook"
+                    android:text="0"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="库存"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/add_goodsStock"
+                    android:text="1245"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="时间"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/add_createTime"
+                    android:text="2015-12-34"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

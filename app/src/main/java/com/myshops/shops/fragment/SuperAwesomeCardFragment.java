@@ -1,5 +1,6 @@
 package com.myshops.shops.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,20 +8,29 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ListView;
 
 import com.myshops.shops.adapter.EvaluateAdapter;
 import com.myshops.shops.bean.Conmments;
+import com.myshops.shops.myshops.HuiFuXiangXiActivity;
+import com.myshops.shops.myshops.LoginActivity;
+import com.myshops.shops.untils.HttpUtils;
+
+import org.xutils.common.Callback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * 滑动
+ * 消息种中心 -- 评价管理 -- 评价类型 （全部评价、好评、中评、差评）
  * */
 public class SuperAwesomeCardFragment extends Fragment {
+
+    int a = 0;
 
     List<Conmments> list = new ArrayList<>();
     ListView listView;
@@ -58,17 +68,77 @@ public class SuperAwesomeCardFragment extends Fragment {
                 .getDisplayMetrics());
 
         Log.i("brands", "成功");
+        Log.i("SuperonSuccess","* create的时候 **a的值：**"+a);
+        if (a != 0) {
+            Log.i("SuperonSuccess","***a的值：**"+a);
+        }else {
+            a = 1;
+            Log.i("SuperonSuccess","* 查询数据的时候的时候 **a的值：**"+a);
+            //查询数据
+            String tokens = LoginActivity.token;
+            Log.i("onSuccess","****///ss/**cha  xun  sql****  "+tokens);
+           // "select * from wst_goods_appraises"
+            //"select * from wst_goods_appraises where userId in(select userId from wst_user_token where token = '"+tokens+"')"
 
-        list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","好评"));
-        list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","差评"));
+//            String sql = "select * from `wst_goods_appraises`a join `wst_user_token`b on a.userId = b.suerId and wst_user_token.token = '"+tokens+"'";
+            String types = "/AllOrders/findMessage";
+            HashMap<String,String> map = new HashMap<>();
+            map.put("token",LoginActivity.token);
+            Log.i("token",LoginActivity.token);
+            HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String s) {
+                    System.out.println("onSuccess" + s.toString());
+
+                }
+
+                @Override
+                public void onError(Throwable throwable, boolean b) {
+                    System.out.println("onError" + throwable.toString());
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException e) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
+
+            //假数据
+            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","好评"));
+//            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","差评"));
+
+        }
 
         evaAdapter = new EvaluateAdapter(list,getContext());
-        evaAdapter.notifyDataSetChanged();
+//        evaAdapter.notifyDataSetChanged();
         listView.setAdapter(evaAdapter);
 
+
+
+
+        //点击listview列表 回复消息
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                huifu();
+            }
+        });
         params.setMargins(margin, margin, margin, margin);
         fl.addView(listView);
         return fl;
     }
+
+    //回复消息
+    public void huifu() {
+        Intent intent = new Intent(getActivity(), HuiFuXiangXiActivity.class);
+        startActivity(intent);
+    }
+
 
 }

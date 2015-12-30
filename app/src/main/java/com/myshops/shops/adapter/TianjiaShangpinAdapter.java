@@ -1,9 +1,15 @@
 package com.myshops.shops.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.myshops.shops.myshops.R;
 
 import java.util.List;
 
@@ -34,7 +40,26 @@ public class TianjiaShangpinAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        ViewHolder v;
+        if(convertView == null){
+            v = new ViewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_tianjiashangpin,null);
+            v.add_img = (ImageView) convertView.findViewById(R.id.add_img);
+            v.add_name = (TextView) convertView.findViewById(R.id.add_name);
+            v.add_marketPrice = (TextView) convertView.findViewById(R.id.add_marketPrice);
+            v.add_shopPrice = (TextView) convertView.findViewById(R.id.add_shopPrice);
+            v.add_shopPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            v.add_saleCount = (TextView) convertView.findViewById(R.id.add_saleCount);
+            v.add_isBook = (TextView) convertView.findViewById(R.id.add_isBook);
+            v.add_goodsStock = (TextView) convertView.findViewById(R.id.add_goodsStock);
+            v.add_createTime = (TextView) convertView.findViewById(R.id.add_createTime);
+            convertView.setTag(v);
+        }
+        v = (ViewHolder) convertView.getTag();
         return convertView;
+    }
+    class ViewHolder{
+        ImageView add_img;
+        TextView add_name,add_marketPrice,add_shopPrice,add_saleCount,add_isBook,add_goodsStock,add_createTime;
     }
 }

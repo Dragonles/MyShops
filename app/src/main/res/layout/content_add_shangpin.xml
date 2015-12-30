@@ -40,16 +40,52 @@
         </LinearLayout>
 
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:orientation="vertical"
         android:paddingTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品名称："
+                android:textSize="@dimen/right_zitiSize"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/add_goodsName"
+                android:background="@drawable/edit_addshangpin"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品编号："
+                android:textSize="@dimen/right_zitiSize"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/add_goodId"
+                android:background="@drawable/edit_addshangpin"/>
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="商品图片:"
+            android:layout_marginTop="10dp"
             android:textSize="@dimen/right_zitiSize"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +96,180 @@
                 android:id="@+id/imageChose"
                 android:src="@drawable/kaitong_img"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品描述:"
+            android:textSize="@dimen/right_zitiSize"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="top"
+            android:id="@+id/add_shangoinmiaoshu"
+            android:background="@drawable/edit_addshangpin"
+            android:hint="输入商品描述"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品属性："
+            android:textSize="@dimen/right_zitiSize"
+            android:layout_marginTop="10dp"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="价格："-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:textSize="16sp"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="现价："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:inputType="number"
+                android:layout_weight="2"
+                android:id="@+id/add_nowPrice"
+                android:background="@drawable/edit_addshangpin"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:paddingLeft="3dp"
+                android:text="原价："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:inputType="number"
+                android:layout_weight="2"
+                android:id="@+id/add_oldPrice"
+                android:background="@drawable/edit_addshangpin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="库存："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_kucun"
+                android:background="@drawable/edit_addshangpin"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:paddingLeft="3dp"
+                android:text="单位："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_danwei"
+                android:background="@drawable/edit_addshangpin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="销售个数："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_xiaoshouCount"
+                android:background="@drawable/edit_addshangpin"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:paddingLeft="3dp"
+                android:text="预定数量："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_yudingCount"
+                android:background="@drawable/edit_addshangpin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="创建时间："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_createTime"
+                android:background="@drawable/edit_addshangpin"
+                />
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                 android:paddingLeft="3dp"
+                android:text="销售时间："/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:id="@+id/add_xiaoshouTime"
+                android:background="@drawable/edit_addshangpin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp">
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@color/style_color"
+                android:textColor="@color/white"
+                android:textSize="@dimen/right_zitiSize"
+                android:id="@+id/add_commit"
+                android:text="完  成"/>
+        </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

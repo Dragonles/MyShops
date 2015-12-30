@@ -106,7 +106,7 @@
             android:drawableLeft="@drawable/ic_mygoods_add"
             android:textColor="@color/public_font_color"
             android:textSize="18sp"
-            android:id="@+id/btn_shopinfo_exit"
+            android:id="@+id/btn_add_shangpins"
             android:background="@null"/>
         </LinearLayout>
 
