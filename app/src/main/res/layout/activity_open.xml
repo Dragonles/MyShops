@@ -152,6 +152,31 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:text="店铺地址"
+                    android:textColor="@color/public_font_color"
+                    android:gravity="center"
+                    android:id="@+id/btn_open_usershopaddress"
+                    android:layout_weight="5"
+                    android:background="@drawable/login_edittext_style"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
