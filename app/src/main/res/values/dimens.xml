@@ -6,4 +6,14 @@
     <dimen name="ziti_Size">25sp</dimen>
     <dimen name="right_zitiSize">20sp</dimen>
     <dimen name="fenlei_height">40dp</dimen>
+
+    <!-- ������ť���߶� -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- ������ťpaddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- ������ťpaddingRight -->
+    <dimen name="pickerview_topbar_paddingright">30dp</dimen>
+    <!-- ������ť���ִ�С -->
+    <dimen name="pickerview_topbar_btn_textsize">20sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
 </resources>
