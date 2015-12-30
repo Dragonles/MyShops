@@ -3,6 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="fenlei">分类</string>
     <string name="bianji">编辑</string>
+    <string name="tianjia">添加</string>
+    <string name="xinjianfenlei">新建分类</string>
+    <string name="bianjifenlei">编辑分类</string>
     <string name="xiaoshoujilu">销售记录</string>
     <string name="shouruyuzhichu">我的收入/支出</string>
     <string name="jinhuojilu">进货记录</string>
