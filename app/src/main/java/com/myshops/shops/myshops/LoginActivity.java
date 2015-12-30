@@ -28,12 +28,16 @@ public class LoginActivity extends AppCompatActivity {
 
     public static String token;
     ProgressDialog pd;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         pd = new ProgressDialog(this);
         pd.setMessage("正在登录");
+        preferences = getSharedPreferences("user_info", 0);
+        editor = preferences.edit();
     }
 
     @Event(R.id.ib_login_back)
@@ -72,10 +76,8 @@ public class LoginActivity extends AppCompatActivity {
         HttpUtils.httputilsPost(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
-                pd.dismiss();
-                SharedPreferences preferences = getSharedPreferences("user_info", 0);
 
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -85,25 +87,16 @@ public class LoginActivity extends AppCompatActivity {
                     String username = data.getString("username");
                     token = data.getString("token");
                     String userType = data.getString("userType");
-                    SharedPreferences.Editor editor = preferences.edit();
 
                     if ("200".equals(code)){
                         //存入数据
                         editor.putString("NAME",username );
                         editor.putString("userType",userType);
                         editor.putString("token",token);
-                        //提交
-                        editor.commit();
+                        isShopNull();
 
-                    //    isShopNull();
-
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("username",username);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                     } else{
-                        Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
@@ -133,49 +126,61 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void isShopNull(){
-        String pa = "/AllOrders/shopisnull ";
-
+        String pa = "/AllOrders/shopisnull";
         HashMap<String, String> map = new HashMap<>();
+        Log.i("aaaa",token);
         map.put("token", token);
 
-        pd.show();
+        Log.i("aaaa","走着步1");
 
         HttpUtils.httputilsGet(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+                Log.i("aaaa","走着步2"+result+"------------");
+             //   Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
                 pd.dismiss();
-                SharedPreferences preferences = getSharedPreferences("user_info", 0);
+                Intent intent;
+
 
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String code = jsonObject.getString("code");
-//                    String message = jsonObject.getString("message");
-//                    JSONObject data = jsonObject.getJSONObject("data");
-//                    String username = data.getString("username");
-//                    token = data.getString("token");
-//                    String userType = data.getString("userType");
-//                    SharedPreferences.Editor editor = preferences.edit();
-//
-//                    if ("200".equals(code)){
-//                        //存入数据
-//                        editor.putString("NAME",username );
-//                        editor.putString("userType",userType);
-//                        //提交
-//                        editor.commit();
-//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-//                        intent.putExtra("username",username);
-//                        startActivity(intent);
-//                        LoginActivity.this.finish();
-//                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
-//                    } else{
-//                        Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
-//                    }
+                    String date = jsonObject.getString("data");
+
+                    if ("200".equals(code)){
+
+                        if ("1".equals(date)){
+                            //存在店铺信息跳转主界面
+                            //存入数据
+                            editor.putString("hasShops",date);
+
+                            intent = new Intent(LoginActivity.this,MainActivity.class);
+                            Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            //未开通店铺，跳转开通店铺界面
+                            //存入数据
+                            editor.putString("hasShops","");
+
+                            intent = new Intent(LoginActivity.this,OpenActivity.class);
+
+                        }
+                        //提交
+                        editor.commit();
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+
+                    } else{
+                        Toast.makeText(x.app(), "信息错误，请重新登陆", Toast.LENGTH_SHORT).show();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
+
+
 
             }
 
@@ -188,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(CancelledException cex) {
                 //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-                Log.i("aa", x.app() + "");
+                Log.i("aa","这里"+ x.app() + "");
             }
             @Override
             public void onFinished() {

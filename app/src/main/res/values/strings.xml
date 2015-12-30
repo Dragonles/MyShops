@@ -17,4 +17,8 @@
     <string name="title_activity_shou_ru_zhi_chu">ShouRuZhiChuActivity</string>
     <string name="title_activity_xiao_shou_ji_lu">XiaoShouJiLuActivity</string>
     <string name="title_activity_shangpin_fenlei">ShangpinFenleiActivity</string>
+
+
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
 </resources>
