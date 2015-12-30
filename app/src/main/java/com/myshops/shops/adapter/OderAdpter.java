@@ -1,6 +1,7 @@
 package com.myshops.shops.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,21 +56,20 @@ public class OderAdpter extends BaseAdapter {
             holder.money=(TextView)convertView.findViewById(R.id.moneytext);
             holder.flag_stad=(TextView)convertView.findViewById(R.id.flag_stad);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder=(ViewHolder)convertView.getTag();
         }
-       holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
+        holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
         holder.uname.setText(list.get(position).getUsername());
      //  holder.flag.setText(list.get(position).getOrderStatus());
         holder.goodsname.setText(list.get(position).getGoodsName());
         holder.number.setText(list.get(position).getGoodsNums());
         holder.flag_stad.setText(list.get(position).getOrderStatus());
         holder.money.setText(list.get(position).getTotalMoney());
+        Log.i("dindanss","订单adapter");
         return convertView;
     }
-    class ViewHolder
-    {
+    class ViewHolder {
 
         public ImageView goodimg;//商品图片
         public TextView uname;//买家名称

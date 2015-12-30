@@ -37,11 +37,11 @@ public class ShanActivity extends AppCompatActivity {
                         if ("".equals(strName)){
                             intent =new Intent(ShanActivity.this,LoginActivity.class);
                         } else{
-                            if ("".equals(hasShops)){
-                                intent =new Intent(ShanActivity.this,OpenActivity.class);
-                            } else{
+//                            if ("".equals(hasShops)){
+//                                intent =new Intent(ShanActivity.this,OpenActivity.class);
+//                            } else{
                                 intent =new Intent(ShanActivity.this,MainActivity.class);
-                            }
+//                            }
                         }
                     }
                     ShanActivity.this.startActivity(intent);
@@ -51,6 +51,7 @@ public class ShanActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     void ReadSharedPreferences(){
         SharedPreferences user = getSharedPreferences("user_info",0);
         isFirstLead = user.getBoolean("isFirstLead",false);

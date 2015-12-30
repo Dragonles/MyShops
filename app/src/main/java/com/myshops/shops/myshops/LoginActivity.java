@@ -89,19 +89,19 @@ public class LoginActivity extends AppCompatActivity {
 
                     if ("200".equals(code)){
                         //存入数据
-                        editor.putString("phone",username );
+                        editor.putString("NAME",username );
                         editor.putString("userType",userType);
                         editor.putString("token",token);
                         //提交
                         editor.commit();
 
-                        isShopNull();
-//
-//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-//                        intent.putExtra("username",username);
-//                        startActivity(intent);
-//                        LoginActivity.this.finish();
-//                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    //    isShopNull();
+
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        intent.putExtra("username",username);
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                     } else{
                         Toast.makeText(x.app(), "登陆信息错误", Toast.LENGTH_SHORT).show();
                     }
