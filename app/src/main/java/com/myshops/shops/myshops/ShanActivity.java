@@ -51,6 +51,7 @@ public class ShanActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     void ReadSharedPreferences(){
         SharedPreferences user = getSharedPreferences("user_info",0);
         isFirstLead = user.getBoolean("isFirstLead",false);

@@ -1,6 +1,7 @@
 package com.myshops.shops.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Order;
 import com.myshops.shops.myshops.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,11 +45,10 @@ public class OderAdpter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if(convertView == null)
-        {
+        if(convertView == null) {
             holder= new ViewHolder();
             convertView= LayoutInflater.from(context).inflate(R.layout.order_item,null);
-           holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
+            holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
             holder.uname=(TextView)convertView.findViewById(R.id.uname);
             holder.flag=(TextView)convertView.findViewById(R.id.falg_fahuo);
             holder.goodsname=(TextView)convertView.findViewById(R.id.goods_name);
@@ -55,21 +56,21 @@ public class OderAdpter extends BaseAdapter {
             holder.money=(TextView)convertView.findViewById(R.id.moneytext);
             holder.flag_stad=(TextView)convertView.findViewById(R.id.flag_stad);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder=(ViewHolder)convertView.getTag();
         }
-       holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
+//        holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
+        Picasso.with(context).load(list.get(position).getGoodsThums()).into(holder.goodimg);
         holder.uname.setText(list.get(position).getUsername());
      //  holder.flag.setText(list.get(position).getOrderStatus());
         holder.goodsname.setText(list.get(position).getGoodsName());
         holder.number.setText(list.get(position).getGoodsNums());
         holder.flag_stad.setText(list.get(position).getOrderStatus());
         holder.money.setText(list.get(position).getTotalMoney());
+        Log.i("dindanss","订单adapter");
         return convertView;
     }
-    class ViewHolder
-    {
+    class ViewHolder {
 
         public ImageView goodimg;//商品图片
         public TextView uname;//买家名称
