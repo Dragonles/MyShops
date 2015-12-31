@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.myshops.shops.adapter.JinhuoAdapter;
 import com.myshops.shops.myshops.AddShangpinActivity;
 import com.myshops.shops.myshops.R;
 
@@ -36,6 +37,7 @@ public class Goods_chushou_Fragment extends Fragment {
         Tv_kucun = (TextView) v.findViewById(R.id.text_kucun);
         btn_add = (Button) v.findViewById(R.id.btn_add_shangpins);
         Tv_data.setTextColor(getResources().getColorStateList(R.color.style_color));
+//        Lv_data.setAdapter(new JinhuoAdapter());
         //添加事件点击事件
         Ln_data.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +61,7 @@ public class Goods_chushou_Fragment extends Fragment {
                 Tv_xiaoliang.setTextColor(getResources().getColorStateList(R.color.style_color));
             }
         });
-        Ln_kucun.setOnClickListener(new View.OnClickListener() {
+         Ln_kucun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Lv_data.setVisibility(View.GONE);
