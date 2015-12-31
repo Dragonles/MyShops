@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Order;
 import com.myshops.shops.myshops.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,11 +45,10 @@ public class OderAdpter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if(convertView == null)
-        {
+        if(convertView == null) {
             holder= new ViewHolder();
             convertView= LayoutInflater.from(context).inflate(R.layout.order_item,null);
-           holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
+            holder.goodimg=(ImageView)convertView.findViewById(R.id.goods_img);
             holder.uname=(TextView)convertView.findViewById(R.id.uname);
             holder.flag=(TextView)convertView.findViewById(R.id.falg_fahuo);
             holder.goodsname=(TextView)convertView.findViewById(R.id.goods_name);
@@ -59,7 +59,8 @@ public class OderAdpter extends BaseAdapter {
         } else {
             holder=(ViewHolder)convertView.getTag();
         }
-        holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
+//        holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
+        Picasso.with(context).load(list.get(position).getGoodsThums()).into(holder.goodimg);
         holder.uname.setText(list.get(position).getUsername());
      //  holder.flag.setText(list.get(position).getOrderStatus());
         holder.goodsname.setText(list.get(position).getGoodsName());

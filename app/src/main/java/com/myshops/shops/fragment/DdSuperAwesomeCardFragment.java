@@ -47,6 +47,7 @@ public class DdSuperAwesomeCardFragment extends Fragment {
         DdSuperAwesomeCardFragment f = new DdSuperAwesomeCardFragment();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
+        Log.i("Logpos","  **  "+b);
         f.setArguments(b);
         return f;
     }
@@ -55,7 +56,7 @@ public class DdSuperAwesomeCardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         positions = getArguments().getInt(ARG_POSITION);
-        Log.i("positions",positions+"*******");
+        Log.i("Logpos",positions+"*******");
     }
 
     @Override
@@ -64,7 +65,7 @@ public class DdSuperAwesomeCardFragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_super_awesome_card, container, false);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        Log.i("positions",positions+"*******");
+        Log.i("Logpos",positions+" ** // ");
         listView = new ListView(getActivity());
         listView.setLayoutParams(params);
 
@@ -73,57 +74,7 @@ public class DdSuperAwesomeCardFragment extends Fragment {
         fl.setLayoutParams(params);
         final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
                 .getDisplayMetrics());
-
-
-
-//        Log.i("brands", "成功");
-//        Log.i("SuperonSuccess","* create的时候 **a的值：**"+a);
-//        if (a != 0) {
-//            Log.i("SuperonSuccess","***a的值：**"+a);
-//        }else {
-//            a = 1;
-//            Log.i("SuperonSuccess","* 查询数据的时候的时候 **a的值：**"+a);
-            //查询数据
-
-
-//            Log.i("onSuccess","****///ss/**cha  xun  sql****  "+tokens);
-//            String types = "/AllOrders/findMessage";
-//            HashMap<String,String> map = new HashMap<>();
-//            map.put("token",tokens);
-//            Log.i("token",tokens);
-//            HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
-//                @Override
-//                public void onSuccess(String s) {
-//                    System.out.println("onSuccess" + s.toString());
-//
-//                }
-//
-//                @Override
-//                public void onError(Throwable throwable, boolean b) {
-//                    System.out.println("onError" + throwable.toString());
-//                }
-//
-//                @Override
-//                public void onCancelled(Callback.CancelledException e) {
-//
-//                }
-//
-//                @Override
-//                public void onFinished() {
-//
-//                }
-//            });
-
-
-            //假数据
-//            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","好评"));
-//            list.add(new Conmments("小苍","vip5","good！","无敌大井盖","非标配","2012-12-12","差评"));
-
-//        }
-
-//        orderadpter = new DingDanFragment(lists,getContext());
-//        evaAdapter.notifyDataSetChanged();
-//        listView.setAdapter(orderadpter);
+        //调用方法
         allClicks();
         params.setMargins(margin, margin, margin, margin);
         fl.addView(listView);
@@ -157,6 +108,7 @@ public class DdSuperAwesomeCardFragment extends Fragment {
             public void onSuccess(String s) {
                 System.out.println("onSuccess" + s.toString());
                 Log.i("sss",s.toString());
+                //解析JSON数据
                 try {
                     JSONObject data = new JSONObject(s);
                     String code = data.get("code").toString();
@@ -170,9 +122,16 @@ public class DdSuperAwesomeCardFragment extends Fragment {
                         Log.i("img",info.get("goodsThums").toString());
                         order.setGoodsName(info.get("goodsName").toString());
                         order.setGoodsNums(info.get("goodsNums").toString());
-                        order.setUsername(info.get("userName")    .toString());
+                        order.setUsername(info.get("userName").toString());
                         order.setTotalMoney(info.get("totalMoney").toString());
-                        order.setOrderStatus(info.get("orderStatus").toString());
+                        order.setGoodsThums(info.get("goodsThums").toString());
+                        if("-1".equals(info.get("orderStatus").toString())) {
+                            order.setOrderStatus("未付款");
+                        } else {
+                            order.setOrderStatus("未知");
+                        }
+
+                        Log.i("orderstatus_ss",info.get("orderStatus").toString());
                         lists.add(order);
                     }
                     listView.setAdapter(new OderAdpter(getActivity(), lists));
