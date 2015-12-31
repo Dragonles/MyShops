@@ -16,4 +16,10 @@ public class Goods_xiajia_Fragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("aa","dd");
+        super.onSaveInstanceState(outState);
+    }
 }

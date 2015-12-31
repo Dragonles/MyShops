@@ -15,4 +15,9 @@ public class Goods_fenlei_Fragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_goods_fenlei_, container, false);
         return v;
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("aas","dds");
+        super.onSaveInstanceState(outState);
+    }
 }
