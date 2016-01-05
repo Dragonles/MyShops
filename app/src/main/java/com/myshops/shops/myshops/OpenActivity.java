@@ -332,7 +332,7 @@ public class OpenActivity extends AppCompatActivity {
             HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
-                 //   Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
+                    //   Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
                     Log.i("onSuccess",s.toString());
                     String code = null;
                     try {
@@ -459,7 +459,7 @@ public class OpenActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(String s) {
                     progressDialog.dismiss();
-                   // Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
                     Log.i("submit",s.toString());
                     JSONObject jsonObject = null;
                     String code = null;
