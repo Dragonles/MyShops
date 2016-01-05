@@ -35,6 +35,9 @@ public class DingDanFragment extends BaseFragment {
 
     @ViewInject(R.id.listViews)
     private ListView listView;
+    private void onclike(View v){
+        
+    }
     OderAdpter orderadpter; 
     private List<Order> lists=new ArrayList<>();
 
@@ -45,7 +48,7 @@ public class DingDanFragment extends BaseFragment {
         HashMap<String, String> map = new HashMap<>();
         map.put("token", LoginActivity.token);
         Log.i("token",LoginActivity.token);
-        HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
+        HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String s) {
                 System.out.println("onSuccess" + s.toString());
