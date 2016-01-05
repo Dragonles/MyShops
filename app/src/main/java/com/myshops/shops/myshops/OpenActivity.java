@@ -1,28 +1,25 @@
 package com.myshops.shops.myshops;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.myshops.shops.bean.Areas;
-import com.myshops.shops.bean.ProvinceBean;
 import com.myshops.shops.untils.HttpUtils;
 
 import org.json.JSONArray;
@@ -35,41 +32,42 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import me.nereo.imagechoose.MultiImageSelectorActivity;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.picker.WheelPicker;
 
 @ContentView(R.layout.activity_open)
 public class OpenActivity extends AppCompatActivity {
 
-    String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",useremail = "",userpwd = "",userstore = "";
+    String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",useremail = "",storeplace = "",sendhowlong = "",userstore = "";
     private  static  final int REQUEST_IMAGE=2;
     private String mStoreFilePath = "",mUserFilePath = "";//图片路径
     static int where = 0; // 区分店铺图片和用户图片
-    static int is_submit = 0; // 判断是否可以提交信息
-    private double WEIDU ,JINGDU; // 经纬度
+    static boolean is_submit = false; // 判断是否可以提交信息
+    private double WEIDU = 0 ,JINGDU = 0; // 经纬度
     int curryposition = 0;
-    RadioGroup rg;
+    RadioGroup rg;//派送范围选项
     public static String placeName = "选择地址";
 
+    private ArrayList<Areas> areasList = new ArrayList<>();
+    final ArrayList<String> dataset = new ArrayList<String>();
 
-    private ArrayList<ProvinceBean> options1Items = new ArrayList<ProvinceBean>();
-    private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
-    OptionsPickerView pvOptions;
-
+    StringBuffer province = new StringBuffer();
+    String first = "";
+    public static String choosename = "";
+    ProgressDialog progressDialog ;
+    String userIds ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("加载中……");
 
     }
     // 店铺照片  用户手持身份证照片
@@ -122,6 +120,7 @@ public class OpenActivity extends AppCompatActivity {
 
                 curryposition = checkedId;
                 Log.i("qqq",curryposition+"");
+                sendhowlong = rbtext[curryposition];
             }
         });
 
@@ -152,13 +151,9 @@ public class OpenActivity extends AppCompatActivity {
     private Button btn_open_usershopaddress;
     @Event(R.id.btn_open_usershopaddress)
     private void userShopAddEvent(View view){
-        //areaType = "4";
-        //parentId = "370102001000";
+
+        progressDialog.show();
         //地区选择接口
-
-        addPick();
-        pvOptions.show();
-
         String types = "/KittyApi/areas";
         HashMap<String,String> map = new HashMap<>();
         map.put("parentId","0");
@@ -166,147 +161,34 @@ public class OpenActivity extends AppCompatActivity {
         HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String s) {
+                progressDialog.dismiss();
                 Log.i("citys",s.toString());
+
+                areasList.clear();
+                dataset.clear();
+                province.setLength(0);
+
                 try {
                     JSONObject data = new JSONObject(s);
                     String code = data.get("code").toString();
                     String message = data.get("message").toString();
                     JSONArray datas = data.getJSONArray("data");
 
-                    List<Areas> areasList = new ArrayList<Areas>();
                     for (int i = 0; i < datas.length(); i++) {
                         org.json.JSONObject datas2 = datas.getJSONObject(i);
-
-//
-//                        Areas areas = new Areas();
-//                        areas.setAreaId(datas2.get("areaId").toString());
-//                        areas.setAreaName(datas2.get("areaName").toString());
-//                        areas.setParentId(datas2.get("parentId").toString());
-//                        areas.setAreaType(datas2.get("areaType").toString());
-
-//                        areasList.add(areas);
-
-                        options1Items.add(new ProvinceBean((Long) datas2.get("areaId"),datas2.get("areaName").toString()));
-
+                        String id = (String) datas2.get("areaId");
+                        String name = (String) datas2.get("areaName");
+                        Log.i("areas","ID:"+id+"-----名称："+name);
+                        areasList.add(new Areas(id,name));
                     }
+                    for (int i = 0; i < datas.length(); i++) {
 
-                    final ArrayList<String> dataset = new ArrayList<String>();
-                    for (Areas areas : areasList) {
-                        String areaName = areas.getAreaName();
-                        dataset.add(areaName);
+                        Log.i("areascity","ID:"+areasList.get(i).getId()+"-----名称："+areasList.get(i).getName());
+                        dataset.add(areasList.get(i).getName());
                     }
-
-                    //选项选择器
-                    pvOptions = new OptionsPickerView(OpenActivity.this);
-                    //选项1
-//                    options1Items.add(new ProvinceBean(0,"广东"));
-//                    options1Items.add(new ProvinceBean(1,"湖南"));
-//                    options1Items.add(new ProvinceBean(3,"广西"));
-
-                    //选项2
-                    ArrayList<String> options2Items_01=new ArrayList<String>();
-                    options2Items_01.add("广州");
-                    options2Items_01.add("佛山");
-                    options2Items_01.add("东莞");
-                    options2Items_01.add("阳江");
-                    options2Items_01.add("珠海");
-                    ArrayList<String> options2Items_02=new ArrayList<String>();
-                    options2Items_02.add("长沙");
-                    options2Items_02.add("岳阳");
-                    ArrayList<String> options2Items_03=new ArrayList<String>();
-                    options2Items_03.add("桂林");
-                    options2Items.add(options2Items_01);
-                    options2Items.add(options2Items_02);
-                    options2Items.add(options2Items_03);
-
-                    //选项3
-                    ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<ArrayList<String>>();
-                    ArrayList<ArrayList<String>> options3Items_02 = new ArrayList<ArrayList<String>>();
-                    ArrayList<ArrayList<String>> options3Items_03 = new ArrayList<ArrayList<String>>();
-                    ArrayList<String> options3Items_01_01=new ArrayList<String>();
-                    options3Items_01_01.add("白云");
-                    options3Items_01_01.add("天河");
-                    options3Items_01_01.add("海珠");
-                    options3Items_01_01.add("越秀");
-                    options3Items_01.add(options3Items_01_01);
-                    ArrayList<String> options3Items_01_02=new ArrayList<String>();
-                    options3Items_01_02.add("南海");
-                    options3Items_01_02.add("高明");
-                    options3Items_01_02.add("顺德");
-                    options3Items_01_02.add("禅城");
-                    options3Items_01.add(options3Items_01_02);
-                    ArrayList<String> options3Items_01_03=new ArrayList<String>();
-                    options3Items_01_03.add("其他");
-                    options3Items_01_03.add("常平");
-                    options3Items_01_03.add("虎门");
-                    options3Items_01.add(options3Items_01_03);
-                    ArrayList<String> options3Items_01_04=new ArrayList<String>();
-                    options3Items_01_04.add("其他1");
-                    options3Items_01_04.add("其他2");
-                    options3Items_01_04.add("其他3");
-                    options3Items_01.add(options3Items_01_04);
-                    ArrayList<String> options3Items_01_05=new ArrayList<String>();
-                    options3Items_01_05.add("其他1");
-                    options3Items_01_05.add("其他2");
-                    options3Items_01_05.add("其他3");
-                    options3Items_01.add(options3Items_01_05);
-
-                    ArrayList<String> options3Items_02_01=new ArrayList<String>();
-                    options3Items_02_01.add("长沙长沙长沙长沙长沙长沙长沙长沙长沙1111111111");
-                    options3Items_02_01.add("长沙2");
-                    options3Items_02_01.add("长沙3");
-                    options3Items_02_01.add("长沙4");
-                    options3Items_02_01.add("长沙5");
-                    options3Items_02_01.add("长沙6");
-                    options3Items_02_01.add("长沙7");
-                    options3Items_02_01.add("长沙8");
-                    options3Items_02.add(options3Items_02_01);
-                    ArrayList<String> options3Items_02_02=new ArrayList<String>();
-                    options3Items_02_02.add("岳1");
-                    options3Items_02_02.add("岳2");
-                    options3Items_02_02.add("岳3");
-                    options3Items_02_02.add("岳4");
-                    options3Items_02_02.add("岳5");
-                    options3Items_02_02.add("岳6");
-                    options3Items_02_02.add("岳7");
-                    options3Items_02_02.add("岳8");
-                    options3Items_02_02.add("岳9");
-                    options3Items_02.add(options3Items_02_02);
-                    ArrayList<String> options3Items_03_01=new ArrayList<String>();
-                    options3Items_03_01.add("好山水");
-                    options3Items_03.add(options3Items_03_01);
-
-                    options3Items.add(options3Items_01);
-                    options3Items.add(options3Items_02);
-                    options3Items.add(options3Items_03);
-
-                    //三级联动效果
-                    pvOptions.setPicker(options1Items, options2Items, options3Items, true);
-                    //设置选择的三级单位
-                    //  pvOptions.setLabels("省", "市", "区");
-                    pvOptions.setTitle("选择城市");
-                    pvOptions.setCyclic(false, true, true);
-                    //设置默认选中的三级项目
-                    //监听确定选择按钮
-                    pvOptions.setSelectOptions(1, 1, 1);
-                    pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-                        @Override
-                        public void onOptionsSelect(int options1, int option2, int options3) {
-                            //返回的分别是三个级别的选中位置
-                            String tx = options1Items.get(options1).getPickerViewText()
-                                    + options2Items.get(options1).get(option2)
-                                    + options3Items.get(options1).get(option2).get(options3);
-                            btn_open_usershopaddress.setText(tx);
-                            //    vMasker.setVisibility(View.GONE);
-                        }
-                    });
+                    addPick();
 
 
-
-
-
-//
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -315,7 +197,7 @@ public class OpenActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable throwable, boolean b) {
-                Log.i("aa", "2+fanhui");
+                Log.i("aa", "2+fanhui---"+throwable+"-----"+b);
             }
 
             @Override
@@ -328,174 +210,275 @@ public class OpenActivity extends AppCompatActivity {
                 Log.i("aa", "4+fanhui");
             }
         });
-
     }
-
+    // 弹出选择窗口
     public void addPick(){
+        OptionPicker picker = new OptionPicker(OpenActivity.this);
+        picker.setOptions(dataset);
+        picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
+            @Override
+            public void onSubmit(int[] result) {
 
-        //选项选择器
-        pvOptions = new OptionsPickerView(this);
-        //选项1
-        options1Items.add(new ProvinceBean(0,"广东"));
-        options1Items.add(new ProvinceBean(1,"湖南"));
-        options1Items.add(new ProvinceBean(3,"广西"));
 
-        //选项2
-        ArrayList<String> options2Items_01=new ArrayList<String>();
-        options2Items_01.add("广州");
-        options2Items_01.add("佛山");
-        options2Items_01.add("东莞");
-        options2Items_01.add("阳江");
-        options2Items_01.add("珠海");
-        ArrayList<String> options2Items_02=new ArrayList<String>();
-        options2Items_02.add("长沙");
-        options2Items_02.add("岳阳");
-        ArrayList<String> options2Items_03=new ArrayList<String>();
-        options2Items_03.add("桂林");
-        options2Items.add(options2Items_01);
-        options2Items.add(options2Items_02);
-        options2Items.add(options2Items_03);
+                first = dataset.get(result[0]);
 
-        //选项3
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<ArrayList<String>>();
-        ArrayList<ArrayList<String>> options3Items_02 = new ArrayList<ArrayList<String>>();
-        ArrayList<ArrayList<String>> options3Items_03 = new ArrayList<ArrayList<String>>();
-        ArrayList<String> options3Items_01_01=new ArrayList<String>();
-        options3Items_01_01.add("白云");
-        options3Items_01_01.add("天河");
-        options3Items_01_01.add("海珠");
-        options3Items_01_01.add("越秀");
-        options3Items_01.add(options3Items_01_01);
-        ArrayList<String> options3Items_01_02=new ArrayList<String>();
-        options3Items_01_02.add("南海");
-        options3Items_01_02.add("高明");
-        options3Items_01_02.add("顺德");
-        options3Items_01_02.add("禅城");
-        options3Items_01.add(options3Items_01_02);
-        ArrayList<String> options3Items_01_03=new ArrayList<String>();
-        options3Items_01_03.add("其他");
-        options3Items_01_03.add("常平");
-        options3Items_01_03.add("虎门");
-        options3Items_01.add(options3Items_01_03);
-        ArrayList<String> options3Items_01_04=new ArrayList<String>();
-        options3Items_01_04.add("其他1");
-        options3Items_01_04.add("其他2");
-        options3Items_01_04.add("其他3");
-        options3Items_01.add(options3Items_01_04);
-        ArrayList<String> options3Items_01_05=new ArrayList<String>();
-        options3Items_01_05.add("其他1");
-        options3Items_01_05.add("其他2");
-        options3Items_01_05.add("其他3");
-        options3Items_01.add(options3Items_01_05);
+                province.append(first);
 
-        ArrayList<String> options3Items_02_01=new ArrayList<String>();
-        options3Items_02_01.add("长沙长沙长沙长沙长沙长沙长沙长沙长沙1111111111");
-        options3Items_02_01.add("长沙2");
-        options3Items_02_01.add("长沙3");
-        options3Items_02_01.add("长沙4");
-        options3Items_02_01.add("长沙5");
-        options3Items_02_01.add("长沙6");
-        options3Items_02_01.add("长沙7");
-        options3Items_02_01.add("长沙8");
-        options3Items_02.add(options3Items_02_01);
-        ArrayList<String> options3Items_02_02=new ArrayList<String>();
-        options3Items_02_02.add("岳1");
-        options3Items_02_02.add("岳2");
-        options3Items_02_02.add("岳3");
-        options3Items_02_02.add("岳4");
-        options3Items_02_02.add("岳5");
-        options3Items_02_02.add("岳6");
-        options3Items_02_02.add("岳7");
-        options3Items_02_02.add("岳8");
-        options3Items_02_02.add("岳9");
-        options3Items_02.add(options3Items_02_02);
-        ArrayList<String> options3Items_03_01=new ArrayList<String>();
-        options3Items_03_01.add("好山水");
-        options3Items_03.add(options3Items_03_01);
+                Jsonjiexi("/Api/exeQuery",areasList.get(result[0]).getId());
+                areasList.clear();
+                dataset.clear();
+                btn_open_usershopaddress.setText(province);
+            }
+        });
+        picker.showAtBottom();
+    }
+    //下一级城市查询
+    private void Jsonjiexi(String d,String zhi){
+        progressDialog.show();
+        String sql = "select * from wst_areas where parentId = "+zhi;
+        HashMap<String,String> map = new HashMap<>();
+        if("/Api/exeQuery".equals(d)){
+            map.put("sql",sql);
+        }
 
-        options3Items.add(options3Items_01);
-        options3Items.add(options3Items_02);
-        options3Items.add(options3Items_03);
+        HttpUtils.httputilsPost(d, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                progressDialog.dismiss();
+                Log.i("qing",result);
+                JSONObject jsonObject = null;
+                String code = null;
+                String message = null;
+                JSONArray sheng = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    code = jsonObject.getString("code");
+                    message = jsonObject.getString("message");
+                    sheng = jsonObject.getJSONArray("data");
 
-        //三级联动效果
-        pvOptions.setPicker(options1Items, options2Items, options3Items, true);
-        //设置选择的三级单位
-        //  pvOptions.setLabels("省", "市", "区");
-        pvOptions.setTitle("选择城市");
-        pvOptions.setCyclic(false, true, true);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        pvOptions.setSelectOptions(1, 1, 1);
-        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if ("200".equals(code)){
+                    Log.i("qing","if---"+province);
+                    areasList.clear();
+                    for (int i = 0; i < sheng.length(); i++) {
+                        JSONObject shengs = null;
+                        try {
+                            shengs = sheng.getJSONObject(i);
+                            String areaId = shengs.getString("areaId");
+                            String parentId = shengs.getString("parentId");
+                            String areaName = shengs.getString("areaName");
+                            String areaType = shengs.getString("areaType");
+                            Log.i("addresssheng","aaaaa"+areaName);
+                            areasList.add(new Areas(areaId,areaName));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    dataset.clear();
+                    for (int i = 0; i < sheng.length(); i++) {
+                        Log.i("areascity","ID:"+areasList.get(i).getId()+"-----名称："+areasList.get(i).getName());
+                        dataset.add(areasList.get(i).getName());
+                    }
+                    addPick();
+                } else {
+
+                    choosename = String.valueOf(province);
+                    Log.i("qing","choosename-----"+choosename);
+                    province.setLength(0);
+                }
+
+            }
 
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);
-                btn_open_usershopaddress.setText(tx);
-                //    vMasker.setVisibility(View.GONE);
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
 
-
     }
-
 
     //店铺介绍
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
 
     @Event(R.id.btn_open_submit)
-    private void LoginSubmitEvent(View view){
-        is_submit = 0;
+    private void OpenSubmitEvent(View view){
 
-        storepicture = mStoreFilePath;
-        userpicture = mUserFilePath;
-        userstorename = et_open_userstorname.getText().toString();
-        userphonenum = et_open_userphonenum.getText().toString();
-        useremail = et_open_useremailaddress.getText().toString();
-        userstore = et_open_userstore.getText().toString();
-
-        if (!("".equals(storepicture))){
-            is_submit += 1;
-        }
-        if (!("".equals(userpicture))){
-            is_submit += 1;
-        }
-        if (!("".equals(userstorename))){
-            is_submit += 1;
-        }
-        if (isMobileNO(userphonenum)){
-            is_submit += 1;
-        }
-        if (isEmail(useremail)){
-            is_submit += 1;
-        }
-        if (isPassWord(userpwd)){
-            is_submit += 1;
-        }
-        if (!("".equals(userstore))){
-            is_submit += 1;
-        }
-
-        if (is_submit == 7){
-            // 内容填写完毕  提交注册
-            String sqlusers = null;
-            String sqlshops = null;
-            sqlusers = "select loginPwd,userName,userPhone from wst_users where userId = 82";
-            //  sqlusers = "insert into wst_users (userPhone ,userEmail ,loginPwd ) values ('"+userphonenum+"', '"+useremail+"','"+userpwd+"')";
-            sqlshops = "INSERT INTO wst_users (shopName ,shopImg ,statusRemarks) VALUES ('"+userstorename+"','"+storepicture+"','"+userstore+"')";
+        SharedPreferences user = getSharedPreferences("user_info",0);
+        String token = user.getString("token","");
+        if ("".equals(token)){
+            Toast.makeText(OpenActivity.this,"登陆信息错误，请重新登陆！",Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("token",token);
+            String sql = "SELECT userId from wst_user_token where token ='"+token+"'";
             String types = "/Api/exeQuery";
             HashMap<String,String> map = new HashMap<>();
-            map.put("sql",sqlusers);
+            map.put("sql",sql);
             //  map.put("sqlshops",sqlshops);
             HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
-                    Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
                     Log.i("onSuccess",s.toString());
+                    String code = null;
+                    try {
+                        JSONObject js = new JSONObject(s);
+                        code = js.getString("code");
+                        String message = js.getString("message");
+                        JSONArray data = js.getJSONArray("data");
+                        JSONObject info = data.getJSONObject(0);
+                        userIds = info.getString("userId");
+                        Log.i("userid",userIds+"");
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if ("200".equals(code)){
+                        openShop();
+                    } else {
+                        Toast.makeText(OpenActivity.this,"程序出现错误，请重新登陆！",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(OpenActivity.this,LoginActivity.class);
+                        SharedPreferences user = getSharedPreferences("user_info",0);
+                        SharedPreferences.Editor edit = user.edit();
+                        edit.putString("NAME", "");
+                        edit.commit();
+                        startActivity(intent);
+                    }
+
+                }
+
+                @Override
+                public void onError(Throwable throwable, boolean b) {
+                    Log.i("onError",throwable.toString());
+                }
+
+                @Override
+                public void onCancelled(CancelledException e) {
+                    Log.i("onError","走这里1");
+                }
+
+                @Override
+                public void onFinished() {
+                    Log.i("onError","走这里2");
+                }
+            });
+        }
+
+
+    }
+
+    //提交信息
+    public void openShop(){
+        is_submit = false;
+        storepicture = mStoreFilePath;//店铺图片
+        userpicture = mUserFilePath;//用户身份证
+        userstorename = et_open_userstorname.getText().toString();//店铺名称
+        userphonenum = et_open_userphonenum.getText().toString();// 店铺手机号
+        useremail = et_open_useremailaddress.getText().toString();//邮箱地址
+        storeplace = choosename;//店铺地址
+        //经纬度         WEIDU = 0 ,JINGDU
+        //派送范围       sendhowlong
+        userstore = et_open_userstore.getText().toString();// 店铺介绍
+
+        if (!("".equals(userstorename))){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----userstorename-----"+userstorename);
+            //店铺名称通过
+        } else {
+            is_submit=false;
+        }
+        if (isMobileNO(userphonenum)){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----userphonenum-----"+userphonenum);
+            //手机号码通过
+        } else {
+            is_submit=false;
+        }
+        if (isEmail(useremail)){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----useremail-----"+useremail);
+            //邮箱地址通过
+        } else {
+            is_submit=false;
+        }
+        if (!("".equals(storeplace))){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----storeplace-----"+storeplace);
+            //店铺地址通过
+        } else {
+            is_submit=false;
+        }
+        if (JINGDU != 0 && WEIDU != 0){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----JINGDU-----"+JINGDU+"-----WEIDU-----"+WEIDU);
+            //经纬度通过
+        } else {
+            is_submit=false;
+        }
+        if (!("".equals(sendhowlong))){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----sendhowlong-----"+sendhowlong);
+            //派送范围通过
+        } else {
+            is_submit=false;
+        }
+        if (!("".equals(userstore))){
+            is_submit = true ;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----userstore-----"+userstore);
+            //店铺介绍通过
+        } else {
+            is_submit=false;
+        }
+
+        if (is_submit == true){
+            progressDialog.setMessage("正在提交");
+            progressDialog.show();
+            Log.i("issubmit","内容填写完毕  提交注册");
+            // 内容填写完毕  提交注册
+            String sql = "INSERT INTO wst_shops (userId ,shopName ,shopTel ,shopAddress ,latitude ,longitude ,statusRemarks) VALUES ("+userIds+",'"+userstorename+"','"+userphonenum+"','"+storeplace+"','"+WEIDU+"','"+JINGDU+"','"+userstore+"')";
+            String types = "/Api/exeInsertQuery";
+            HashMap<String,String> map = new HashMap<>();
+            map.put("sql",sql);
+            HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String s) {
+                    progressDialog.dismiss();
+                   // Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
+                    Log.i("submit",s.toString());
+                    JSONObject jsonObject = null;
+                    String code = null;
+                    try {
+                        jsonObject = new JSONObject(s);
+                        code = jsonObject.getString("code");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if ("200".equals(code)){
+                        Intent intent = new Intent(OpenActivity.this,MainActivity.class);
+                        SharedPreferences user = getSharedPreferences("user_info",0);
+                        SharedPreferences.Editor edit = user.edit();
+                        edit.putString("hasShops", "1");
+                        edit.commit();
+                        startActivity(intent);
+                        OpenActivity.this.finish();
+                        Toast.makeText(x.app(),"开店成功，等待认证！",Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
@@ -517,7 +500,6 @@ public class OpenActivity extends AppCompatActivity {
         } else {
             Toast.makeText(OpenActivity.this,"请填写完整信息",Toast.LENGTH_SHORT).show();
         }
-
     }
 
     // 正则判断是否为正确的手机号格式
@@ -534,39 +516,29 @@ public class OpenActivity extends AppCompatActivity {
         return m.matches();
     }
 
-    // 判断密码格式是否正确
-    public boolean isPassWord(String pwd){
-        int pwdlength = pwd.length();
-        if (pwdlength > 5 && pwdlength <= 20){
-            // 密码长度为 6-20 位
-            return true;
-        }
-        return false;
-    }
-
-    public void ChooseStorePicture(View view){
-        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-// whether show camera
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-// max select image amount
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-        startActivityForResult(intent,REQUEST_IMAGE);
-        where = 1;
-    }
-
-    public void ChooseUserPicture(View view){
-        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-// whether show camera
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-// max select image amount
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-        startActivityForResult(intent,REQUEST_IMAGE);
-        where = 2;
-    }
+//    public void ChooseStorePicture(View view){
+//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
+//// whether show camera
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//// max select image amount
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+//        startActivityForResult(intent,REQUEST_IMAGE);
+//        where = 1;
+//    }
+//
+//    public void ChooseUserPicture(View view){
+//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
+//// whether show camera
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//// max select image amount
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+//        startActivityForResult(intent,REQUEST_IMAGE);
+//        where = 2;
+//    }
 
     //跳转页面回调方法
     @Override
@@ -576,20 +548,20 @@ public class OpenActivity extends AppCompatActivity {
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == Activity.RESULT_OK){
                 // Get the result list of select image paths
-                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                for (String s:path){
-
-                }
-
-                if (where == 1){
-                    mStoreFilePath = path.get(0).toString();
-                    iv_open_storepicture.setImageDrawable(null);
-                    iv_open_storepicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                } else if (where == 2){
-                    mUserFilePath = path.get(0).toString();
-                    iv_open_userpicture.setImageBitmap(null);
-                    iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                }
+//                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+//                for (String s:path){
+//
+//                }
+//
+//                if (where == 1){
+//                    mStoreFilePath = path.get(0).toString();
+//                    iv_open_storepicture.setImageDrawable(null);
+//                    iv_open_storepicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
+//                } else if (where == 2){
+//                    mUserFilePath = path.get(0).toString();
+//                    iv_open_userpicture.setImageBitmap(null);
+//                    iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
+//                }
 
             }
         } else{

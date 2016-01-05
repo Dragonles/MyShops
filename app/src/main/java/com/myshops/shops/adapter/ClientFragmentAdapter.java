@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Conmments;
 import com.myshops.shops.myshops.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class ClientFragmentAdapter extends BaseAdapter {
         Log.i("aaaa","********2222********");vh.txt_pingjia.setText(conmmentsList.get(position).getUserlevel());
         vh.txt_pingjia.setText(conmmentsList.get(position).getComment());
         vh.txt_username.setText(conmmentsList.get(position).getUsername());
-        Picasso.with(context).load(conmmentsList.get(position).getUsericon()).into(vh.img_shangpin);
+//        Picasso.with(context).load(conmmentsList.get(position).getUsericon()).into(vh.img_shangpin);
 //        vh.img_shangpin.setImageResource(conmmentsList.get(position).getUsericon());
         vh.shangpin_name_left.setText(conmmentsList.get(position).getBuyproduct());
         vh.shangpin_danjia.setText(conmmentsList.get(position).getDanjia());

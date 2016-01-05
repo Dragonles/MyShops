@@ -80,9 +80,6 @@
             android:name=".HuiFuXiangXiActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name="me.nereo.imagechoose.MultiImageSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity android:name=".ShopInfoActivity"
             android:label="ff"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
