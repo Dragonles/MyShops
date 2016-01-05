@@ -23,7 +23,6 @@ import com.myshops.shops.myshops.ShopInfoActivity;
 import com.myshops.shops.myshops.ShouRuZhiChuActivity;
 import com.myshops.shops.myshops.XiaoShouJiLuActivity;
 import com.myshops.shops.untils.HttpUtils;
-import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -130,7 +129,7 @@ public class ShopFragment extends Fragment {
                             tv_shop_username.setText(userName);
                             Log.i("userPhoto",userPhoto + " " + userName + " 2");
                             iv_userIcon.setBackgroundResource(0);
-                            Picasso.with(getContext()).load(userPhoto).into(iv_userIcon);
+//                            Picasso.with(getContext()).load(userPhoto).into(iv_userIcon);
 
                         }catch (Exception e){
                         

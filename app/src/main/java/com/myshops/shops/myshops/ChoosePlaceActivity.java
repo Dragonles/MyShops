@@ -1,5 +1,6 @@
 package com.myshops.shops.myshops;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -62,12 +63,17 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
     private LatLonPoint latLonPoint = new LatLonPoint(39.90865, 116.39751);
     private GeocodeSearch geocoderSearch;
     private TextView text_chooseplace_place;
+    ProgressDialog pd;
     //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_place);
+
+        pd = new ProgressDialog(this);
+        pd.setMessage("正在定位");
+        pd.show();
 
         btn_chooseplace_back = (Button) findViewById(R.id.btn_chooseplace_back);
         text_chooseplace_place = (TextView) findViewById(R.id.text_chooseplace_place);
@@ -109,6 +115,8 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
                 Intent data = new Intent();
                 data.putExtra("weidu", x);
                 data.putExtra("jingdu", y);
+                OpenActivity.placeName = "" + text_chooseplace_place.getText();
+
                 setResult(3, data);
 
                 latLonPoint = new LatLonPoint(x,y);
@@ -148,6 +156,7 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
                 text_chooseplace_place.setVisibility(View.VISIBLE);
                 addressName = result.getRegeocodeAddress().getFormatAddress();
                 text_chooseplace_place.setText(addressName);
+                OpenActivity.placeName = "" + addressName;
 
 
             } else {
@@ -222,6 +231,10 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
                         data.putExtra("jingdu", y);
                         setResult(3, data);
 
+                        latLonPoint = new LatLonPoint(x,y);
+                        getAddress(latLonPoint);
+
+                        OpenActivity.placeName = "" + text_chooseplace_place.getText();
                         init();
 
                         amapLocation.getAccuracy();//获取精度信息
@@ -293,6 +306,7 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
 
 
     private void addMarkersToMap() {
+        pd.dismiss();
         //文字显示标注，可以设置显示内容，位置，字体大小颜色，背景色旋转角度
         TextOptions textOptions = new TextOptions().position(latLng)
                 .text("Text").fontColor(Color.BLACK)

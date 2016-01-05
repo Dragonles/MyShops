@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import me.nereo.imagechoose.MultiImageSelectorActivity;
+
 
 @ContentView(R.layout.activity_open)
 public class OpenActivity extends AppCompatActivity {
@@ -237,27 +237,27 @@ public class OpenActivity extends AppCompatActivity {
     }
 
     public void ChooseStorePicture(View view){
-        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-// whether show camera
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-// max select image amount
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-        startActivityForResult(intent,REQUEST_IMAGE);
-        where = 1;
+//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
+//// whether show camera
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//// max select image amount
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+//        startActivityForResult(intent,REQUEST_IMAGE);
+//        where = 1;
     }
 
     public void ChooseUserPicture(View view){
-        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-// whether show camera
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-// max select image amount
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-        startActivityForResult(intent,REQUEST_IMAGE);
-        where = 2;
+//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
+//// whether show camera
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//// max select image amount
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
+//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+//        startActivityForResult(intent,REQUEST_IMAGE);
+//        where = 2;
     }
 
     //返回图片路径方法
@@ -268,20 +268,20 @@ public class OpenActivity extends AppCompatActivity {
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == Activity.RESULT_OK){
                 // Get the result list of select image paths
-                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                for (String s:path){
-
-                }
-
-                if (where == 1){
-                    mStoreFilePath = path.get(0).toString();
-                    iv_open_storepicture.setImageDrawable(null);
-                    iv_open_storepicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                } else if (where == 2){
-                    mUserFilePath = path.get(0).toString();
-                    iv_open_userpicture.setImageBitmap(null);
-                    iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                }
+               // List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+//                for (String s:path){
+//
+//                }
+//
+//                if (where == 1){
+//                    mStoreFilePath = path.get(0).toString();
+//                    iv_open_storepicture.setImageDrawable(null);
+//                    iv_open_storepicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
+//                } else if (where == 2){
+//                    mUserFilePath = path.get(0).toString();
+//                    iv_open_userpicture.setImageBitmap(null);
+//                    iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
+//                }
 
             }
         } else{
@@ -290,7 +290,7 @@ public class OpenActivity extends AppCompatActivity {
                 JINGDU = data.getDoubleExtra("jingdu",0);
                 Log.i("sss","WEIDU"+WEIDU);
                 Log.i("sss","JINGDU"+JINGDU);
-                btn_open_storeaddress.setText("修改位置");
+                btn_open_storeaddress.setText("修改地址");
             }
         }
     }
