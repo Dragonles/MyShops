@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myshops.shops.bean.CircleImageView;
 import com.myshops.shops.myshops.LoginActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
+import com.myshops.shops.myshops.ShouRuZhiChuActivity;
+import com.myshops.shops.myshops.XiaoShouJiLuActivity;
 import com.myshops.shops.untils.HttpUtils;
 import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
@@ -39,6 +42,7 @@ public class ShopFragment extends Fragment {
     public static String userName;
     public static String userPhone;
     private TextView tv_shop_username;
+    LinearLayout lly_xiaoshou, lly_shouru;
     public ShopFragment() {
         // Required empty public constructor
     }
@@ -57,7 +61,24 @@ public class ShopFragment extends Fragment {
         mgoinfo=(ImageButton)v.findViewById(R.id.shop_info);
         iv_userIcon = (ImageView) v.findViewById(R.id.iv_userIcon);
         tv_shop_username = (TextView) v.findViewById(R.id.tv_shop_username);
+        lly_xiaoshou = (LinearLayout) v.findViewById(R.id.lly_xiaoshou);
+        lly_shouru = (LinearLayout) v.findViewById(R.id.lly_shouru);
 
+        lly_xiaoshou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), XiaoShouJiLuActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        lly_shouru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShouRuZhiChuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         String t = LoginActivity.token;
         String sqll = "select * from wst_user_token where token = '" + t + "'";

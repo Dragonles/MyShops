@@ -98,8 +98,9 @@ public class HttpUtils {
     public static void httpPostImage(String path,String token,String url,Callback.CommonCallback<String> callback){
 
         RequestParams params = new RequestParams(Config.url+url);
-        params.addQueryStringParameter("sign",token);
+        params.addQueryStringParameter("token",token);
         params.setMethod(HttpMethod.POST);
+        params.setMultipart(true);
         params.addBodyParameter("image",new File(path));
         x.http().post(params,callback);
 

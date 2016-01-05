@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.myshops.shops.bean.Shouruyuzhichu;
+import com.myshops.shops.bean.Xiaoshoujilu;
 import com.myshops.shops.untils.HttpUtils;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 
@@ -20,9 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class XiaoShouJiLuActivity extends AppCompatActivity {
-    List<Shouruyuzhichu> list = new ArrayList<>();
+    List<Xiaoshoujilu> list = new ArrayList<>();
     private  ListView listView;
     private ImageView iv_back;
+    private ImageView shangpin_img;
     String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_xiao_shou_ji_lu);
 
         listView = (ListView) findViewById(R.id.xiaoshou_listView);
+        shangpin_img = (ImageView) findViewById(R.id.shangpin_img);
+        iv_back = (ImageView) findViewById(R.id.goBacks);
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,9 +42,8 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
             }
         });
 
-        String t = LoginActivity.token;
-        String sql = "select * from wst_user_token where token = '" + t + "'";
-//        String sql = "select * from wst_users where userId = " + sqll;
+
+        String sql = "select * from wst_goods where isSale = 1";
         String types = "/Api/exeQuery";
         HashMap<String, String> map = new HashMap<>();
         map.put("sql", sql);
@@ -49,6 +52,25 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
             public void onSuccess(String s) {
 
                 Log.i("onSuccess", s.toString());
+                try {
+                    JSONObject jsonobj = new JSONObject(s);
+                    String code = jsonobj.getString("code");
+                    String message = jsonobj.getString("message");
+                    JSONArray data = jsonobj.getJSONArray("data");
+                    JSONObject info = data.getJSONObject(0);
+                    String goodsName = info.getString("goodsName");
+                    String goodsImg = info.getString("goodsImg");
+                    String createTime = info.getString("createTime");
+                    String shopPrice = info.getString("shopPrice");
+                    String bookQuantity = info.getString("bookQuantity");
+
+                    list.add(new Xiaoshoujilu(goodsImg,goodsName,shopPrice,createTime,bookQuantity));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -67,8 +89,6 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
             }
         });
 
-
-        list.add(new Shouruyuzhichu(R.drawable.shangpin1,"毛衣","灰色","L","23","45","34","进货"));
     }
 
 }

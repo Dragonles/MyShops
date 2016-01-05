@@ -37,6 +37,21 @@
                 android:textColor="#FFF"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/tv_tijiao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="提交"
+                android:textSize="15sp"
+                android:textColor="#FFF"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"/>
+
         </RelativeLayout>
 
         <ScrollView
@@ -224,7 +239,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
-            android:text="保存信息"
+            android:text="退出登录"
             android:textColor="#FFF"
             android:textSize="18sp"
             android:id="@+id/btn_shopinfo_exit"

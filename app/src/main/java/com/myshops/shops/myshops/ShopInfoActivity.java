@@ -23,19 +23,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.google.android.gms.appindexing.Action;
-//import com.google.android.gms.appindexing.AppIndex;
-//import com.google.android.gms.common.api.GoogleApiClient;
-import com.myshops.shops.bean.CircleImageView;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.myshops.shops.fragment.ShopFragment;
-import com.myshops.shops.untils.Config;
 import com.myshops.shops.untils.HttpUtils;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.common.util.MD5;
 
 import java.util.HashMap;
 
@@ -43,7 +43,7 @@ import java.util.HashMap;
 public class ShopInfoActivity extends AppCompatActivity {
 
     private RelativeLayout rly_name, rly_phone, rly_mima;
-    private TextView tv_name, tv_phone, tv_pwd;
+    private TextView tv_name, tv_phone, tv_pwd, tv_tijiao;
     private ImageView iv_shopinfo_shopheader;
     private static final int RESULT_LOAD_IMAGE = 1;
     String searchC;
@@ -52,10 +52,16 @@ public class ShopInfoActivity extends AppCompatActivity {
     Button btn_shopinfo_exit;
     String smima = "", sname = "", sphone = "";
     static String id, os, ns, nsa, userName, userPhone, userPwd;
+    static String dizhi;
 
 //    CircleImageView imageView;
 
-    EditText et_search, et_oldpwd, et_newpwd,et_newpwd_algin;
+    EditText et_search, et_oldpwd, et_newpwd, et_newpwd_algin;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -81,6 +87,7 @@ public class ShopInfoActivity extends AppCompatActivity {
         iv_shopinfo_shopheader = (ImageView) findViewById(R.id.iv_shopinfo_shopheader);
         ib_shopinfo_back = (ImageButton) findViewById(R.id.ib_shopinfo_back);
         btn_shopinfo_exit = (Button) findViewById(R.id.btn_shopinfo_exit);
+        tv_tijiao = (TextView) findViewById(R.id.tv_tijiao);
 
         iv_shopinfo_shopheader.setImageBitmap(BitmapFactory.decodeFile(ShopFragment.userPhoto));
         tv_name.setText(ShopFragment.userName);
@@ -181,18 +188,18 @@ public class ShopInfoActivity extends AppCompatActivity {
                         nsa = et_newpwd_algin.getText().toString();
                         if (ns != "") {
 
-                             if (ns.equals(nsa)) {
-                                Log.i("mima",et_newpwd.getText().toString() + "  " + et_newpwd_algin.getText().toString());
+                            if (ns.equals(nsa)) {
+                                Log.i("mima", et_newpwd.getText().toString() + "  " + et_newpwd_algin.getText().toString());
                                 tv_pwd.setText(ns);
                                 smima = ns;
 
 
                             } else {
 
-                                Log.i("mima",et_newpwd.getText().toString() + " a " + et_newpwd_algin.getText().toString());
+                                Log.i("mima", et_newpwd.getText().toString() + " a " + et_newpwd_algin.getText().toString());
                                 Toast.makeText(ShopInfoActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
+                        } else {
                             Toast.makeText(ShopInfoActivity.this, "密码不可为空", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -206,9 +213,9 @@ public class ShopInfoActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        final SharedPreferences token = getSharedPreferences("user_info",0);
-        final String t = token.getString("token","");
-        Log.i("ShopToken",t);
+        final SharedPreferences token = getSharedPreferences("user_info", 0);
+        final String t = token.getString("token", "");
+        Log.i("ShopToken", t);
 
         String sqll = "select * from wst_user_token where token = '" + t + "'";
 //        String sql = "select * from wst_users where userId = " + sqll;
@@ -252,7 +259,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
                 maps.put("sql", sql);
-                HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+                HttpUtils.httputilsGet(type, maps, new CommonCallback<String>() {
                     @Override
                     public void onSuccess(String s) {
 
@@ -266,6 +273,9 @@ public class ShopInfoActivity extends AppCompatActivity {
                             userName = jsonobject.getString("userName");
                             userPhone = jsonobject.getString("userPhone");
                             userPwd = jsonobject.getString("userPwd");
+                            tv_name.setText(userName);
+                            tv_pwd.setText(userPwd);
+                            tv_phone.setText(userPhone);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -307,35 +317,43 @@ public class ShopInfoActivity extends AppCompatActivity {
         });
 
 
-
-
-        btn_shopinfo_exit.setOnClickListener(new View.OnClickListener() {
+        tv_tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (sname != null && sphone != null && smima != null) {
 
-
-
-//                    Log.i("update", sname + " " + sphone + " " + smima + " " );
-//
-//                    String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "', where userId = " + id  ;
-//                    String types = "/Api/exeQuery";
-//                    HashMap<String, String> map = new HashMap<>();
-//                    map.put("sql", sql);
-//                    HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
+//                    HttpUtils.httpPostImage(sURL, t, "/ApiUp/uploadImage", new Callback.CommonCallback<String>() {
 //                        @Override
-//                        public void onSuccess(String s) {
-//                            Log.i("onSuccess", s.toString());
+//                        public void onSuccess(String result) {
+//                            Log.i("iconurlss",result+ "11111图片地址："+dizhi+"  88888"+dizhi);
+//                            try {
+//                                JSONObject jsonObject = new JSONObject(result);
+//                                String code = jsonObject.getString("code");
+//                                String message = jsonObject.getString("message");
+//                                JSONObject data = jsonObject.getJSONObject("data");
+//                                String srcpath = data.getString("srcpath");
+//
+//                                dizhi = "http://122.114.62.25:8686/" + srcpath;
+//                                Log.i("iconurlss", "11111图片地址："+dizhi+"  88888"+dizhi);
+//                                Log.i("update", sname + " " + sphone + " " + smima + " " + dizhi);
+//                                Log.i("iconurlss", "图片地址："+dizhi+"  88888  "+dizhi);
+//
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                                Log.i("iconurlss", "11111图片地址："+dizhi+"  catch88888"+dizhi);
+//                            }
+//
 //                        }
 //
 //                        @Override
-//                        public void onError(Throwable throwable, boolean b) {
-//                            Log.i("onError", throwable.toString());
+//                        public void onError(Throwable ex, boolean isOnCallback) {
+//
 //                        }
 //
 //                        @Override
-//                        public void onCancelled(CancelledException e) {
+//                        public void onCancelled(CancelledException cex) {
 //
 //                        }
 //
@@ -345,23 +363,36 @@ public class ShopInfoActivity extends AppCompatActivity {
 //                        }
 //                    });
 
+                    UploadManager uploadManager = new UploadManager();
+                    String key = null;
+                    String token = LoginActivity.token;
+                    uploadManager.put(sURL, key, token,
+                            new UpCompletionHandler() {
+                                @Override
+                                public void complete(String key, ResponseInfo info, JSONObject res) {
+                                    //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
+                                    Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
+                                }
+                            }, null);
 
-                    //String typess = "/Api/uploadImage";
-
-
-                    HttpUtils.httpPostImage(sURL, t, "/ApiUp/uploadImage", new Callback.CommonCallback<String>() {
+                    String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "',  userPhoto = '" + dizhi + "' where userId = " + id;
+                    String types = "/Api/exeQuery";
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("sql", sql);
+                    HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
                         @Override
-                        public void onSuccess(String result) {
-                            Log.i("uploadImage", result+ " "+ t + " " + sURL);
+                        public void onSuccess(String s) {
+                            Log.i("onSuccesses", s.toString());
+
                         }
 
                         @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-
+                        public void onError(Throwable throwable, boolean b) {
+                            Log.i("onErrores", throwable.toString());
                         }
 
                         @Override
-                        public void onCancelled(CancelledException cex) {
+                        public void onCancelled(CancelledException e) {
 
                         }
 
@@ -372,50 +403,43 @@ public class ShopInfoActivity extends AppCompatActivity {
                     });
 
 
+                    String type = "/Api/eidtUserPwd";
+                    HashMap<String, String> maps = new HashMap<>();
+                    maps.put("token", t);
+                    maps.put("loginPwd", os);
+                    maps.put("newLoginPwd", ns);
+                    HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+
+                            Log.i("onSuccess", os + ns + result.toString());
+                            Log.i("onSuccesss", "走方法");
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            Log.i("onErrors", ex.toString() + isOnCallback);
 
 
+                            Log.i("onSuccesss", "走方法");
+                        }
 
 
+                        @Override
+                        public void onCancelled(CancelledException cex) {
 
 
-//
-//
-//                    String type = "/Api/eidtUserPwd";
-//                    HashMap<String , String> maps = new HashMap<>();
-//                    maps.put("token",t);
-//                    maps.put("loginPwd", os);
-//                    maps.put("newLoginPwd",ns);
-//                    HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>(){
-//                        @Override
-//                        public void onSuccess(String result) {
-//
-//                            Log.i("onSuccess", os + ns + result.toString());
-//                            Log.i("onSuccesss","走方法");
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable ex, boolean isOnCallback) {
-//                            Log.i("onErrors", ex.toString() + isOnCallback);
-//
-//
-//                            Log.i("onSuccesss","走方法");
-//                        }
-//
-//
-//                        @Override
-//                        public void onCancelled(CancelledException cex) {
-//
-//
-//                            Log.i("onSuccesss","走方法");
-//                        }
-//
-//                        @Override
-//                        public void onFinished() {
-//
-//
-//                            Log.i("onSuccesss","走方法");
-//                        }
-//                    });
+                            Log.i("onSuccesss", "走方法");
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+
+                            Log.i("onSuccesss", "走方法");
+                        }
+                    });
+
 
                     Toast.makeText(ShopInfoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
 
@@ -426,9 +450,27 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
+        btn_shopinfo_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences user = getSharedPreferences("user_info",0);
+                SharedPreferences.Editor users = user.edit();
+                users.putString("NAME","");
+                users.commit();
+
+                Intent intent = new Intent(ShopInfoActivity.this, LoginActivity.class);
+                startActivity(intent);
+                ShopInfoActivity.this.finish();
+            }
+        });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        // client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -449,5 +491,5 @@ public class ShopInfoActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "图片选择异常", Toast.LENGTH_LONG).show();
         }
     }
-    
+
 }

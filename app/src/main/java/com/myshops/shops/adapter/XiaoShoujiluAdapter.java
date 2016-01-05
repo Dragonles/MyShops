@@ -47,6 +47,8 @@ public class XiaoShoujiluAdapter extends BaseAdapter {
             v.img = (ImageView) convertView.findViewById(R.id.shangpin_img);
             v.name = (TextView) convertView.findViewById(R.id.xiaoshou_name);
             v.price = (TextView) convertView.findViewById(R.id.xiaoshou_pirce);
+            v.data = (TextView) convertView.findViewById(R.id.xiaoshou_data);
+            v.count = (TextView) convertView.findViewById(R.id.xiaoshou_count);
         }
         return convertView;
     }

@@ -106,7 +106,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
             }
         });
 
-        list.add(new Shouruyuzhichu(R.drawable.shangpin1, "进口羊毛衫", "白色", "LL", "54", "23", "3", "进货"));
+        list.add(new Shouruyuzhichu("A", "进口羊毛衫", "白色", "LL", "54", "23", "3", "进货"));
         listView.setAdapter(new shouruAdapter(getApplicationContext(), list));
     }
 }
