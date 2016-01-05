@@ -33,4 +33,6 @@ dependencies {
     compile project(':multi-image-selector')
     compile files('libs/Android_Map_V2.7.20151124.jar')
     compile files('libs/AMap_Location_V2.2.0_20151222.jar')
+    compile files('libs/MapApiServices.jar')
+
 }

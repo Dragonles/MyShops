@@ -1,6 +1,7 @@
 package com.myshops.shops.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,7 +32,7 @@ import java.util.List;
 public class SuperAwesomeCardFragment extends Fragment {
 
     int a = 0;
-
+    private String tokens;  //用户token
     List<Conmments> list = new ArrayList<>();
     ListView listView;
     EvaluateAdapter evaAdapter;
@@ -62,6 +63,21 @@ public class SuperAwesomeCardFragment extends Fragment {
         listView = new ListView(getActivity());
         listView.setLayoutParams(params);
 
+        Log.i("dindanss","消息中心 ----  评价管理");
+        //获取用户的token
+        Log.i("SharedPreferencesToken","LoginActivity的："+LoginActivity.token);
+
+        if (LoginActivity.token == null) {
+            SharedPreferences user = getActivity().getSharedPreferences("user_info",0);
+            tokens = user.getString("token","");
+            Log.i("SharedPreferencesToken","SharedPreferences 本地保存"+tokens);
+        } else {
+            tokens = LoginActivity.token;
+            Log.i("SharedPreferencesToken","登录获得："+tokens);
+        }
+
+
+
         FrameLayout fl = new FrameLayout(getActivity());
         fl.setLayoutParams(params);
         final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
@@ -75,16 +91,13 @@ public class SuperAwesomeCardFragment extends Fragment {
             a = 1;
             Log.i("SuperonSuccess","* 查询数据的时候的时候 **a的值：**"+a);
             //查询数据
-            String tokens = LoginActivity.token;
-            Log.i("onSuccess","****///ss/**cha  xun  sql****  "+tokens);
-           // "select * from wst_goods_appraises"
-            //"select * from wst_goods_appraises where userId in(select userId from wst_user_token where token = '"+tokens+"')"
 
-//            String sql = "select * from `wst_goods_appraises`a join `wst_user_token`b on a.userId = b.suerId and wst_user_token.token = '"+tokens+"'";
+
+            Log.i("onSuccess","****///ss/**cha  xun  sql****  "+tokens);
             String types = "/AllOrders/findMessage";
             HashMap<String,String> map = new HashMap<>();
-            map.put("token",LoginActivity.token);
-            Log.i("token",LoginActivity.token);
+            map.put("token",tokens);
+            Log.i("token",tokens);
             HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
@@ -139,6 +152,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         Intent intent = new Intent(getActivity(), HuiFuXiangXiActivity.class);
         startActivity(intent);
     }
+
 
 
 }
