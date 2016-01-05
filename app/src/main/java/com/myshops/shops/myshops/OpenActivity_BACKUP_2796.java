@@ -1,30 +1,42 @@
 package com.myshops.shops.myshops;
 
 import android.app.Activity;
+<<<<<<< .merge_file_a08320
+import android.content.Context;
+=======
 import android.app.ProgressDialog;
+>>>>>>> .merge_file_a08968
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+<<<<<<< .merge_file_a08320
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+=======
 import android.widget.Toast;
 
 import com.myshops.shops.bean.Areas;
+>>>>>>> .merge_file_a08968
 import com.myshops.shops.untils.HttpUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -37,8 +49,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+<<<<<<< .merge_file_a08320
+
+=======
 import cn.qqtheme.framework.picker.OptionPicker;
 import cn.qqtheme.framework.picker.WheelPicker;
+>>>>>>> .merge_file_a08968
 
 @ContentView(R.layout.activity_open)
 public class OpenActivity extends AppCompatActivity {
@@ -50,6 +66,9 @@ public class OpenActivity extends AppCompatActivity {
     static boolean is_submit = false; // 判断是否可以提交信息
     private double WEIDU = 0 ,JINGDU = 0; // 经纬度
     int curryposition = 0;
+<<<<<<< .merge_file_a08320
+    RadioGroup rg;
+=======
     RadioGroup rg;//派送范围选项
     public static String placeName = "选择地址";
 
@@ -61,13 +80,17 @@ public class OpenActivity extends AppCompatActivity {
     public static String choosename = "";
     ProgressDialog progressDialog ;
     String userIds ="";
+>>>>>>> .merge_file_a08968
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+<<<<<<< .merge_file_a08320
+=======
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中……");
+>>>>>>> .merge_file_a08968
 
     }
     // 店铺照片  用户手持身份证照片
@@ -96,7 +119,9 @@ public class OpenActivity extends AppCompatActivity {
     //派送范围
     @ViewInject(R.id.btn_open_send)
     private Button btn_open_send;
+
     @Event(R.id.btn_open_send)
+
     private void SendEvent(View view){
         AlertDialog.Builder dialog = new AlertDialog.Builder(OpenActivity.this);
 
@@ -146,6 +171,8 @@ public class OpenActivity extends AppCompatActivity {
         dialog.show();
     }
 
+<<<<<<< .merge_file_a08320
+=======
     // 地区选择
     @ViewInject(R.id.btn_open_usershopaddress)
     private Button btn_open_usershopaddress;
@@ -311,6 +338,7 @@ public class OpenActivity extends AppCompatActivity {
 
     }
 
+>>>>>>> .merge_file_a08968
     //店铺介绍
     @ViewInject(R.id.et_open_userstore)
     private EditText et_open_userstore;
@@ -516,7 +544,21 @@ public class OpenActivity extends AppCompatActivity {
         return m.matches();
     }
 
+<<<<<<< .merge_file_a08320
+    // 判断密码格式是否正确
+    public boolean isPassWord(String pwd){
+        int pwdlength = pwd.length();
+        if (pwdlength > 5 && pwdlength <= 20){
+            // 密码长度为 6-20 位
+            return true;
+        }
+        return false;
+    }
+
+    public void ChooseStorePicture(View view){
+=======
 //    public void ChooseStorePicture(View view){
+>>>>>>> .merge_file_a08968
 //        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
 //// whether show camera
 //        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
@@ -526,9 +568,15 @@ public class OpenActivity extends AppCompatActivity {
 //        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
 //        startActivityForResult(intent,REQUEST_IMAGE);
 //        where = 1;
+<<<<<<< .merge_file_a08320
+    }
+
+    public void ChooseUserPicture(View view){
+=======
 //    }
 //
 //    public void ChooseUserPicture(View view){
+>>>>>>> .merge_file_a08968
 //        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
 //// whether show camera
 //        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
@@ -538,9 +586,13 @@ public class OpenActivity extends AppCompatActivity {
 //        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
 //        startActivityForResult(intent,REQUEST_IMAGE);
 //        where = 2;
+<<<<<<< .merge_file_a08320
+    }
+=======
 //    }
+>>>>>>> .merge_file_a08968
 
-    //跳转页面回调方法
+    //返回图片路径方法
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -548,7 +600,11 @@ public class OpenActivity extends AppCompatActivity {
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == Activity.RESULT_OK){
                 // Get the result list of select image paths
+<<<<<<< .merge_file_a08320
+               // List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+=======
 //                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+>>>>>>> .merge_file_a08968
 //                for (String s:path){
 //
 //                }
@@ -570,7 +626,7 @@ public class OpenActivity extends AppCompatActivity {
                 JINGDU = data.getDoubleExtra("jingdu",0);
                 Log.i("sss","WEIDU"+WEIDU);
                 Log.i("sss","JINGDU"+JINGDU);
-                btn_open_storeaddress.setText(placeName);
+                btn_open_storeaddress.setText("修改地址");
             }
         }
     }

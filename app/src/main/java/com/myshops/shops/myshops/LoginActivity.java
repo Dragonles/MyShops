@@ -63,65 +63,72 @@ public class LoginActivity extends AppCompatActivity {
     @Event(R.id.btn_login_submit)
     private void LoginSubmitEvent(View view){
 
-        String pa = "/Api/login";
-        String loginPhone = et_login_phonenum.getText().toString();
-        String loginPassword = et_login_pwd.getText().toString();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("loginName", loginPhone);
-        map.put("loginPwd", loginPassword);
-        map.put("clientType", "android");
+        String userloginname = et_login_phonenum.getText().toString();
+        String userloginpwd = et_login_pwd.getText().toString();
 
-        pd.show();
+        if ("".equals(userloginname) || "".equals(userloginpwd)){
+            Toast.makeText(LoginActivity.this,"请输入完整信息",Toast.LENGTH_SHORT).show();
+        } else {
+            String pa = "/Api/login";
+            String loginPhone = et_login_phonenum.getText().toString();
+            String loginPassword = et_login_pwd.getText().toString();
+            HashMap<String, String> map = new HashMap<>();
+            map.put("loginName", loginPhone);
+            map.put("loginPwd", loginPassword);
+            map.put("clientType", "android");
 
-        HttpUtils.httputilsPost(pa,map, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-              //  Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
-                Log.i("aaaa", result + "");
+            pd.show();
 
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String code = jsonObject.getString("code");
-                    String message = jsonObject.getString("message");
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    String username = data.getString("username");
-                    token = data.getString("token");
-                    String userType = data.getString("userType");
+            HttpUtils.httputilsPost(pa,map, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    //  Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+                    Log.i("aaaa", result + "");
 
-                    if ("200".equals(code)){
-                        //存入数据
-                        editor.putString("NAME",username );
-                        editor.putString("userType",userType);
-                        editor.putString("token",token);
-                        isShopNull();
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String code = jsonObject.getString("code");
+                        String message = jsonObject.getString("message");
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String username = data.getString("username");
+                        token = data.getString("token");
+                        String userType = data.getString("userType");
 
-                    } else{
-                        Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
+                        if ("200".equals(code)){
+                            //存入数据
+                            editor.putString("NAME",username );
+                            editor.putString("userType",userType);
+                            editor.putString("token",token);
+                            isShopNull();
+
+                        } else{
+                            Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.i("aa","onerror"+ex.getMessage() + "");
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                Log.i("aa","onerror"+ex.getMessage() + "");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-                //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-                Log.i("aa", x.app() + "");
-            }
-            @Override
-            public void onFinished() {
-                //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-                Log.i("aa",x.app()+"");
-            }
-        });
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                    Log.i("aa", x.app() + "");
+                }
+                @Override
+                public void onFinished() {
+                    //    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                    Log.i("aa",x.app()+"");
+                }
+            });
+        }
     }
 
 
