@@ -93,7 +93,8 @@
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:id="@+id/et_open_userstorname"
-                    android:hint="店铺名称:"
+                    android:hint="店铺名称"
+                    android:gravity="center"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
                 <TextView
@@ -117,7 +118,8 @@
                     android:textSize="12sp"
                     android:inputType="number"
                     android:id="@+id/et_open_userphonenum"
-                    android:hint="手机号:"
+                    android:hint="手机号码"
+                    android:gravity="center"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
                 <TextView
@@ -139,9 +141,35 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:textSize="12sp"
-                    android:hint="邮箱:"
+                    android:hint="邮箱地址"
+                    android:gravity="center"
                     android:id="@+id/et_open_useremailaddress"
                     android:inputType="textEmailAddress"
+                    android:layout_weight="5"
+                    android:background="@drawable/login_edittext_style"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:text="店铺地址"
+                    android:textColor="@color/public_font_color"
+                    android:gravity="center"
+                    android:id="@+id/btn_open_usershopaddress"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
                 <TextView
@@ -165,7 +193,8 @@
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:id="@+id/btn_open_storeaddress"
-                    android:text="手动选择地址"
+                    android:text="选择位置"
+                    android:textColor="@color/public_font_color"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
                 <TextView
@@ -183,13 +212,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
-                <EditText
+                <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:textSize="12sp"
-                    android:id="@+id/et_open_send"
-                    android:hint="派送方式:"
+                    android:id="@+id/btn_open_send"
+                    android:text="派送范围"
+                    android:textColor="@color/public_font_color"
                     android:layout_weight="5"
                     android:background="@drawable/login_edittext_style"/>
                 <TextView
@@ -236,6 +266,7 @@
                     android:padding="10dp"
                     android:textSize="12sp"
                     android:hint="立即开店"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/btn_open_submit"
                     android:layout_weight="5"
                     android:textColor="@color/white"
@@ -249,6 +280,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>

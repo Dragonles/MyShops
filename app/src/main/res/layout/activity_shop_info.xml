@@ -59,6 +59,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:id="@+id/iv_shopinfo_shopheader"
                         android:layout_height="70dp">
 
                         <TextView
@@ -82,14 +83,15 @@
                             android:layout_alignParentEnd="true"
                             android:id="@+id/ib_shopinfo_shopheader_go" />
 
-                        <ImageView
+                        <com.myshops.shops.bean.CircleImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/iconfont_bussinessmans"
                             android:layout_centerVertical="true"
+                            android:id="@+id/imgs"
+                            android:onClick="setimg"
                             android:layout_toLeftOf="@+id/ib_shopinfo_shopheader_go"
-                            android:layout_toStartOf="@+id/ib_shopinfo_shopheader_go"
-                            android:id="@+id/iv_shopinfo_shopheader" />
+                             />
                     </RelativeLayout>
                     <TextView
                         android:layout_width="match_parent"

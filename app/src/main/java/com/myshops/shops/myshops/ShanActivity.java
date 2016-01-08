@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class ShanActivity extends AppCompatActivity {
 
-    public static String strName,strPassword,hasShops;
+    public static String strName,hasShops;
     public static boolean isFirstLead;
     private Intent intent;
     @Override
@@ -25,7 +25,7 @@ public class ShanActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     /*
-                    * 延迟3秒后跳转引导页（LeadActivity）
+                    *  延迟3秒后跳转引导页（LeadActivity）
                     * */
                     ReadSharedPreferences();
                     Log.i("isfirst",isFirstLead+"");
@@ -37,11 +37,11 @@ public class ShanActivity extends AppCompatActivity {
                         if ("".equals(strName)){
                             intent =new Intent(ShanActivity.this,LoginActivity.class);
                         } else{
-                            if ("".equals(hasShops)){
-                                intent =new Intent(ShanActivity.this,OpenActivity.class);
-                            } else{
+//                            if ("".equals(hasShops)){
+//                                intent =new Intent(ShanActivity.this,OpenActivity.class);
+//                            } else{
                                 intent =new Intent(ShanActivity.this,MainActivity.class);
-                            }
+//                            }
                         }
                     }
                     ShanActivity.this.startActivity(intent);
@@ -51,6 +51,7 @@ public class ShanActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     void ReadSharedPreferences(){
         SharedPreferences user = getSharedPreferences("user_info",0);
         isFirstLead = user.getBoolean("isFirstLead",false);

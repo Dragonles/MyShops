@@ -28,4 +28,5 @@ public class BaseFragment extends Fragment {
             x.view().inject(this, this.getView());
         }
     }
+
 }
