@@ -39,13 +39,14 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
+import com.myshops.shops.myshops.R;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import cn.qqtheme.framework.helper.Common;
-import cn.qqtheme.framework.picker.R;
 
 /**
  * 基于android-wheel修改

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.myshops.shops.bean.CircleImageView;
 import com.myshops.shops.myshops.LoginActivity;
 import com.myshops.shops.myshops.R;
@@ -23,6 +24,8 @@ import com.myshops.shops.myshops.ShopInfoActivity;
 import com.myshops.shops.myshops.ShouRuZhiChuActivity;
 import com.myshops.shops.myshops.XiaoShouJiLuActivity;
 import com.myshops.shops.untils.HttpUtils;
+import com.myshops.shops.untils.QiNiuConfig;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -36,7 +39,7 @@ public class ShopFragment extends Fragment {
 
     ImageButton mgoinfo;
     private ImageView iv_userIcon;
-    public static String uid;
+    static String uid;
     public static String userPhoto;
     public static String userName;
     public static String userPhone;
@@ -106,6 +109,8 @@ public class ShopFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                xiaZai();
+
                 String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
@@ -137,10 +142,10 @@ public class ShopFragment extends Fragment {
 
 //                        Log.i("userPhoto",userPhoto + " " + userName + " 1");
 //                        tv_shop_username.setText(userName);
-//                        //iv_userIcon.setImageBitmap(BitmapFactory.decodeFile(userPhoto));
-//                        Log.i("userPhoto",userPhoto + " " + userName + " 2");
+//                        iv_userIcon.setImageBitmap(BitmapFactory.decodeFile(QiNiuConfig.externalLinks + userPhoto));
+                        Log.i("userPhoto",QiNiuConfig.externalLinks + userPhoto);
 //                        iv_userIcon.setImageURI(Uri.parse(userPhoto));
-//                        //Picasso.with(getContext()).load(userPhoto).into(iv_userIcon);
+                        Picasso.with(getContext()).load(QiNiuConfig.externalLinks + userPhoto).into(iv_userIcon);
 //                        Log.i("userPhoto",userPhoto + " " + userName + " ''3");
 
 
@@ -203,5 +208,52 @@ public class ShopFragment extends Fragment {
         MobclickAgent.onPause(getContext());
     }
 
+    public void xiaZai(){
+
+        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
+        String type = "/Api/exeQuery";
+        HashMap<String, String> maps = new HashMap<>();
+        maps.put("sql", sql);
+        HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+                Log.i("userphoto", s.toString());
+
+                try {
+                    JSONObject jsonobj = new JSONObject(s);
+                    String code = jsonobj.getString("code");
+                    String message = jsonobj.getString("message");
+                    JSONArray data = jsonobj.getJSONArray("data");
+                    JSONObject info = data.getJSONObject(0);
+                    String images = info.getString("userPhoto");
+                    //图片外链地址（网络地址）
+                    String url2 = QiNiuConfig.externalLinks + images;
+                    //加载（下载）图片  iv_add4为ImageView
+                    Log.i("url2", url2);
+                    Glide.with(ShopFragment.this).load(url2).into(iv_userIcon);
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+                Log.i("onError", throwable.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
 
 }

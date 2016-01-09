@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -23,21 +24,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.myshops.shops.fragment.ShopFragment;
+import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
+import com.myshops.shops.untils.QiNiuConfig;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.qiniu.util.Auth;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.x;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class ShopInfoActivity extends AppCompatActivity {
@@ -45,14 +54,15 @@ public class ShopInfoActivity extends AppCompatActivity {
     private RelativeLayout rly_name, rly_phone, rly_mima;
     private TextView tv_name, tv_phone, tv_pwd, tv_tijiao;
     private ImageView iv_shopinfo_shopheader;
-    private static final int RESULT_LOAD_IMAGE = 1;
     String searchC;
-    public String sURL;
     ImageButton ib_shopinfo_back;
     Button btn_shopinfo_exit;
     String smima = "", sname = "", sphone = "";
-    static String id, os, ns, nsa, userName, userPhone, userPwd;
-    static String dizhi;
+    static String id, os, ns, nsa, userName, userPhone, userPwd, userPhoto;
+    private Uri photoUri;
+    private final int PIC_FROM_CAMERA = 1;
+    private final int PIC_FROM＿LOCALPHOTO = 0;
+    static File picFile;
 
 //    CircleImageView imageView;
 
@@ -89,9 +99,12 @@ public class ShopInfoActivity extends AppCompatActivity {
         btn_shopinfo_exit = (Button) findViewById(R.id.btn_shopinfo_exit);
         tv_tijiao = (TextView) findViewById(R.id.tv_tijiao);
 
-        iv_shopinfo_shopheader.setImageBitmap(BitmapFactory.decodeFile(ShopFragment.userPhoto));
         tv_name.setText(ShopFragment.userName);
         tv_phone.setText(ShopFragment.userPhone);
+//        Picasso.with(x.app()).load(QiNiuConfig.externalLinks + ShopFragment.userPhoto).into(iv_shopinfo_shopheader);
+//        iv_shopinfo_shopheader.setImageURI(Uri.parse(QiNiuConfig.externalLinks + ShopFragment.userPhoto));
+        xiaZai();
+
         ib_shopinfo_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +112,31 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
+        iv_shopinfo_shopheader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ActionSheetDialog(ShopInfoActivity.this)
+                        .builder()
+                        .setTitle("选项")
+                        .setCancelable(true)
+                        .setCanceledOnTouchOutside(true)
+                        .addSheetItem("拍摄照片", ActionSheetDialog.SheetItemColor.Red,
+                                new ActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        doHandlerPhoto(PIC_FROM_CAMERA);// 用户点击了从照相机获取
+                                        // onActivityResult(PIC_FROM_CAMERA,0,null);
+                                    }
+                                })
+                        .addSheetItem("选取本地", ActionSheetDialog.SheetItemColor.Red,
+                                new ActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        doHandlerPhoto(PIC_FROM＿LOCALPHOTO);
+                                    }
+                                }).show();
+            }
+        });
 
         rly_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,6 +243,8 @@ public class ShopInfoActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+
         final SharedPreferences token = getSharedPreferences("user_info", 0);
         final String t = token.getString("token", "");
         Log.i("ShopToken", t);
@@ -265,6 +305,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                             userName = jsonobject.getString("userName");
                             userPhone = jsonobject.getString("userPhone");
                             userPwd = jsonobject.getString("userPwd");
+                            userPhoto = jsonobject.getString("userPhoto");
                             tv_name.setText(userName);
                             tv_pwd.setText(userPwd);
                             tv_phone.setText(userPhone);
@@ -308,6 +349,7 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
+        showImage();
 
         tv_tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,45 +397,7 @@ public class ShopInfoActivity extends AppCompatActivity {
 //                        }
 //                    });
 
-                    UploadManager uploadManager = new UploadManager();
-                    String key = null;
-                    String token = LoginActivity.token;
-                    uploadManager.put(sURL, key, token,
-                            new UpCompletionHandler() {
-                                @Override
-                                public void complete(String key, ResponseInfo info, JSONObject res) {
-                                    //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
-                                    Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
-                                }
-                            }, null);
-
-                    String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "',  userPhoto = '" + dizhi + "' where userId = " + id;
-                    String types = "/Api/exeQuery";
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("sql", sql);
-                    HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            Log.i("onSuccesses", s.toString());
-
-                        }
-
-                        @Override
-                        public void onError(Throwable throwable, boolean b) {
-                            Log.i("onErrores", throwable.toString());
-                        }
-
-                        @Override
-                        public void onCancelled(CancelledException e) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
-
+                    upLoadImage();
 
                     String type = "/Api/eidtUserPwd";
                     HashMap<String, String> maps = new HashMap<>();
@@ -451,9 +455,10 @@ public class ShopInfoActivity extends AppCompatActivity {
                 users.putString("NAME","");
                 users.commit();
 
+                ShopInfoActivity.this.finish();
                 Intent intent = new Intent(ShopInfoActivity.this, LoginActivity.class);
                 startActivity(intent);
-                ShopInfoActivity.this.finish();
+
             }
         });
 
@@ -465,5 +470,257 @@ public class ShopInfoActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void doHandlerPhoto(int type) {
+        try {
+            // 保存裁剪后的图片文件
+            File pictureFileDir = new File(
+                    Environment.getExternalStorageDirectory(), "/maimai");
+            if (!pictureFileDir.exists()) {
+                pictureFileDir.mkdirs();
+            }
+            int rand=(int)(Math.random()*100000);
+            Log.i("ran",rand+"");
+            picFile = new File(pictureFileDir, rand+".jpeg");
+            if (!picFile.exists()) {
+                picFile.createNewFile();
+                Log.i("imgs",picFile.toString());
+            }
+            photoUri = Uri.fromFile(picFile);
+            Log.i("img",photoUri.toString());
+            if (type == PIC_FROM＿LOCALPHOTO) {
+                Intent intent = getCropImageIntent();
+                startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
+            } else {
+                Intent cameraIntent = new Intent(
+                        MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(cameraIntent, PIC_FROM_CAMERA);
+            }
+
+        } catch (Exception e) {
+            Log.i("HandlerPicError", "处理图片出现错误");
+        }
+    }
+
+    /**
+     * 调用图片剪辑程序
+     */
+    public Intent getCropImageIntent() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+        intent.setType("image/*");
+        setIntentParams(intent);
+        return intent;
+    }
+
+    /**
+     * 启动裁剪
+     */
+    private void cropImageUriByTakePhoto() {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(photoUri, "image/*");
+        setIntentParams(intent);
+        startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
+    }
+
+    /**
+     * 设置公用参数
+     */
+    private void setIntentParams(Intent intent)
+    {
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 600);
+        intent.putExtra("outputY", 600);
+        intent.putExtra("noFaceDetection", true); // no face detection
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            case PIC_FROM_CAMERA: // 拍照
+                try
+                {
+                    cropImageUriByTakePhoto();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            case PIC_FROM＿LOCALPHOTO:
+                try
+                {
+                    if (photoUri != null)
+                    {
+                        Bitmap bitmap = decodeUriAsBitmap(photoUri);
+                        iv_shopinfo_shopheader.setImageBitmap(bitmap);
+                    }
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    private Bitmap decodeUriAsBitmap(Uri uri)
+    {
+        Bitmap bitmap = null;
+        try
+        {
+            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        return bitmap;
+    }
+
+    /**
+     * 生成七牛上传token
+     * */
+    public String qiNiuUpToken(){
+        //七牛key
+        Auth auth = Auth.create(QiNiuConfig.ak,QiNiuConfig.sk);
+        //七牛空间名称
+        String bucketName = QiNiuConfig.bucketName;
+        //生成上传token
+        String token = auth.uploadToken(bucketName);
+        return token;
+    }
+
+    private void upLoadImage(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                    //开始上传文件
+                try {
+
+                    UploadManager uploadManager = new UploadManager();
+                    uploadManager.put(picFile, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo info, JSONObject response) {
+
+                            Log.i("qiniu", key + " " + info + " " + response);
+                            userPhoto = key;
+
+
+                            String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "',  userPhoto = '" + userPhoto + "' where userId = " + id;
+                            String types = "/Api/exeQuery";
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("sql", sql);
+                            HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
+                                @Override
+                                public void onSuccess(String s) {
+                                    Log.i("onSuccesses", s.toString());
+
+                                }
+
+                                @Override
+                                public void onError(Throwable throwable, boolean b) {
+                                    Log.i("onErrores", throwable.toString());
+                                }
+
+                                @Override
+                                public void onCancelled(CancelledException e) {
+
+                                }
+
+                                @Override
+                                public void onFinished() {
+
+                                }
+                            });
+                        }
+                    }, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    public String suiJiName(){
+        //随机数
+        String s = "";
+        Random ran =new Random(System.currentTimeMillis());
+        for (int i = 0; i < 10; i++) {
+            s = s + ran.nextInt(100);
+        }
+        //上传的文件名
+        String keyname = "wst_"+s+".jpg";
+        return  keyname;
+    }
+
+    public void showImage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String url = "http://7xpmv7.com1.z0.glb.clouddn.com/Fj3g6jWLrUlRvm3TvcZviHbeM0YZ";
+                iv_shopinfo_shopheader.setImageBitmap(BitmapFactory.decodeFile(url));
+//                Picasso.with(ShopInfoActivity.this).load(url).into(iv_shopinfo_shopheader);
+                Log.i("showImage","走方法");
+            }
+        }).start();
+    }
+
+    public void xiaZai(){
+
+        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + id + "'";
+        String type = "/Api/exeQuery";
+        HashMap<String, String> maps = new HashMap<>();
+        maps.put("sql", sql);
+        HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+                Log.i("userphoto", s.toString());
+
+                try {
+                    JSONObject jsonobj = new JSONObject(s);
+                    String code = jsonobj.getString("code");
+                    String message = jsonobj.getString("message");
+                    JSONArray data = jsonobj.getJSONArray("data");
+                    JSONObject info = data.getJSONObject(0);
+                    String images = info.getString("userPhoto");
+                    //图片外链地址（网络地址）
+                    String url2 = QiNiuConfig.externalLinks + images;
+                    //加载（下载）图片  iv_add4为ImageView
+                    Log.i("url2", url2);
+                    Glide.with(ShopInfoActivity.this).load(url2).into(iv_shopinfo_shopheader);
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+                Log.i("onError", throwable.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
 
 }

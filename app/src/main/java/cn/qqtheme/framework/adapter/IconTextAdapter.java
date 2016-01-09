@@ -7,11 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.myshops.shops.myshops.R;
+
 import java.util.List;
 
 import cn.qqtheme.framework.entity.IconText;
 import cn.qqtheme.framework.helper.Common;
-import cn.qqtheme.framework.picker.R;
 
 public class IconTextAdapter<T extends IconText> extends BeanAdapter<T> {
 

@@ -10,6 +10,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
+import com.myshops.shops.myshops.R;
+
 import cn.qqtheme.framework.helper.Common;
 import cn.qqtheme.framework.popup.ConfirmPopup;
 import cn.qqtheme.framework.view.ColorPanelView;

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.myshops.shops.adapter.XiaoShoujiluAdapter;
 import com.myshops.shops.bean.Xiaoshoujilu;
 import com.myshops.shops.untils.HttpUtils;
 
@@ -42,7 +43,6 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
             }
         });
 
-
         String sql = "select * from wst_goods where isSale = 1";
         String types = "/Api/exeQuery";
         HashMap<String, String> map = new HashMap<>();
@@ -65,6 +65,7 @@ public class XiaoShouJiLuActivity extends AppCompatActivity {
                     String bookQuantity = info.getString("bookQuantity");
 
                     list.add(new Xiaoshoujilu(goodsImg,goodsName,shopPrice,createTime,bookQuantity));
+                    listView.setAdapter(new XiaoShoujiluAdapter(getApplicationContext(),list));
 
 
                 } catch (JSONException e) {

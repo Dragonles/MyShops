@@ -2,10 +2,11 @@ package cn.qqtheme.framework.adapter;
 
 import android.content.Context;
 
+import com.myshops.shops.myshops.R;
+
 import cn.qqtheme.framework.entity.FileItem;
 import cn.qqtheme.framework.helper.FileUtils;
 import cn.qqtheme.framework.helper.LogUtils;
-import cn.qqtheme.framework.picker.R;
 
 import java.io.File;
 import java.util.ArrayList;
