@@ -3,7 +3,7 @@ package com.myshops.shops.bean;
 /**
  * Created by Administrator on 2015/12/25.
  */
-public class Tinajiashangpin {
+public class Tianjiashangpin {
     private String add_img;
     private String add_name;
     private String add_marketPrice;
@@ -17,7 +17,7 @@ public class Tinajiashangpin {
 
     }
 
-    public Tinajiashangpin(String add_img, String add_name, String add_marketPrice, String add_shopPrice, String saleCount, String isBlok, String goodsStock, String createTime) {
+    public Tianjiashangpin(String add_img, String add_name, String add_marketPrice, String add_shopPrice, String saleCount, String isBlok, String goodsStock, String createTime) {
         this.add_img = add_img;
         this.add_name = add_name;
         this.add_marketPrice = add_marketPrice;
@@ -30,7 +30,7 @@ public class Tinajiashangpin {
 
     @Override
     public String toString() {
-        return "Tinajiashangpin{" +
+        return "Tianjiashangpin{" +
                 "add_img='" + add_img + '\'' +
                 ", add_name='" + add_name + '\'' +
                 ", add_marketPrice='" + add_marketPrice + '\'' +

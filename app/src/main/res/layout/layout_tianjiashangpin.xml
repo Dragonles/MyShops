@@ -11,8 +11,8 @@
             android:id="@+id/linearout_img"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:id="@+id/add_img"
                 android:layout_marginLeft="14dp"
                 android:layout_marginTop="5dp"

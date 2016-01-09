@@ -5,7 +5,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="style_color">#ef5b5b</color>
+    <color name="list_button_xian">#dad8c9</color>
     <color name="huise">#ECEAEC</color>
     <color name="xiantiao">#DFDEDE</color>
     <color name="fontcolor">#64595c</color>
@@ -39,4 +41,26 @@
     <color name="xian1">#ECEAEC</color>
 
 
+    <color name="shuaxin_text_color">#969696</color>
+
+    <color name="gray">#aaaaaa</color>
+
+    <!--搜索页面-->
+    <color name="sousuo_Ed_textColor">#cccccc</color>
+
+    <!--登陆页面-->
+    <color name="login_text_color">#e44949</color>
+
+    <!--注册-->
+    <color name="zhuce_about_color">#cccccc</color>
+
+    <!--订单-->
+    <color name="dingdan_ziti_color">#666666</color>
+    <color name="dizhi_fahuo_moren">#f84680</color>
+    <color name="dizhi_shouhuo_moren">#5f9eff</color>
+    <color name="xian">#eae6e5</color>
+    <color name="red">#e44949</color>
+    <!--添加商品-->
+    <color name="Left_title_color">#646464</color>
+    <color name="Right_neirong_color">#cccccc</color>
 </resources>

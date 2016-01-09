@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
-import com.myshops.shops.myshops.R;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.myshops.shops.bean.Tianjiashangpin;
 import com.myshops.shops.myshops.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class TianjiaShangpinAdapter extends BaseAdapter {
     Context context;
-    List<TianjiaShangpinAdapter> list ;
+    List<Tianjiashangpin> list ;
     public TianjiaShangpinAdapter(Context context,List list){
         this.context = context;
         this.list = list;
@@ -40,6 +42,7 @@ public class TianjiaShangpinAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Tianjiashangpin tj = list.get(position);
         ViewHolder v;
         if(convertView == null){
             v = new ViewHolder();
@@ -48,7 +51,7 @@ public class TianjiaShangpinAdapter extends BaseAdapter {
             v.add_name = (TextView) convertView.findViewById(R.id.add_name);
             v.add_marketPrice = (TextView) convertView.findViewById(R.id.add_marketPrice);
             v.add_shopPrice = (TextView) convertView.findViewById(R.id.add_shopPrice);
-            v.add_shopPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//            v.add_shopPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             v.add_saleCount = (TextView) convertView.findViewById(R.id.add_saleCount);
             v.add_isBook = (TextView) convertView.findViewById(R.id.add_isBook);
             v.add_goodsStock = (TextView) convertView.findViewById(R.id.add_goodsStock);
@@ -56,6 +59,14 @@ public class TianjiaShangpinAdapter extends BaseAdapter {
             convertView.setTag(v);
         }
         v = (ViewHolder) convertView.getTag();
+//        Picasso.with(context).load(tj.getAdd_img()).into(v.add_img);
+        v.add_name.setText(tj.getAdd_name());
+        v.add_marketPrice.setText(tj.getAdd_marketPrice());
+        v.add_shopPrice.setText(tj.getAdd_shopPrice());
+        v.add_shopPrice.setTextColor(Paint.STRIKE_THRU_TEXT_FLAG);
+        v.add_saleCount.setText(tj.getSaleCount());
+        v.add_goodsStock.setText(tj.getGoodsStock());
+        v.add_createTime.setText(tj.getCreateTime());
         return convertView;
     }
     class ViewHolder{

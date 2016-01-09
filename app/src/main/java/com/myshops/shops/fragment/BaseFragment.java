@@ -14,8 +14,7 @@ import org.xutils.x;
 public class BaseFragment extends Fragment {
 
     private boolean injected = false;
-
-    @Override
+     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         injected = true;
         return x.view().inject(this, inflater, container);
