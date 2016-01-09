@@ -720,7 +720,5 @@ public class ShopInfoActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
 }
