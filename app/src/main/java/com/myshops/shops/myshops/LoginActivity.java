@@ -21,6 +21,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_login)
@@ -139,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
         map.put("token", token);
 
         Log.i("aaaa","走着步1");
-
         HttpUtils.httputilsGet(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
