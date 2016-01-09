@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Order;
 import com.myshops.shops.myshops.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class OderAdpter extends BaseAdapter {
             holder=(ViewHolder)convertView.getTag();
         }
 //        holder.goodimg.setBackgroundResource(R.drawable.img_head_three);
-        Picasso.with(context).load(list.get(position).getGoodsThums()).into(holder.goodimg);
+ //       Picasso.with(context).load(list.get(position).getGoodsThums()).into(holder.goodimg);
         holder.uname.setText(list.get(position).getUsername());
      //  holder.flag.setText(list.get(position).getOrderStatus());
         holder.goodsname.setText(list.get(position).getGoodsName());
