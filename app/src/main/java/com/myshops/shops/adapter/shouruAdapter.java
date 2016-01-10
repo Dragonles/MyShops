@@ -55,7 +55,7 @@ public class ShouruAdapter extends BaseAdapter {
             convertView.setTag(v);
         }
         v = (ViewHolder) convertView.getTag();
-        v.shangpin_img.setBackgroundResource(list.get(position).getImg());
+        v.shangpin_img.setBackgroundResource(Integer.parseInt(list.get(position).getImg()));
         v.shangpin_title.setText(list.get(position).getShangpin_title());
         v.shangpin_color.setText(list.get(position).getShangpin_color());
         v.shangpin_size.setText(list.get(position).getShagpin_size());

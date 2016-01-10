@@ -1,4 +1,5 @@
 package com.myshops.shops.bean;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -12,254 +13,227 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.myshops.shops.myshops.R;
 
-public class CircleImageView extends ImageView {
 
-	private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
+/**
+ * Created by 陈增庆 on 2015/12/16.
+ */
+public class
+CircleImageView extends ImageView {
 
-	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-	private static final int COLORDRAWABLE_DIMENSION = 1;
+    private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
-	private static final int DEFAULT_BORDER_WIDTH = 0;
-	private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+    private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
+    private static final int COLORDRAWABLE_DIMENSION = 1;
 
-	private final RectF mDrawableRect = new RectF();
-	private final RectF mBorderRect = new RectF();
+    private static final int DEFAULT_BORDER_WIDTH = 0;
+    private static final int DEFAULT_BORDER_COLOR = Color.WHITE;
 
-	private final Matrix mShaderMatrix = new Matrix();
-	private final Paint mBitmapPaint = new Paint();
-	private final Paint mBorderPaint = new Paint();
+    private final RectF mDrawableRect = new RectF();
+    private final RectF mBorderRect = new RectF();
 
-	private int mBorderColor = DEFAULT_BORDER_COLOR;
-	private int mBorderWidth = DEFAULT_BORDER_WIDTH;
+    private final Matrix mShaderMatrix = new Matrix();
+    private final Paint mBitmapPaint = new Paint();
+    private final Paint mBorderPaint = new Paint();
 
-	private Bitmap mBitmap;
-	private BitmapShader mBitmapShader;
-	private int mBitmapWidth;
-	private int mBitmapHeight;
+    private int mBorderColor = DEFAULT_BORDER_COLOR;
+    private int mBorderWidth = DEFAULT_BORDER_WIDTH;
 
-	private float mDrawableRadius;
-	private float mBorderRadius;
+    private Bitmap mBitmap;
+    private BitmapShader mBitmapShader;
+    private int mBitmapWidth;
+    private int mBitmapHeight;
 
-	private boolean mReady;
-	private boolean mSetupPending;
+    private float mDrawableRadius;
+    private float mBorderRadius;
 
-	public CircleImageView(Context context) {
-		super(context);
+    private boolean mReady;
+    private boolean mSetupPending;
 
-		init();
-	}
+    public CircleImageView(Context context) {
+        super(context);
+    }
 
-	public CircleImageView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public CircleImageView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        super.setScaleType(SCALE_TYPE);
 
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.CircleImageView, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
 
-		mBorderWidth = a.getDimensionPixelSize(
-				R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH);
-		mBorderColor = a.getColor(R.styleable.CircleImageView_border_color,
-				DEFAULT_BORDER_COLOR);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, DEFAULT_BORDER_COLOR);
 
-		a.recycle();
+        a.recycle();
 
-		init();
-	}
+        mReady = true;
 
-	private void init() {
-		super.setScaleType(SCALE_TYPE);
-		mReady = true;
+        if (mSetupPending) {
+            setup();
+            mSetupPending = false;
+        }
+    }
 
-		if (mSetupPending) {
-			setup();
-			mSetupPending = false;
-		}
-	}
+    @Override
+    public ScaleType getScaleType() {
+        return SCALE_TYPE;
+    }
 
-	@Override
-	public ScaleType getScaleType() {
-		return SCALE_TYPE;
-	}
+    @Override
+    public void setScaleType(ScaleType scaleType) {
+        if (scaleType != SCALE_TYPE) {
+            throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
+        }
+    }
 
-	@Override
-	public void setScaleType(ScaleType scaleType) {
-		if (scaleType != SCALE_TYPE) {
-			throw new IllegalArgumentException(String.format(
-					"ScaleType %s not supported.", scaleType));
-		}
-	}
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (getDrawable() == null) {
+            return;
+        }
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius, mBitmapPaint);
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius, mBorderPaint);
+    }
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		if (getDrawable() == null) {
-			return;
-		}
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        setup();
+    }
 
-		canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius,
-				mBitmapPaint);
-		if (mBorderWidth != 0) {
-			canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius,
-					mBorderPaint);
-		}
-	}
+    public int getBorderColor() {
+        return mBorderColor;
+    }
 
-	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		super.onSizeChanged(w, h, oldw, oldh);
-		setup();
-	}
+    public void setBorderColor(int borderColor) {
+        if (borderColor == mBorderColor) {
+            return;
+        }
 
-	public int getBorderColor() {
-		return mBorderColor;
-	}
+        mBorderColor = borderColor;
+        mBorderPaint.setColor(mBorderColor);
+        invalidate();
+    }
 
-	public void setBorderColor(int borderColor) {
-		if (borderColor == mBorderColor) {
-			return;
-		}
+    public int getBorderWidth() {
+        return mBorderWidth;
+    }
 
-		mBorderColor = borderColor;
-		mBorderPaint.setColor(mBorderColor);
-		invalidate();
-	}
+    public void setBorderWidth(int borderWidth) {
+        if (borderWidth == mBorderWidth) {
+            return;
+        }
 
-	public int getBorderWidth() {
-		return mBorderWidth;
-	}
+        mBorderWidth = borderWidth;
+        setup();
+    }
 
-	public void setBorderWidth(int borderWidth) {
-		if (borderWidth == mBorderWidth) {
-			return;
-		}
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+        mBitmap = bm;
+        setup();
+    }
 
-		mBorderWidth = borderWidth;
-		setup();
-	}
+    @Override
+    public void setImageDrawable(Drawable drawable) {
+        super.setImageDrawable(drawable);
+        mBitmap = getBitmapFromDrawable(drawable);
+        setup();
+    }
 
-	@Override
-	public void setImageBitmap(Bitmap bm) {
-		super.setImageBitmap(bm);
-		mBitmap = bm;
-		setup();
-	}
+    @Override
+    public void setImageResource(int resId) {
+        super.setImageResource(resId);
+        mBitmap = getBitmapFromDrawable(getDrawable());
+        setup();
+    }
 
-	@Override
-	public void setImageDrawable(Drawable drawable) {
-		super.setImageDrawable(drawable);
-		mBitmap = getBitmapFromDrawable(drawable);
-		setup();
-	}
+    private Bitmap getBitmapFromDrawable(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
 
-	@Override
-	public void setImageResource(int resId) {
-		super.setImageResource(resId);
-		mBitmap = getBitmapFromDrawable(getDrawable());
-		setup();
-	}
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
 
-	@Override
-	public void setImageURI(Uri uri) {
-		super.setImageURI(uri);
-		mBitmap = getBitmapFromDrawable(getDrawable());
-		setup();
-	}
+        try {
+            Bitmap bitmap;
 
-	private Bitmap getBitmapFromDrawable(Drawable drawable) {
-		if (drawable == null) {
-			return null;
-		}
+            if (drawable instanceof ColorDrawable) {
+                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
+            } else {
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+            }
 
-		if (drawable instanceof BitmapDrawable) {
-			return ((BitmapDrawable) drawable).getBitmap();
-		}
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (OutOfMemoryError e) {
+            return null;
+        }
+    }
 
-		try {
-			Bitmap bitmap;
+    private void setup() {
+        if (!mReady) {
+            mSetupPending = true;
+            return;
+        }
 
-			if (drawable instanceof ColorDrawable) {
-				bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION,
-						COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
-			} else {
-				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-						drawable.getIntrinsicHeight(), BITMAP_CONFIG);
-			}
+        if (mBitmap == null) {
+            return;
+        }
 
-			Canvas canvas = new Canvas(bitmap);
-			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-			drawable.draw(canvas);
-			return bitmap;
-		} catch (OutOfMemoryError e) {
-			return null;
-		}
-	}
+        mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
-	private void setup() {
-		if (!mReady) {
-			mSetupPending = true;
-			return;
-		}
+        mBitmapPaint.setAntiAlias(true);
+        mBitmapPaint.setShader(mBitmapShader);
 
-		if (mBitmap == null) {
-			return;
-		}
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderPaint.setAntiAlias(true);
+        mBorderPaint.setColor(mBorderColor);
+        mBorderPaint.setStrokeWidth(mBorderWidth);
 
-		mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP,
-				Shader.TileMode.CLAMP);
+        mBitmapHeight = mBitmap.getHeight();
+        mBitmapWidth = mBitmap.getWidth();
 
-		mBitmapPaint.setAntiAlias(true);
-		mBitmapPaint.setShader(mBitmapShader);
+        mBorderRect.set(0, 0, getWidth(), getHeight());
+        mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2, (mBorderRect.width() - mBorderWidth) / 2);
 
-		mBorderPaint.setStyle(Paint.Style.STROKE);
-		mBorderPaint.setAntiAlias(true);
-		mBorderPaint.setColor(mBorderColor);
-		mBorderPaint.setStrokeWidth(mBorderWidth);
+        mDrawableRect.set(mBorderWidth, mBorderWidth, mBorderRect.width() - mBorderWidth, mBorderRect.height() - mBorderWidth);
+        mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
 
-		mBitmapHeight = mBitmap.getHeight();
-		mBitmapWidth = mBitmap.getWidth();
+        updateShaderMatrix();
+        invalidate();
+    }
 
-		mBorderRect.set(0, 0, getWidth(), getHeight());
-		mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2,
-				(mBorderRect.width() - mBorderWidth) / 2);
+    private void updateShaderMatrix() {
+        float scale;
+        float dx = 0;
+        float dy = 0;
 
-		mDrawableRect.set(mBorderWidth, mBorderWidth, mBorderRect.width()
-				- mBorderWidth, mBorderRect.height() - mBorderWidth);
-		mDrawableRadius = Math.min(mDrawableRect.height() / 2,
-				mDrawableRect.width() / 2);
+        mShaderMatrix.set(null);
 
-		updateShaderMatrix();
-		invalidate();
-	}
+        if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
+            scale = mDrawableRect.height() / (float) mBitmapHeight;
+            dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
+        } else {
+            scale = mDrawableRect.width() / (float) mBitmapWidth;
+            dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
+        }
 
-	private void updateShaderMatrix() {
-		float scale;
-		float dx = 0;
-		float dy = 0;
+        mShaderMatrix.setScale(scale, scale);
+        mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth, (int) (dy + 0.5f) + mBorderWidth);
 
-		mShaderMatrix.set(null);
-
-		if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width()
-				* mBitmapHeight) {
-			scale = mDrawableRect.height() / (float) mBitmapHeight;
-			dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
-		} else {
-			scale = mDrawableRect.width() / (float) mBitmapWidth;
-			dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
-		}
-
-		mShaderMatrix.setScale(scale, scale);
-		mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth,
-				(int) (dy + 0.5f) + mBorderWidth);
-
-		mBitmapShader.setLocalMatrix(mShaderMatrix);
-	}
-
+        mBitmapShader.setLocalMatrix(mShaderMatrix);
+    }
 }
