@@ -12,7 +12,6 @@
         android:gravity="center_vertical|left"
         android:paddingLeft="@dimen/pickerview_topbar_paddingleft"
         android:paddingRight="@dimen/pickerview_topbar_paddingright"
-        android:text="@string/pickerview_cancel"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 
@@ -36,7 +35,6 @@
         android:gravity="center_vertical|left"
         android:paddingLeft="@dimen/pickerview_topbar_paddingright"
         android:paddingRight="@dimen/pickerview_topbar_paddingleft"
-        android:text="@string/pickerview_submit"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 </RelativeLayout>
