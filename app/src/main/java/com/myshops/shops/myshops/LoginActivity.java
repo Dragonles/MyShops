@@ -86,28 +86,34 @@ public class LoginActivity extends AppCompatActivity {
                     //  Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                     Log.i("aaaa", result + "");
 
+                    String code = null;
+                    String message = null;
+                    JSONObject data;
+                    String username = null;
+                    String userType = null;
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        String code = jsonObject.getString("code");
-                        String message = jsonObject.getString("message");
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String username = data.getString("username");
+                        code = jsonObject.getString("code");
+                        message = jsonObject.getString("message");
+                        data = jsonObject.getJSONObject("data");
+                        username = data.getString("username");
                         token = data.getString("token");
-                        String userType = data.getString("userType");
-
-                        if ("200".equals(code)){
-                            //存入数据
-                            editor.putString("NAME",username );
-                            editor.putString("userType",userType);
-                            editor.putString("token",token);
-                            isShopNull();
-
-                        } else{
-                            Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
-                        }
+                        userType = data.getString("userType");
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+
+                    if ("200".equals(code)){
+                        //存入数据
+                        editor.putString("NAME",username );
+                        editor.putString("userType",userType);
+                        editor.putString("token",token);
+                        isShopNull();
+
+                    } else{
+                        pd.dismiss();
+                        Toast.makeText(x.app(), ""+message, Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -136,11 +142,11 @@ public class LoginActivity extends AppCompatActivity {
     public void isShopNull(){
         String pa = "/AllOrders/shopisnull";
         HashMap<String, String> map = new HashMap<>();
-        Log.i("aaaa",token);
+        Log.i("aaaa","token"+token);
         map.put("token", token);
 
         Log.i("aaaa","走着步1");
-        HttpUtils.httputilsGet(pa,map, new Callback.CommonCallback<String>() {
+        HttpUtils.httputilsPost(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.i("aaaa","走着步2"+result+"------------");
@@ -148,46 +154,44 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("aaaa", result + "");
                 pd.dismiss();
                 Intent intent;
-
+                String code = null;
+                String date = null;
+                String message = null;
 
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    String code = jsonObject.getString("code");
-                    String date = jsonObject.getString("data");
-
-                    if ("200".equals(code)){
-
-                        if ("1".equals(date)){
-                            //存在店铺信息跳转主界面
-                            //存入数据
-                            editor.putString("hasShops",date);
-
-                            intent = new Intent(LoginActivity.this,MainActivity.class);
-                            Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //未开通店铺，跳转开通店铺界面
-                            //存入数据
-                            editor.putString("hasShops","");
-
-                            intent = new Intent(LoginActivity.this,OpenActivity.class);
-
-                        }
-                        //提交
-                        editor.commit();
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-
-                    } else{
-                        Toast.makeText(x.app(), "信息错误，请重新登陆", Toast.LENGTH_SHORT).show();
-                    }
-
+                    code = jsonObject.getString("code");
+                    date = jsonObject.getString("data");
+                    message = jsonObject.getString("message");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Log.i("logindata",date);
+                if ("200".equals(code)){
 
+                    if ("1".equals(date)){
+                        //存在店铺信息跳转主界面
+                        //存入数据
+                        editor.putString("hasShops",date);
 
+                        intent = new Intent(LoginActivity.this,MainActivity.class);
+                        Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //未开通店铺，跳转开通店铺界面
+                        //存入数据
+                        editor.putString("hasShops","");
 
+                        intent = new Intent(LoginActivity.this,OpenActivity.class);
 
+                    }
+                    //提交
+                    editor.commit();
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+
+                } else{
+                    Toast.makeText(x.app(), ""+message, Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -195,6 +199,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("aa","onerror"+ex.getMessage() + "");
+                Log.i("aaaa","走着步3----------"+ex.getMessage()+"------------");
+                pd.dismiss();
+                Toast.makeText(x.app(),"系统出现异常，请稍后再试！",Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

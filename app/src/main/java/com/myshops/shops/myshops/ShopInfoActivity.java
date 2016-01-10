@@ -3,6 +3,7 @@ package com.myshops.shops.myshops;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.CircleImageView;
 import com.myshops.shops.untils.ActionSheetDialog;
+
+import org.xutils.view.annotation.Event;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -187,6 +190,16 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public void shopInfoExit(View view){
+        Intent intent = new Intent(ShopInfoActivity.this,LoginActivity.class);
+        SharedPreferences user = getSharedPreferences("user_info",0);
+        SharedPreferences.Editor edit = user.edit();
+        edit.putString("NAME", "");
+        edit.commit();
+        startActivity(intent);
     }
 
     private void doHandlerPhoto(int type) {

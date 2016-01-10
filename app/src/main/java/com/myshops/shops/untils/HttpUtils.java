@@ -3,11 +3,16 @@ package com.myshops.shops.untils;
 import android.content.Context;
 import android.util.Log;
 
+import com.mob.tools.network.HttpConnection;
+
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.xutils.common.Callback;
 import org.xutils.common.util.MD5;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.security.BasicPermission;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,6 +51,8 @@ public class HttpUtils {
             qingqiu+=Config.siyao;
             //发送http请求
             RequestParams params = new RequestParams(url);
+            params.setConnectTimeout(5000);//设置连接超时
+
             for(int j=0;j<map.size();j++){
                 params.addQueryStringParameter(list.get(j),map.get(list.get(j)));
             }

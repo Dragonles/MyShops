@@ -1,13 +1,16 @@
 package com.myshops.shops.myshops;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,21 +22,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.mob.tools.network.HttpConnection;
 import com.myshops.shops.bean.Areas;
+import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
 
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.http.request.HttpRequest;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.security.BasicPermission;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +53,7 @@ import cn.qqtheme.framework.picker.WheelPicker;
 @ContentView(R.layout.activity_open)
 public class OpenActivity extends AppCompatActivity {
 
-    String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",useremail = "",storeplace = "",sendhowlong = "",userstore = "";
+    String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",storeplace = "",sendhowlong = "",userstore = "";
     private  static  final int REQUEST_IMAGE=2;
     private String mStoreFilePath = "",mUserFilePath = "";//图片路径
     static int where = 0; // 区分店铺图片和用户图片
@@ -61,6 +71,10 @@ public class OpenActivity extends AppCompatActivity {
     public static String choosename = "";
     ProgressDialog progressDialog ;
     String userIds ="";
+
+    private Uri photoUri;
+    private final int PIC_FROM_CAMERA = 1;
+    private final int PIC_FROM＿LOCALPHOTO = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +96,6 @@ public class OpenActivity extends AppCompatActivity {
     //手机号
     @ViewInject(R.id.et_open_userphonenum)
     private EditText et_open_userphonenum;
-    //邮箱地址
-    @ViewInject(R.id.et_open_useremailaddress)
-    private EditText et_open_useremailaddress;
     //店铺地址
     @ViewInject(R.id.btn_open_storeaddress)
     private Button btn_open_storeaddress;
@@ -359,6 +370,7 @@ public class OpenActivity extends AppCompatActivity {
                         edit.putString("NAME", "");
                         edit.commit();
                         startActivity(intent);
+                        OpenActivity.this.finish();
                     }
 
                 }
@@ -390,7 +402,6 @@ public class OpenActivity extends AppCompatActivity {
         userpicture = mUserFilePath;//用户身份证
         userstorename = et_open_userstorname.getText().toString();//店铺名称
         userphonenum = et_open_userphonenum.getText().toString();// 店铺手机号
-        useremail = et_open_useremailaddress.getText().toString();//邮箱地址
         storeplace = choosename;//店铺地址
         //经纬度         WEIDU = 0 ,JINGDU
         //派送范围       sendhowlong
@@ -407,13 +418,6 @@ public class OpenActivity extends AppCompatActivity {
             is_submit = true ;
             Log.i("issubmit","is_submit-----"+is_submit+"-----userphonenum-----"+userphonenum);
             //手机号码通过
-        } else {
-            is_submit=false;
-        }
-        if (isEmail(useremail)){
-            is_submit = true ;
-            Log.i("issubmit","is_submit-----"+is_submit+"-----useremail-----"+useremail);
-            //邮箱地址通过
         } else {
             is_submit=false;
         }
@@ -509,70 +513,181 @@ public class OpenActivity extends AppCompatActivity {
         return m.matches();
     }
 
-    // 正则判断是否为正确的邮箱格式
-    public boolean isEmail(String mobiles) {
-        Pattern p = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
-        Matcher m = p.matcher(mobiles);
-        return m.matches();
+    public void ChooseStorePicture(View view){
+        new ActionSheetDialog(OpenActivity.this)
+                .builder()
+                .setTitle("选项")
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("拍摄照片", ActionSheetDialog.SheetItemColor.Red,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                doHandlerPhoto(PIC_FROM_CAMERA);// 用户点击了从照相机获取
+                                // onActivityResult(PIC_FROM_CAMERA,0,null);
+                            }
+                        })
+                .addSheetItem("选取本地", ActionSheetDialog.SheetItemColor.Red,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                doHandlerPhoto(PIC_FROM＿LOCALPHOTO);
+                            }
+                        }).show();
+        where = 1;
     }
 
-//    public void ChooseStorePicture(View view){
-//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-//// whether show camera
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-//// max select image amount
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-//        startActivityForResult(intent,REQUEST_IMAGE);
-//        where = 1;
-//    }
-//
-//    public void ChooseUserPicture(View view){
-//        Intent intent = new Intent(OpenActivity.this,MultiImageSelectorActivity.class);
-//// whether show camera
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-//// max select image amount
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-//// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-//        startActivityForResult(intent,REQUEST_IMAGE);
-//        where = 2;
-//    }
+
+    public void ChooseUserPicture(View view){
+        new ActionSheetDialog(OpenActivity.this)
+                .builder()
+                .setTitle("选项")
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("拍摄照片", ActionSheetDialog.SheetItemColor.Red,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                doHandlerPhoto(PIC_FROM_CAMERA);// 用户点击了从照相机获取
+                                // onActivityResult(PIC_FROM_CAMERA,0,null);
+                            }
+                        })
+                .addSheetItem("选取本地", ActionSheetDialog.SheetItemColor.Red,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                doHandlerPhoto(PIC_FROM＿LOCALPHOTO);
+                            }
+                        }).show();
+        where = 2;
+    }
+
+    private void doHandlerPhoto(int type) {
+        try {
+            // 保存裁剪后的图片文件
+            File pictureFileDir = new File(
+                    Environment.getExternalStorageDirectory(), "/maimai");
+            if (!pictureFileDir.exists()) {
+                pictureFileDir.mkdirs();
+            }
+            int rand=(int)(Math.random()*100000);
+            Log.i("ran",rand+"");
+            File picFile = new File(pictureFileDir, rand+".jpeg");
+            if (!picFile.exists()) {
+                picFile.createNewFile();
+                Log.i("imgs",picFile.toString());
+            }
+            photoUri = Uri.fromFile(picFile);
+            Log.i("img",photoUri.toString());
+            if (type == PIC_FROM＿LOCALPHOTO) {
+                Intent intent = getCropImageIntent();
+                startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
+            } else {
+                Intent cameraIntent = new Intent(
+                        MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(cameraIntent, PIC_FROM_CAMERA);
+            }
+
+        } catch (Exception e) {
+            Log.i("HandlerPicError", "处理图片出现错误");
+        }
+    }
+
+    /**
+     * 调用图片剪辑程序
+     */
+    public Intent getCropImageIntent() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+        intent.setType("image/*");
+        setIntentParams(intent);
+        return intent;
+    }
+
+    /**
+     * 启动裁剪
+     */
+    private void cropImageUriByTakePhoto() {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(photoUri, "image/*");
+        setIntentParams(intent);
+        startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
+    }
+
+    /**
+     * 设置公用参数
+     */
+    private void setIntentParams(Intent intent)
+    {
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 600);
+        intent.putExtra("outputY", 600);
+        intent.putExtra("noFaceDetection", true); // no face detection
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+    }
+
+    private Bitmap decodeUriAsBitmap(Uri uri)
+    {
+        Bitmap bitmap = null;
+        try
+        {
+            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        return bitmap;
+    }
 
     //跳转页面回调方法
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_IMAGE){
-            if(resultCode == Activity.RESULT_OK){
-                // Get the result list of select image paths
-//                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-//                for (String s:path){
-//
-//                }
-//
-//                if (where == 1){
-//                    mStoreFilePath = path.get(0).toString();
-//                    iv_open_storepicture.setImageDrawable(null);
-//                    iv_open_storepicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-//                } else if (where == 2){
-//                    mUserFilePath = path.get(0).toString();
-//                    iv_open_userpicture.setImageBitmap(null);
-//                    iv_open_userpicture.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-//                }
-
-            }
-        } else{
-            if (resultCode == 3){
-                WEIDU = data.getDoubleExtra("weidu",0);
-                JINGDU = data.getDoubleExtra("jingdu",0);
-                Log.i("sss","WEIDU"+WEIDU);
-                Log.i("sss","JINGDU"+JINGDU);
-                btn_open_storeaddress.setText(placeName);
-            }
+        switch (requestCode)
+        {
+            case PIC_FROM_CAMERA: // 拍照
+                try
+                {
+                    cropImageUriByTakePhoto();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            case PIC_FROM＿LOCALPHOTO:
+                try
+                {
+                    if (photoUri != null)
+                    {
+                        Bitmap bitmap = decodeUriAsBitmap(photoUri);
+                        if (where == 1){
+                            iv_open_storepicture.setImageBitmap(bitmap);
+                        } else if (where == 2){
+                            iv_open_userpicture.setImageBitmap(bitmap);
+                        }
+                    }
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                if (resultCode == 3){
+                    WEIDU = data.getDoubleExtra("weidu",0);
+                    JINGDU = data.getDoubleExtra("jingdu",0);
+                    Log.i("sss","WEIDU"+WEIDU);
+                    Log.i("sss","JINGDU"+JINGDU);
+                    btn_open_storeaddress.setText(placeName);
+                }
+                break;
         }
+
     }
 
 }
