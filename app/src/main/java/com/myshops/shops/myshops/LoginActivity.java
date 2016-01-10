@@ -1,8 +1,6 @@
 package com.myshops.shops.myshops;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_login)
