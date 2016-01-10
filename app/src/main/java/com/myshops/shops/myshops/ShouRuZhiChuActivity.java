@@ -31,7 +31,8 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
     Shouruyuzhichu srAdapter;
     private TextView txt_shouru, txt_zhichu, txt_shourus; //收入总额   支出总额  隐藏收入总额
     private CheckBox check_xy; //显示隐藏按钮
-    Float a;
+    private List<Float> prices = new ArrayList<>();
+    private float a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,21 +108,29 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
                         JSONArray datas = jo.getJSONArray("data");
 
                         for (int i = 0; i < 10; i++) {
-//                            Shouruyuzhichu sr = new Shouruyuzhichu();
+                            Shouruyuzhichu sr = new Shouruyuzhichu();
                             JSONObject info = datas.getJSONObject(i);
-//                            xs.setImg(info.getString("goodsThums").toString());
-//                            Log.i("xiaoshouSuc", "商品名称" + info.getString("goodsName").toString());
-//                            xs.setData(info.getString("saleTime").toString());
-//                            Log.i("pricess","价格"+info.get("shopPrice"));
-//                            a += (Float) info.get("shopPrice");
-//                            sr.setShangpin_price_first(info.getString("shopPrice").toString());
-//                            xs.setShangming_name(info.gtString("goodsName").toString());
-//                            xs.setCount(info.getString("saleCount").toString());
+                            sr.setImg(info.getString("goodsThums").toString());//商品图片
+                            sr.setShangpin_price_two(info.getString("markeprice").toString());//商品原价
+                            sr.setShangpin_price_first(info.getString("shopPrice").toString());//商品现价
+                            sr.setShangpin_title(info.getString("goodsName").toString());//商品名称
+                            sr.setShangpin_count(info.getString("saleCount").toString());//销售个数
+                            sr.setShangpin_count(info.getString("saleCount").toString());//销售颜色
+                            sr.setShangpin_count(info.getString("saleCount").toString());//销售尺码
+
+                            a= a + Float.valueOf(info.get("shopPrice").toString());
+//
+//
 //                            list.add(sr);
                         }
-//                        txt_shouru.setText(a.toString());
-                        Log.i("pricess","结束");
-                        Log.i("srzclog","Json数据: "+a);
+//
+//                        float p = 0;
+//                        for (int i = 0; i < prices.size(); i++) {
+//                            p+= prices.get(i);
+//                        }
+                        Log.i("pricess","结束总价格："+a);
+                        txt_shouru.setText(a+"/元");
+//                        Log.i("srzclog","Json数据: "+a);
 //                        srAdapter = new ShouruAdapter(getApplicationContext(),list);
 //                        listView.setAdapter(srAdapter);
 
