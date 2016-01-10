@@ -6,13 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.myshops.shops.adapter.ShouruAdapter;
 import com.myshops.shops.bean.Shouruyuzhichu;
-import com.myshops.shops.bean.Xiaoshoujilu;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.ToastUtil;
 
@@ -20,7 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.view.annotation.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,7 +113,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
 //                            Log.i("xiaoshouSuc", "商品名称" + info.getString("goodsName").toString());
 //                            xs.setData(info.getString("saleTime").toString());
 //                            Log.i("pricess","价格"+info.get("shopPrice"));
-//                            a += (Float) info.get("shopPrice");
+                            a += (Float) info.get("shopPrice");
 //                            sr.setShangpin_price_first(info.getString("shopPrice").toString());
 //                            xs.setShangming_name(info.gtString("goodsName").toString());
 //                            xs.setCount(info.getString("saleCount").toString());

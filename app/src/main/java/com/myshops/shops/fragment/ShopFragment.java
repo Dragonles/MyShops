@@ -26,7 +26,36 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.fragment_shop)
 public class ShopFragment extends Fragment {
 
-
+    /**
+     * 销售记录 页面
+     * */
+    @Event(value = R.id.line_xiaoshou)
+    private void xiaoClick(View v) {
+        Intent intent = new Intent(getActivity(), XiaoShouJiLuActivity.class);
+        startActivity(intent);
+    }
+    /**
+     * 收入总额 页面
+     * */
+    @Event(value = R.id.line_shouru)
+    private void shouruClick(View v) {
+        Intent intent = new Intent(getActivity(), ShouRuZhiChuActivity.class);
+        startActivity(intent);
+    }
+    /**
+     * 进货市场 页面
+     * */
+    @Event(value = R.id.line_shichang)
+    private void shichangClick(View v) {
+        ToastUtil.ToastLongs(getActivity(),"此功能正在努力开发中..");
+    }
+    /**
+     * 进货记录 页面
+     * */
+    @Event(value = R.id.line_jinhuo)
+    private void jinhuoClick(View v) {
+        ToastUtil.ToastLongs(getActivity(),"此功能正在努力开发中..");
+    }
 
     Button buttons;
     @Event(value = R.id.shop_info)
