@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="ziti_Size">25sp</dimen>
-    <dimen name="right_zitiSize">20sp</dimen>
+    <dimen name="right_zitiSize">18sp</dimen>
     <dimen name="fenlei_height">40dp</dimen>
 
     <!-- ������ť���߶� -->
@@ -16,4 +16,59 @@
     <!-- ������ť���ִ�С -->
     <dimen name="pickerview_topbar_btn_textsize">20sp</dimen>
     <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <!--添加商品-->
+    <dimen name="wancheng_size">14sp</dimen>
+    <dimen name="margin_top">15dp</dimen>
+    <dimen name="add_left_right">15dp</dimen>
+    <dimen name="add_K_height">50dp</dimen>
+    <dimen name="Left_title_text_size">16sp</dimen>
+    <dimen name="Right_neirong_text_size">14sp</dimen>
+    <dimen name="img_neirong">150dp</dimen>
+    <dimen name="img_left">5dp</dimen>
+    <!--字体的公共样式-->
+    <dimen name="biaoti">20sp</dimen>
+    <!--top的公共样式-->
+    <dimen name="xian">1dp</dimen>
+    <dimen name="editetext_height">40dp</dimen>
+    <dimen name="top_height">55dp</dimen>
+    <dimen name="fanhui_padding_left">17dp</dimen>
+    <dimen name="fanhui_padding_right">13dp</dimen>
+    <dimen name="top_bottom">6dp</dimen>
+    <dimen name="paddingleft">10dp</dimen>
+    <dimen name="paddingright">10dp</dimen>
+    <!--首页-->
+    <dimen name="mb">5dp</dimen>
+    <dimen name="b_height">40dp</dimen>
+
+    <!--搜索页面-->
+    <dimen name="sousuo_K_marginRight">33dp</dimen>
+    <dimen name="ding_Right">50dp</dimen>
+
+    <!--登陆页面-->
+    <dimen name="login_title_size">20sp</dimen>
+    <dimen name="K_top">20dp</dimen>
+    <dimen name="K_height">50dp</dimen>
+    <dimen name="text_left_right">15dp</dimen>
+
+    <dimen name="dingdan_top_bottom">7.5dp</dimen>
+    <!--编辑店铺-->
+    <dimen name="_top_head">30dp</dimen>
+    <dimen name="_nei_height">45dp</dimen>
+    <dimen name="_nei_edit_width">200dp</dimen>
+    <dimen name="_dianpu_touxiang_height">80dp</dimen>
+
+    <dimen name="text_size_bianji">17sp</dimen>
+    <!--编辑地址-->
+    <dimen name="bianjidizhi_top">20dp</dimen>
+    <dimen name="edit_top">5dp</dimen>
+    <dimen name="edit_top_ten">10dp</dimen>
+    <!--结算账户-->
+    <dimen name="jilv">120dp</dimen>
+    <!--钱包-->
+    <dimen name="djs_height">70dp</dimen>
+    <dimen name="djs_size">15sp</dimen>
+
+    <!--商品-->
+    <dimen name="top_tubiao_zi_margintop">3dp</dimen>
+    <dimen name="sousuo_K">40dp</dimen>
 </resources>

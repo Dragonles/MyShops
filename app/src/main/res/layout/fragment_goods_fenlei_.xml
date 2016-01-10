@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <com.myshops.shops.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/rotate_header_web_view_frame_classify"
+        android:layout_width="match_parent"
+        android:layout_height="481dp">
+        <include layout="@layout/refresh_head" />
+        <com.myshops.shops.pulltorefresh.pullableview.PullableListView
+            android:id="@+id/fenlei_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_above="@+id/fenlei_foot"
+            android:divider="@color/list_button_xian"
+            android:dividerHeight="0.2dp" />
+        <include layout="@layout/load_more" />
+    </com.myshops.shops.pulltorefresh.PullToRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/fenlei_listView"
+        android:id="@+id/fenlei_foot">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:id="@+id/textView_addClassify"
+                android:text="@string/xinjianfenlei"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"/>
+</LinearLayout>
