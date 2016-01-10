@@ -46,7 +46,6 @@ public class Goods_xiajia_Fragment extends Fragment {
                 .setOnRefreshListener(new MyListener());
         tianjiaShangpinAdapter = new TianjiaShangpinAdapter(getActivity(),xiajia_list);
         Lv_xiajia = (ListView) v.findViewById(R.id.listView_xiajia);
-        layout_data = (PullToRefreshLayout) v.findViewById(R.id.rotate_header_web_view_frame_xiajia);
         getXiajiaShuju(null);
         return v;
     }
@@ -71,10 +70,11 @@ public class Goods_xiajia_Fragment extends Fragment {
                 @Override
                 public void handleMessage(Message msg)
                 {
-                    xiajia_list.clear();
+                    list_shu = 10;
                     shangti = 0;
-                    getXiajiaShuju(null);
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    xiajia_list.clear();
+                    getXiajiaShuju(pullToRefreshLayout);
+//                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
         }
@@ -87,10 +87,9 @@ public class Goods_xiajia_Fragment extends Fragment {
                 @Override
                 public void handleMessage(Message msg)
                 {
-                    list_shu+=5;
-                    Log.i("GG","!!!!!!!!MaD的值"+shangti);
+                    list_shu+=10;
                         getXiajiaShuju(pullToRefreshLayout);
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+//                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
         }
@@ -131,9 +130,11 @@ public class Goods_xiajia_Fragment extends Fragment {
                         shangti = list_shu;
                         if ( pullToRefreshLayout == null){
                             Lv_xiajia.setAdapter(new TianjiaShangpinAdapter(getActivity(),xiajia_list));
+                            mprogresssdialog.dismiss();
                         }else {
                             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                             tianjiaShangpinAdapter.notifyDataSetChanged();
+                            mprogresssdialog.dismiss();
                         }
 
                     }else{

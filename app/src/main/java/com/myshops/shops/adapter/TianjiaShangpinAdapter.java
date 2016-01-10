@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.myshops.shops.bean.Tianjiashangpin;
 import com.myshops.shops.myshops.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

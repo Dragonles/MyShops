@@ -6,9 +6,16 @@ package com.myshops.shops.bean;
 public class Goods_classify {
     private String classify_name;
     private String classify_count;
+    private String catId;
 
     public Goods_classify(){
 
+    }
+
+    public Goods_classify(String classify_name, String classify_count, String catId) {
+        this.classify_name = classify_name;
+        this.classify_count = classify_count;
+        this.catId = catId;
     }
 
     public Goods_classify(String classify_name, String classify_count) {
@@ -32,11 +39,20 @@ public class Goods_classify {
         this.classify_count = classify_count;
     }
 
+    public String getCatId() {
+        return catId;
+    }
+
+    public void setCatId(String catId) {
+        this.catId = catId;
+    }
+
     @Override
     public String toString() {
         return "Goods_classify{" +
                 "classify_name='" + classify_name + '\'' +
                 ", classify_count='" + classify_count + '\'' +
+                ", catId='" + catId + '\'' +
                 '}';
     }
 }

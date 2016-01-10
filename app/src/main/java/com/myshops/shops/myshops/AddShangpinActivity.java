@@ -1,13 +1,8 @@
 package com.myshops.shops.myshops;
 
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,29 +14,21 @@ import android.widget.TextView;
 
 import com.myshops.shops.untils.HttpUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
-import java.util.List;
-
-import me.nereo.imagechoose.MultiImageSelectorActivity;
 
 @ContentView(R.layout.activity_add_shangpin)
-public class AddShangPinActivity extends BaseActivity implements View.OnClickListener {
+public class AddShangpinActivity extends BaseActivity implements View.OnClickListener {
     private ProgressDialog mProgressDialog;
     private static final int REQUEST_IMAGE =2;
     String mFilePath,zFilePath;
     SharedPreferences spf;
     HashMap<String,String> map = new HashMap<>();
     String id;
-
-
     @ViewInject(R.id.shangpinleimu)
     private TextView shangpinleimu;
 
@@ -100,15 +87,8 @@ public class AddShangPinActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        Log.i("GG","id:--"+id);
-        if ("".equals(id)){
-
-        }else {
-            setShangPin();
-        }
+        spf = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+//            setShangPin();
 
         qu_img.setOnClickListener(this);
         qu_img2.setOnClickListener(this);
@@ -120,7 +100,7 @@ public class AddShangPinActivity extends BaseActivity implements View.OnClickLis
 
     @Event(R.id.tianjiasp)
     private void tjspClick(View view){
-        mProgressDialog = ProgressDialog.show(AddShangPinActivity.this, "", "正在加载...");
+        mProgressDialog = ProgressDialog.show(AddShangpinActivity.this, "", "正在加载...");
         String types = "/AllOrders/addgoods";
         String spjs = String.valueOf(shangpinjieshao.getText());
         String spname = String.valueOf(shangpinname.getText());
@@ -128,35 +108,30 @@ public class AddShangPinActivity extends BaseActivity implements View.OnClickLis
         map.put("goodsName",spname);
         map.put("goodsDesc",spjs);
         map.put("token",spf.getString("token",""));
-        HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.i("aaa","-----onSuccess"+result);
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i("aaa","-----onError");
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+//        HttpUtils.httputilsPost(types, map, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.i("GG","结果"+result);
+//                mProgressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//                Log.i("GG","错误"+ex);
+//                mProgressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//                Log.i("GG","结束");
+//            }
+//        });
     }
-
-//    @Event(R.id.shezhiyunfei)
-//    private void szyfClick(View view){
-//        startActivity(new Intent(AddShangPinActivity.this,YunfeiActivity.class));
-//    }
 
     //添加规格块
     @Event(R.id.add_guige)
@@ -169,81 +144,64 @@ public class AddShangPinActivity extends BaseActivity implements View.OnClickLis
             guige_3.setVisibility(View.VISIBLE);
         }
     }
-
-    @Event(R.id.tjimg)
-    private void tjimgClick(View view){
-        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
-
-        // whether show camera
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-
-        // max select image amount
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
-
-        // select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-
-        startActivityForResult(intent, REQUEST_IMAGE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE){
-            if(resultCode == RESULT_OK){
-                // Get the result list of select image paths
-                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                for (String s : path){
-                    Log.i("branddd",s);
-                }
-                if(add_img.getVisibility() == View.GONE){
-                    add_img.setVisibility(View.VISIBLE);
-                    imgs.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                }else if(add_img2.getVisibility() == View.GONE){
-                    add_img2.setVisibility(View.VISIBLE);
-                    imgs2.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                }else if(add_img3.getVisibility() == View.GONE){
-                    add_img3.setVisibility(View.VISIBLE);
-                    imgs3.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
-                }
-            }
-        }
-    }
-
-
+    //获取分类
     @Event(R.id.shangpinleimu)
     private void spClick(View view){
-        final String[] leimu = {"鼠标","电脑","服饰","运动鞋"};
-        final int[] i = new int[1];
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddShangPinActivity.this);
-        builder.setTitle("类目");
-        builder.setCancelable(true);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        Log.i("GG","!!!!!!!!!!!!!");
+        HashMap<String ,String> hashMap = new HashMap<>();
+//        hashMap.put("token",spf.getString("token",""));
+        hashMap.remove("sign");
+        HttpUtils.httputilsGet("/Api/getGoodsCats", hashMap, new Callback.CommonCallback<String>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(i[0] == 1){
+            public void onSuccess(String result) {
+                Log.i("GG","分类结果"+result.toString());
+            }
 
-                }else{
-                    shangpinleimu.setText(leimu[0]);
-                }
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("GG","错误"+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
 
             }
-        });
-        builder.setSingleChoiceItems(leimu, 0,new  DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                shangpinleimu.setText(leimu[which]);
-                i[0] = 1;
+            public void onFinished() {
+                Log.i("GG","结束");
             }
         });
-        AlertDialog alert = builder.create();
-        alert.show();
+//        final String[] leimu = {"鼠标","电脑","服饰","运动鞋"};
+//        final int[] i = new int[1];
+//        AlertDialog.Builder builder = new AlertDialog.Builder(AddShangpinActivity.this);
+//        builder.setTitle("类目");
+//        builder.setCancelable(true);
+//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if(i[0] == 1){
+//
+//                }else{
+//                    shangpinleimu.setText(leimu[0]);
+//                }
+//            }
+//        });
+//        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        builder.setSingleChoiceItems(leimu, 0,new  DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                shangpinleimu.setText(leimu[which]);
+//                i[0] = 1;
+//            }
+//        });
+//        AlertDialog alert = builder.create();
+//        alert.show();
     }
 
     @Event(R.id.tjspfh)
@@ -269,61 +227,61 @@ public class AddShangPinActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    //获取商品信息
-    public void setShangPin(){
-        //属性
-        String types = "/Api/extQueryByToken";
-//        map.put("url","/Api/register");
-        map.put("token",spf.getString("token",""));
-        map.put("sql","select * from wst_goods where goodsId ='"+id+"'");
-        map.remove("sign");
-
-        HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String s) {
-                Log.i("GG","onSuccess::::::"+s.toString());
-
-                String ct = null;
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    ct = jsonObject.getString("code");
-
-                    if(ct.equals("200")){
-                        JSONArray list = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < list.length(); i++) {
-                            JSONObject list_dahu = list.getJSONObject(i);
-                            String goodsId = list_dahu.getString("goodsId");
-                            String goodsSn = list_dahu.getString("goodsSn");
-                            String goodsName = list_dahu.getString("goodsName");
-                            String goodsImg = list_dahu.getString("goodsImg");
-                            String goodsThums = list_dahu.getString("goodsThums");
-                            String marketPrice = list_dahu.getString("marketPrice");
-                            String goodsStock = list_dahu.getString("goodsStock");
-
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable throwable, boolean b) {
-                System.out.println("onError::::::"+throwable.getMessage());
-            }
-
-            @Override
-            public void onCancelled(CancelledException e) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
+//    //获取商品信息
+//    public void setShangPin(){
+//        //属性
+//        String types = "/Api/extQueryByToken";
+//        Log.i("GG","TOKEN的值"+spf.getString("token",""));
+//        map.put("token",spf.getString("token",""));
+//        map.put("sql","select * from wst_goods where goodsId ='"+id+"'");
+//        map.remove("sign");
+//
+//        HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String s) {
+//                Log.i("GG","成功"+s.toString());
+//
+//                String ct = null;
+//                try {
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    ct = jsonObject.getString("code");
+//
+//                    if(ct.equals("200")){
+//                        JSONArray list = jsonObject.getJSONArray("data");
+//                        for (int i = 0; i < list.length(); i++) {
+//                            JSONObject list_dahu = list.getJSONObject(i);
+//                            String goodsId = list_dahu.getString("goodsId");
+//                            String goodsSn = list_dahu.getString("goodsSn");
+//                            String goodsName = list_dahu.getString("goodsName");
+//                            String goodsImg = list_dahu.getString("goodsImg");
+//                            String goodsThums = list_dahu.getString("goodsThums");
+//                            String marketPrice = list_dahu.getString("marketPrice");
+//                            String goodsStock = list_dahu.getString("goodsStock");
+//
+//                        }
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable throwable, boolean b) {
+//                System.out.println("错误"+throwable.getMessage());
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException e) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//                Log.i("GG","结束");
+//            }
+//        });
+//    }
 
 
 }

@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.myshops.shops.adapter.TianjiaShangpinAdapter;
 import com.myshops.shops.bean.Tianjiashangpin;
-import com.myshops.shops.myshops.AddShangPinActivity;
+import com.myshops.shops.myshops.AddShangpinActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.pulltorefresh.PullToRefreshLayout;
 import com.myshops.shops.untils.HttpUtils;
@@ -112,7 +112,7 @@ public class Goods_chushou_Fragment extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AddShangPinActivity.class);
+                Intent intent = new Intent(getActivity(),AddShangpinActivity.class);
                 startActivity(intent);
             }
         });
@@ -190,15 +190,15 @@ public class Goods_chushou_Fragment extends Fragment {
         hashMap_data.put("token",spf.getString("token",""));
         hashMap_data.remove("sign");
         if(w == 1){
-            hashMap_data.put("sql","select * from wst_goods order by createTime");
+            hashMap_data.put("sql","select * from wst_goods order by createTime limit 0,11");
             Log.i("GG","1");
         }
         if(w == 2){
-            hashMap_data.put("sql","select * from wst_goods order by saleCount");
+            hashMap_data.put("sql","select * from wst_goods order by saleCount limit 0,5");
             Log.i("GG","2");
         }
         if(w == 3){
-            hashMap_data.put("sql","select * from wst_goods order by goodsStock");
+            hashMap_data.put("sql","select * from wst_goods order by goodsStock limit 0,5");
             Log.i("GG","3");
         }
         mprogresssdialog = ProgressDialog.show(getActivity(),"","正在加载...");

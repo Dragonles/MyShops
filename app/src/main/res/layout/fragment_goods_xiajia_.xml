@@ -6,12 +6,12 @@
     <com.myshops.shops.pulltorefresh.PullToRefreshLayout
         android:id="@+id/rotate_header_web_view_frame_xiajia"
         android:layout_width="match_parent"
-        android:layout_height="490dp" >
+        android:layout_height="match_parent" >
         <include layout="@layout/refresh_head" />
         <com.myshops.shops.pulltorefresh.pullableview.PullableListView
             android:id="@+id/listView_xiajia"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="520dp"
             android:background="@color/white"
             android:divider="@color/list_button_xian"
             android:dividerHeight="0.2dp" />

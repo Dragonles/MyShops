@@ -59,6 +59,9 @@
             android:name=".ShopProveActivity"
             android:label="@string/title_activity_shop_prove"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddShangpinActivity"
+            android:label="tyui"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:label="ff"
