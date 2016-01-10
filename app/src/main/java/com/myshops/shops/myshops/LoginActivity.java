@@ -185,16 +185,14 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
-
-
-
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("aa","onerror"+ex.getMessage() + "");
+                pd.dismiss();
+                Toast.makeText(x.app(),"系统出现异常，请稍后再试！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

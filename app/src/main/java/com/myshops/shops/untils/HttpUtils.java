@@ -5,9 +5,11 @@ import android.util.Log;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.MD5;
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -97,6 +99,20 @@ public class HttpUtils {
         params.addQueryStringParameter("sign",map.get("sign"));
         //返回JSON数据
         x.http().get(params,callback);
+
+    }
+
+    public static void httpPostImage(String path,String token,String url,Callback.CommonCallback<String> callback){
+
+        RequestParams params = new RequestParams(Config.url+url);
+        params.addQueryStringParameter("token",token);
+        params.setMethod(HttpMethod.POST);
+        params.setMultipart(true);
+        params.addBodyParameter("image",new File(path));
+        x.http().post(params,callback);
+
+
+
 
     }
 
