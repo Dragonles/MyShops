@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="wheelview">
         <attr name="gravity">
-            <enum name="center" value="17"/>
+            <enum name="center" value="17"/>     ds
             <enum name="left" value="3"/>
             <enum name="right" value="5"/>
         </attr>
@@ -10,4 +10,9 @@
         <attr name="textColorCenter" format="color"/>
         <attr name="dividerColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
 </resources>

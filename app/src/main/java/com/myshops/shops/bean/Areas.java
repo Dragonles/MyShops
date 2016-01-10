@@ -1,60 +1,30 @@
 package com.myshops.shops.bean;
 
 /**
- * Created by xuguojunjun on 2015/12/25.
+ * Created by 陈增庆 on 2015/12/30.
  */
 public class Areas {
-    private String areaId;
-    private String parentId;
-    private String areaName;
-    private String areaType;
+    String id ;
+    String name;
 
-    public Areas() {
+    public String getId() {
+        return id;
     }
 
-    public Areas(String areaId, String parentId, String areaName,String areaType) {
-        this.areaId = areaId;
-        this.parentId = parentId;
-        this.areaName = areaName;
-        this.areaType = areaType;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getAreaId() {
-        return areaId;
+    public String getName() {
+        return name;
     }
 
-    public void setAreaId(String areaId) {
-        this.areaId = areaId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
-    }
-
-    public String getAreaType() {
-        return areaType;
-    }
-
-    public void setAreaType(String areaType) {
-        this.areaType = areaType;
-    }
-
-    //这个用来显示在PickerView上面的字符串,PickerView会通过反射获取getPickerViewText方法显示出来。
-    public String getPickerViewText() {
-        //这里还可以判断文字超长截断再提供显示
-        return areaName;
+    public Areas(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }
-

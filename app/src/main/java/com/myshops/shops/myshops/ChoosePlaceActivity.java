@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +30,21 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Text;
 import com.amap.api.maps.model.TextOptions;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeAddress;
+import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
+import com.myshops.shops.untils.AMapUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+
+/**
+ * 地图选择页面
+ * */
 
 public class ChoosePlaceActivity extends AppCompatActivity implements
         GeocodeSearch.OnGeocodeSearchListener,AMap.OnCameraChangeListener {
@@ -64,6 +71,7 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
     private GeocodeSearch geocoderSearch;
     private TextView text_chooseplace_place;
     ProgressDialog pd;
+    private Marker geoMarker;
     //
 
     @Override
@@ -91,7 +99,12 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         }
         geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
-        dingwei();
+
+        if ("".equals(OpenActivity.choosename)){
+            dingwei();
+        } else {
+            getLatlon(OpenActivity.choosename);
+        }
 
         aMap.setOnCameraChangeListener(this);
 
@@ -101,8 +114,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Log.i("onMapClick","-----onMapClick-----"+latLng+"");
-
                 Toast.makeText(ChoosePlaceActivity.this,"位置已选择，请返回",Toast.LENGTH_SHORT).show();
                 btn_chooseplace_back.setVisibility(View.VISIBLE);
 
@@ -112,12 +123,8 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
 
                 x = latLng.latitude;
                 y = latLng.longitude;
-                Intent data = new Intent();
-                data.putExtra("weidu", x);
-                data.putExtra("jingdu", y);
-                OpenActivity.placeName = "" + text_chooseplace_place.getText();
 
-                setResult(3, data);
+                fanhui();
 
                 latLonPoint = new LatLonPoint(x,y);
                 getAddress(latLonPoint);
@@ -129,6 +136,19 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         });
     }
 
+    /**
+     * 用于返回数据
+     *
+     * */
+    public void fanhui(){
+
+        Intent data = new Intent();
+        data.putExtra("weidu", x);
+        data.putExtra("jingdu", y);
+        OpenActivity.placeName = "" + text_chooseplace_place.getText();
+        setResult(3, data);
+    }
+
     public void choosePlaceBack(View view){
         this.finish();
     }
@@ -138,7 +158,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
      * 响应逆地理编码
      */
     public void getAddress(final LatLonPoint latLonPoint) {
-        Log.i("ampmapclikc", "响应逆地理编码");
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 100,
                 GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
         geocoderSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
@@ -148,7 +167,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
      */
     @Override
     public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
-        Log.i("ampmapclikc", "逆地理编码回调");
         if (rCode == 0) {
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
@@ -156,7 +174,7 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
                 text_chooseplace_place.setVisibility(View.VISIBLE);
                 addressName = result.getRegeocodeAddress().getFormatAddress();
                 text_chooseplace_place.setText(addressName);
-                OpenActivity.placeName = "" + addressName;
+                fanhui();
 
 
             } else {
@@ -172,11 +190,52 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
     }
 
     /**
+     * 响应地理编码
+     */
+    public void getLatlon(final String name) {
+
+        GeocodeQuery query = new GeocodeQuery(name, "");// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，
+        geocoderSearch.getFromLocationNameAsyn(query);// 设置同步地理编码请求
+    }
+
+
+    /**
      * 地理编码查询回调
      */
     @Override
     public void onGeocodeSearched(GeocodeResult result, int rCode) {
+        if (rCode == 0) {
+            if (result != null && result.getGeocodeAddressList() != null
+                    && result.getGeocodeAddressList().size() > 0) {
+                GeocodeAddress address = result.getGeocodeAddressList().get(0);
+                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                        AMapUtil.convertToLatLng(address.getLatLonPoint()), 15));
+                geoMarker.setPosition(AMapUtil.convertToLatLng(address
+                        .getLatLonPoint()));
+                addressName = "经纬度值:" + address.getLatLonPoint() + "\n位置描述:"
+                        + address.getFormatAddress();
 
+                text_chooseplace_place.setVisibility(View.VISIBLE);
+                text_chooseplace_place.setText(addressName);
+                latLonPoint = address.getLatLonPoint();
+                x = latLonPoint.getLatitude();
+                y = latLonPoint.getLongitude();
+                getAddress(latLonPoint);
+                fanhui();
+                init();
+
+
+
+            } else {
+
+            }
+        } else if (rCode == 27) {
+
+        } else if (rCode == 32) {
+
+        } else {
+
+        }
     }
 
     // 移动地图
@@ -198,6 +257,7 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         Toast.makeText(ChoosePlaceActivity.this,"位置已选择，请返回",Toast.LENGTH_SHORT).show();
         btn_chooseplace_back.setVisibility(View.VISIBLE);
         ChoosePlaceActivity.this.latLng = cameraPosition.target;
+        fanhui();
         addMarkersToMap();
     }
 
@@ -210,7 +270,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         //初始化定位
         mLocationClient = new AMapLocationClient(this);
         //设置定位回调监听
-
         mLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
@@ -226,15 +285,11 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
                         amapLocation.getLongitude();//获取纬度
                         y = amapLocation.getLongitude();
 
-                        Intent data = new Intent();
-                        data.putExtra("weidu", x);
-                        data.putExtra("jingdu", y);
-                        setResult(3, data);
+                        fanhui();
 
                         latLonPoint = new LatLonPoint(x,y);
                         getAddress(latLonPoint);
 
-                        OpenActivity.placeName = "" + text_chooseplace_place.getText();
                         init();
 
                         amapLocation.getAccuracy();//获取精度信息
@@ -287,7 +342,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
 
     }
 
-
     public void init(){
 
         //改变地图视图为自己的位置
@@ -303,7 +357,6 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         Log.i("suofanfang", mZoom + "");
 
     }
-
 
     private void addMarkersToMap() {
         pd.dismiss();

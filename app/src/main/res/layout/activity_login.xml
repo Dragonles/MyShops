@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/huise"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -43,8 +42,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:background="@color/white">
+        android:paddingBottom="20dp">
         <LinearLayout
             android:layout_width="fill_parent"
             android:orientation="horizontal"

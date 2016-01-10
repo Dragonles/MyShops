@@ -28,30 +28,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.astuetz.PagerSlidingTabStrip
-                android:id="@+id/ddtabs"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="48dip"
-                android:layout_alignParentTop="true"
-                app:pstsIndicatorHeight="2dp"
-                app:pstsIndicatorColor="#e9461a"
-                />
 
-            <android.support.v4.view.ViewPager
-                android:layout_centerInParent="true"
+
+            <me.xiaopan.psts.PagerSlidingTabStrip
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFF"
-                android:id="@+id/viewpager_dd"
-                android:layout_below="@id/ddtabs"
-                android:layout_alignParentLeft="true" />
+                android:id="@+id/slidingTabStrip"
+                app:slidingBlock="@drawable/image_sliding_block"
+                app:allowWidthFull="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="全部订单"/>
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="待发货"/>
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="已发货"/>
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="已完成"/>
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="退款中"/>
+                    <TextView
+                        style="@style/text_slidingTabTitle"
+                        android:text="已退款"/>
+
+                </LinearLayout>
+            </me.xiaopan.psts.PagerSlidingTabStrip>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
+
+
+
+            <!--<com.astuetz.PagerSlidingTabStrip-->
+                <!--android:id="@+id/ddtabs"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_height="48dip"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--app:pstsIndicatorHeight="2dp"-->
+                <!--app:pstsIndicatorColor="#e9461a"-->
+                <!--/>-->
+
+            <!--<android.support.v4.view.ViewPager-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#FFF"-->
+                <!--android:id="@+id/viewpager_dd"-->
+                <!--android:layout_below="@id/ddtabs"-->
+                <!--android:layout_alignParentLeft="true" />-->
         </LinearLayout>
-        <ListView
-            android:layout_width="match_parent"
-            android:id="@+id/listViews"
-            android:layout_below="@id/rly_left"
-            android:layout_height="wrap_content"></ListView>
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:id="@+id/listViews"-->
+            <!--android:layout_below="@id/rly_left"-->
+            <!--android:layout_height="wrap_content"></ListView>-->
     </RelativeLayout>
+
 </FrameLayout>

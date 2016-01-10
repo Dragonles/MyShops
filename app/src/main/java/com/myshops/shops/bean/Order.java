@@ -5,12 +5,29 @@ package com.myshops.shops.bean;
  */
 public class Order  {
     private String username; //买家名称
-   // private String orderStatus; //发货状态
     private String goodsName;//商品名称
     private String goodsNums;//购买数量
     private String totalMoney;//交易金额
     private String orderStatus;//交易状态
     private String goodsThums;//商品图片
+    private String createTime;  //订单创建时间
+    private String isRefund;   //是否退款  0:退款  1不退款
+
+    public String getIsRefund() {
+        return isRefund;
+    }
+
+    public void setIsRefund(String isRefund) {
+        this.isRefund = isRefund;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public String getUsername() {
         return username;
@@ -60,13 +77,15 @@ public class Order  {
         this.orderStatus = orderStatus;
     }
 
-    public Order(String username, String goodsThums, String totalMoney, String goodsNums, String goodsName, String orderStatus) {
+    public Order(String username, String goodsName, String goodsNums, String totalMoney, String orderStatus, String goodsThums, String createTime, String isRefund) {
         this.username = username;
-        this.goodsThums = goodsThums;
-        this.totalMoney = totalMoney;
-        this.goodsNums = goodsNums;
         this.goodsName = goodsName;
+        this.goodsNums = goodsNums;
+        this.totalMoney = totalMoney;
         this.orderStatus = orderStatus;
+        this.goodsThums = goodsThums;
+        this.createTime = createTime;
+        this.isRefund = isRefund;
     }
 
     public Order() {
