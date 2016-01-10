@@ -113,7 +113,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
 //                            Log.i("xiaoshouSuc", "商品名称" + info.getString("goodsName").toString());
 //                            xs.setData(info.getString("saleTime").toString());
 //                            Log.i("pricess","价格"+info.get("shopPrice"));
-                            a += (Float) info.get("shopPrice");
+//                            a += (Float) info.get("shopPrice");
 //                            sr.setShangpin_price_first(info.getString("shopPrice").toString());
 //                            xs.setShangming_name(info.gtString("goodsName").toString());
 //                            xs.setCount(info.getString("saleCount").toString());

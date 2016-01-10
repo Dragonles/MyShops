@@ -4,7 +4,7 @@ package com.myshops.shops.bean;
  * Created by Administrator on 2015/12/18.
  */
 public class Shouruyuzhichu {
-    private int img;
+    private String img;
     private String shangpin_title;
     private String shangpin_color;
     private String shagpin_size;
@@ -22,7 +22,7 @@ public class Shouruyuzhichu {
 
     }
 
-    public Shouruyuzhichu(int img, String shangpin_title, String shangpin_color, String shagpin_size, String shangpin_price_first, String shangpin_price_two, String shangpin_count, String type) {
+    public Shouruyuzhichu(String img, String shangpin_title, String shangpin_color, String shagpin_size, String shangpin_price_first, String shangpin_price_two, String shangpin_count, String type) {
         this.img = img;
         this.shangpin_title = shangpin_title;
         this.shangpin_color = shangpin_color;
@@ -55,11 +55,11 @@ public class Shouruyuzhichu {
         this.price = price;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

@@ -59,7 +59,6 @@ public class ShopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shop,container,false);
-        Toolbar toolbar = (Toolbar)v.findViewById(R.id.toolbar);
         mgoinfo=(ImageButton)v.findViewById(R.id.shop_info);
         iv_userIcon = (ImageView) v.findViewById(R.id.iv_userIcon);
         tv_shop_username = (TextView) v.findViewById(R.id.tv_shop_username);
