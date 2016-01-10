@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         if ("".equals(userloginname) || "".equals(userloginpwd)){
             Toast.makeText(LoginActivity.this,"请输入完整信息",Toast.LENGTH_SHORT).show();
         } else {
+
             String pa = "/Api/login";
             String loginPhone = et_login_phonenum.getText().toString();
             String loginPassword = et_login_pwd.getText().toString();
