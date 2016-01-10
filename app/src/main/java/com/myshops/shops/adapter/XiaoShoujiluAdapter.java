@@ -44,12 +44,18 @@ public class XiaoShoujiluAdapter extends BaseAdapter {
         if(convertView == null){
             v = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.layout_xiaohsoujilu,null);
-            v.img = (ImageView) convertView.findViewById(R.id.shangpin_img);
-            v.name = (TextView) convertView.findViewById(R.id.xiaoshou_name);
-            v.price = (TextView) convertView.findViewById(R.id.xiaoshou_pirce);
-            v.data = (TextView) convertView.findViewById(R.id.xiaoshou_data);
-            v.count = (TextView) convertView.findViewById(R.id.xiaoshou_count);
+            v.img = ((ImageView)convertView.findViewById(R.id.shangpin_img));
+            v.name = ((TextView)convertView.findViewById(R.id.xiaoshou_name));
+            v.price = ((TextView)convertView.findViewById(R.id.xiaoshou_pirce));
+            v.count = ((TextView)convertView.findViewById(R.id.xiaoshou_count));
+            v.data = ((TextView)convertView.findViewById(R.id.xiaoshou_data));
+            convertView.setTag(v);
         }
+        v = (ViewHolder)convertView.getTag();
+        v.count.setText(list.get(position).getCount());
+        v.name.setText(list.get(position).getShangming_name());
+        v.price.setText(list.get(position).getPrice());
+        v.data.setText(list.get(position).getData());
         return convertView;
     }
     class ViewHolder{

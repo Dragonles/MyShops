@@ -3,6 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="fenlei">分类</string>
     <string name="bianji">编辑</string>
+    <string name="tianjia">添加</string>
+    <string name="xinjianfenlei">新建分类</string>
+    <string name="bianjifenlei">编辑分类</string>
     <string name="xiaoshoujilu">销售记录</string>
     <string name="shouruyuzhichu">我的收入/支出</string>
     <string name="jinhuojilu">进货记录</string>
@@ -17,8 +20,46 @@
     <string name="title_activity_shou_ru_zhi_chu">ShouRuZhiChuActivity</string>
     <string name="title_activity_xiao_shou_ji_lu">XiaoShouJiLuActivity</string>
     <string name="title_activity_shangpin_fenlei">ShangpinFenleiActivity</string>
-    <string name="title_activity_photo_chose">PhotoChoseActivity</string>
+
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
     <string name="pickerview_cancel">取消</string>
     <string name="pickerview_submit">确定</string>
+    <!-- 刷新 -->
+    <string name="not_updated_yet">暂未更新过</string>
+    <string name="updated_at">上次更新于%1$s前</string>
+    <string name="updated_just_now">刚刚更新</string>
+    <string name="time_error">时间有问题</string>
+    <!--添加商品-->
+    <string name="addShangpin">添加商品</string>
+    <string name="shangpinLeimu">商品类目</string>
+    <string name="weixuanze">未选择</string>
+    <string name="dianpufenlei">店铺分类</string>
+    <string name="weifenlei">未分类（选填）</string>
+    <string name="shangpinname">商品名称</string>
+    <string name="quming">取个响亮的商品名称吧</string>
+    <string name="shangpinImg">商品图片:</string>
+    <string name="tu_number"> (  /3 )</string>
+    <string name="shangpinjiage">商品价格</string>
+    <string name="dingjia">给商品定个好价格</string>
+    <string name="shangpinkucun">商品库存</string>
+    <string name="kucun_number">设置合理库存避免超卖</string>
+    <string name="shangpinbianma">商品编码</string>
+    <string name="xuantian">（选填）</string>
+    <string name="wancheng">完成</string>
+    <string name="shangpinguige">商品规格</string>
+    <string name="sahngpinleixing">商品类型</string>
 
+    <string name="tianjia_">添加商品规格</string>
+    <string name="yanse_guige">（如颜色尺码等）</string>
+    <string name="shezhiyunfei">设置运费</string>
+    <string name="shangpinleixing">店铺规格</string>
 </resources>

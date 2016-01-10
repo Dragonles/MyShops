@@ -4,11 +4,16 @@ package com.myshops.shops.bean;
  * Created by Administrator on 2015/12/18.
  */
 public class Xiaoshoujilu {
-    private String img;
-    private String shangming_name;
-    private String price;
-    private String data;
-    private String count;
+    private String img;  //商品图片
+    private String shangming_name;  //商品明称
+    private String price; //商品价格
+    private String data;  //商品日期
+    private String count; //商品数量
+
+    public Xiaoshoujilu() {
+
+    }
+
     public void Xiaoshoujilu(){
 
     }

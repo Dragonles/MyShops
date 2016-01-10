@@ -12,6 +12,11 @@ public class Shouruyuzhichu {
     private String shangpin_price_two;
     private String shangpin_count;
     private String type;
+
+    public Shouruyuzhichu() {
+
+    }
+
     public void Shourutuzhichu(){
 
     }
@@ -40,6 +45,7 @@ public class Shouruyuzhichu {
                 ", type='" + type + '\'' +
                 '}';
     }
+
 
     public String getImg() {
         return img;
