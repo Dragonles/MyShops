@@ -43,6 +43,8 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.x;
 
+import org.xutils.view.annotation.Event;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -468,6 +470,16 @@ public class ShopInfoActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+
+    public void shopInfoExit(View view){
+        Intent intent = new Intent(ShopInfoActivity.this,LoginActivity.class);
+        SharedPreferences user = getSharedPreferences("user_info",0);
+        SharedPreferences.Editor edit = user.edit();
+        edit.putString("NAME", "");
+        edit.commit();
+        startActivity(intent);
     }
 
     private void doHandlerPhoto(int type) {

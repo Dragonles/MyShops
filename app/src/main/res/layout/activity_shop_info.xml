@@ -242,6 +242,7 @@
             android:text="退出登录"
             android:textColor="#FFF"
             android:textSize="18sp"
+            android:onClick="shopInfoExit"
             android:id="@+id/btn_shopinfo_exit"
             android:background="@color/public_toolbar_color"/>
 
