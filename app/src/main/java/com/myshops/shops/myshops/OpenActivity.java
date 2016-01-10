@@ -174,17 +174,14 @@ public class OpenActivity extends AppCompatActivity {
             public void onSuccess(String s) {
                 progressDialog.dismiss();
                 Log.i("citys",s.toString());
-
                 areasList.clear();
                 dataset.clear();
                 province.setLength(0);
-
                 try {
                     JSONObject data = new JSONObject(s);
                     String code = data.get("code").toString();
                     String message = data.get("message").toString();
                     JSONArray datas = data.getJSONArray("data");
-
                     for (int i = 0; i < datas.length(); i++) {
                         org.json.JSONObject datas2 = datas.getJSONObject(i);
                         String id = (String) datas2.get("areaId");
@@ -198,9 +195,6 @@ public class OpenActivity extends AppCompatActivity {
                         dataset.add(areasList.get(i).getName());
                     }
                     addPick();
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -354,8 +348,6 @@ public class OpenActivity extends AppCompatActivity {
                         JSONObject info = data.getJSONObject(0);
                         userIds = info.getString("userId");
                         Log.i("userid",userIds+"");
-
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
