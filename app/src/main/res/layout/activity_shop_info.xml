@@ -123,6 +123,7 @@
                         android:layout_height="50dp">
 
                         <TextView
+                            android:id="@+id/tv_name1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="店铺名称"
@@ -132,13 +133,16 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/tv_name1"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
-                            android:id="@+id/ib_shopinfo_shopname_go"
+                            android:id="@+id/et_shopinfo_shopname_go"
+                            android:gravity="right|center"
+                            android:background="@null"
                             android:text=""/>
 
                     </RelativeLayout>
@@ -165,13 +169,16 @@
                             android:id="@+id/textView13" />
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/textView13"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
                             android:id="@+id/ib_settle_invoice_go"
+                            android:gravity="right|center"
+                            android:background="@null"
                             android:text=""/>
 
                     </RelativeLayout>
