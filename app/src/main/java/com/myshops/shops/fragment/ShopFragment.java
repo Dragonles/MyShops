@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.myshops.shops.myshops.MainActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
+import com.myshops.shops.myshops.ShouRuZhiChuActivity;
+import com.myshops.shops.myshops.XiaoShouJiLuActivity;
+import com.myshops.shops.untils.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.xutils.view.annotation.ContentView;
@@ -21,7 +24,9 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.fragment_shop)
-public class ShopFragment extends BaseFragment {
+public class ShopFragment extends Fragment {
+
+
 
     Button buttons;
     @Event(value = R.id.shop_info)

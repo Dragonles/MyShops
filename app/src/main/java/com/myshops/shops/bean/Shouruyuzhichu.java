@@ -9,9 +9,15 @@ public class Shouruyuzhichu {
     private String shangpin_color;
     private String shagpin_size;
     private String shangpin_price_first;
+    private Float price;
     private String shangpin_price_two;
     private String shangpin_count;
     private String type;
+
+    public Shouruyuzhichu() {
+
+    }
+
     public void Shourutuzhichu(){
 
     }
@@ -39,6 +45,14 @@ public class Shouruyuzhichu {
                 ", shangpin_count='" + shangpin_count + '\'' +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public int getImg() {

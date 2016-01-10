@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/18.
  */
-public class shouruAdapter extends BaseAdapter {
+public class ShouruAdapter extends BaseAdapter {
     Context context;
     List<Shouruyuzhichu> list;
-    public shouruAdapter(Context context, List list){
+    public ShouruAdapter(Context context, List list){
         this.context = context;
         this.list = list;
     }

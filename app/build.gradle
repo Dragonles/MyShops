@@ -25,7 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:support-v4:23.1.0'
-    compile 'org.xutils:xutils:3.1.+'
+    compile 'org.xutils:xutils:3.2.+'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile files('libs/umeng-analytics-v5.6.4.jar')
@@ -33,5 +33,5 @@ dependencies {
     compile files('libs/Android_Map_V2.7.20151124.jar')
     compile files('libs/AMap_Location_V2.2.0_20151222.jar')
     compile files('libs/MapApiServices.jar')
-
+    compile 'me.xiaopan:pagerslidingtabstrip:1.6.0'
 }
