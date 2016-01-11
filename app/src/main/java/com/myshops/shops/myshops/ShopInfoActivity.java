@@ -157,8 +157,6 @@ public class ShopInfoActivity extends AppCompatActivity {
                                 Log.i("mima", et_newpwd.getText().toString() + "  " + et_newpwd_algin.getText().toString());
                                 tv_pwd.setText(ns);
                                 smima = ns;
-
-
                             } else {
 
                                 Log.i("mima", et_newpwd.getText().toString() + " a " + et_newpwd_algin.getText().toString());
