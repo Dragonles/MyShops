@@ -99,10 +99,12 @@ public class ChoosePlaceActivity extends AppCompatActivity implements
         }
         geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
-
+        Log.i("qing",OpenActivity.choosename+"------ChooseActivity------");
         if ("".equals(OpenActivity.choosename)){
+            Log.i("qing",OpenActivity.choosename+"------ChooseActivity  if ------");
             dingwei();
         } else {
+            Log.i("qing",OpenActivity.choosename+"------ChooseActivity  else ------");
             getLatlon(OpenActivity.choosename);
         }
 
