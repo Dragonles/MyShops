@@ -79,7 +79,7 @@ public class OpenActivity extends AppCompatActivity {
     private Uri photoUri;
     private final int PIC_FROM_CAMERA = 1;
     private final int PIC_FROM＿LOCALPHOTO = 0;
-    static File stopicFile,userpicFile;
+    String photofile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +188,7 @@ public class OpenActivity extends AppCompatActivity {
                     String message = data.get("message").toString();
                     JSONArray datas = data.getJSONArray("data");
                     for (int i = 0; i < datas.length(); i++) {
-                        org.json.JSONObject datas2 = datas.getJSONObject(i);
+                        JSONObject datas2 = datas.getJSONObject(i);
                         String id = (String) datas2.get("areaId");
                         String name = (String) datas2.get("areaName");
                         Log.i("areas","ID:"+id+"-----名称："+name);
@@ -331,8 +331,7 @@ public class OpenActivity extends AppCompatActivity {
 
     @Event(R.id.btn_open_submit)
     private void OpenSubmitEvent(View view){
-        progressDialog.setMessage("正在提交");
-        progressDialog.show();
+
         SharedPreferences user = getSharedPreferences("user_info",0);
         String token = user.getString("token","");
         if ("".equals(token)){
@@ -347,7 +346,6 @@ public class OpenActivity extends AppCompatActivity {
             HttpUtils.httputilsPost(types,map, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String s) {
-
                     //   Toast.makeText(x.app(), s ,Toast.LENGTH_SHORT).show();
                     Log.i("onSuccess",s.toString());
                     String code = null;
@@ -364,10 +362,8 @@ public class OpenActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     if ("200".equals(code)){
-                        upLoadImage(stopicFile,userpicFile);
-
+                        openShop();
                     } else {
-                        progressDialog.dismiss();
                         Toast.makeText(OpenActivity.this,"程序出现错误，请重新登陆！",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(OpenActivity.this,LoginActivity.class);
                         SharedPreferences user = getSharedPreferences("user_info",0);
@@ -565,6 +561,7 @@ public class OpenActivity extends AppCompatActivity {
         where = 1;
     }
 
+
     public void ChooseUserPicture(View view){
         new ActionSheetDialog(OpenActivity.this)
                 .builder()
@@ -599,15 +596,7 @@ public class OpenActivity extends AppCompatActivity {
             }
             int rand=(int)(Math.random()*100000);
             Log.i("ran",rand+"");
-            File picFile = null;
-            if (where == 1){
-                stopicFile = new File(pictureFileDir, rand+".jpeg");
-                picFile = stopicFile;
-            } else if (where == 2){
-                userpicFile = new File(pictureFileDir, rand+".jpeg");
-                picFile = userpicFile;
-            }
-
+            File picFile = new File(pictureFileDir, rand+".jpeg");
             if (!picFile.exists()) {
                 picFile.createNewFile();
                 Log.i("imgs",picFile.toString());
@@ -652,7 +641,8 @@ public class OpenActivity extends AppCompatActivity {
     /**
      * 设置公用参数
      */
-    private void setIntentParams(Intent intent) {
+    private void setIntentParams(Intent intent)
+    {
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
@@ -665,7 +655,8 @@ public class OpenActivity extends AppCompatActivity {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
     }
 
-    private Bitmap decodeUriAsBitmap(Uri uri) {
+    private Bitmap decodeUriAsBitmap(Uri uri)
+    {
         Bitmap bitmap = null;
         try
         {
@@ -677,6 +668,7 @@ public class OpenActivity extends AppCompatActivity {
         }
         return bitmap;
     }
+
     //跳转页面回调方法
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -697,11 +689,13 @@ public class OpenActivity extends AppCompatActivity {
                 {
                     if (photoUri != null)
                     {
-
                         Bitmap bitmap = decodeUriAsBitmap(photoUri);
+                        photofile = photoUri.toString();
                         if (where == 1){
+                            upLoadImage(1);
                             iv_open_storepicture.setImageBitmap(bitmap);
                         } else if (where == 2){
+                            upLoadImage(2);
                             iv_open_userpicture.setImageBitmap(bitmap);
                         }
                     }
@@ -737,7 +731,7 @@ public class OpenActivity extends AppCompatActivity {
         return token;
     }
 
-    private void upLoadImage(final File picFile1, final File picFile2){
+    private void upLoadImage(final int forwhere){
 
         new Thread(new Runnable() {
             @Override
@@ -747,25 +741,21 @@ public class OpenActivity extends AppCompatActivity {
                 try {
 
                     UploadManager uploadManager = new UploadManager();
-                    uploadManager.put(picFile1, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
+                    uploadManager.put(photofile, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
 
                             Log.i("qiniu", key + " " + info + " " + response);
-                            storepicture = key;
-                            UploadManager uploadManager = new UploadManager();
-                            uploadManager.put(picFile2, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
-                                @Override
-                                public void complete(String key, ResponseInfo info, JSONObject response) {
+                            Log.i("photofile",photofile+"--------");
+                            if (forwhere == 1){
+                                storepicture = key;
+                            } else if (forwhere == 2) {
+                                userpicture = key;
+                            }
 
-                                    Log.i("qiniu", key + " " + info + " " + response);
-                                    userpicture = key;
-                                    openShop();
-                                }
-                            }, null);
+
                         }
                     }, null);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
