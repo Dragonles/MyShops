@@ -9,7 +9,6 @@ public class Shouruyuzhichu {
     private String shangpin_color;
     private String shagpin_size;
     private String shangpin_price_first;
-    private Float price;
     private String shangpin_price_two;
     private String shangpin_count;
     private String type;
@@ -47,13 +46,6 @@ public class Shouruyuzhichu {
                 '}';
     }
 
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
 
     public String getImg() {
         return img;

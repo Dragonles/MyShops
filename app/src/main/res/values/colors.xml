@@ -68,4 +68,11 @@
     <!--添加商品-->
     <color name="Left_title_color">#646464</color>
     <color name="Right_neirong_color">#cccccc</color>
+
+
+
+    <color name="tab_main_text_1">#aaa</color>
+    <color name="tab_main_text_2">#74b5f7</color>
+    <color name="tab_top_text_1">#aaa</color>
+    <color name="tab_top_text_2">#000</color>
 </resources>

@@ -43,6 +43,8 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.x;
 
+import org.xutils.view.annotation.Event;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -51,10 +53,9 @@ import java.util.Random;
 
 public class ShopInfoActivity extends AppCompatActivity {
 
-    private RelativeLayout rly_name, rly_phone, rly_mima;
+    private RelativeLayout rly_mima;
     private TextView tv_name, tv_phone, tv_pwd, tv_tijiao;
     private ImageView iv_shopinfo_shopheader;
-    String searchC;
     ImageButton ib_shopinfo_back;
     Button btn_shopinfo_exit;
     String smima = "", sname = "", sphone = "";
@@ -64,9 +65,7 @@ public class ShopInfoActivity extends AppCompatActivity {
     private final int PIC_FROM＿LOCALPHOTO = 0;
     static File picFile;
 
-//    CircleImageView imageView;
-
-    EditText et_search, et_oldpwd, et_newpwd, et_newpwd_algin;
+    EditText et_oldpwd, et_newpwd, et_newpwd_algin;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -88,10 +87,9 @@ public class ShopInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_info);
 
-        rly_name = (RelativeLayout) findViewById(R.id.rly_name);
-        rly_phone = (RelativeLayout) findViewById(R.id.rly_phone);
+
         rly_mima = (RelativeLayout) findViewById(R.id.rly_mima);
-        tv_name = (TextView) findViewById(R.id.ib_shopinfo_shopname_go);
+        tv_name = (TextView) findViewById(R.id.et_shopinfo_shopname_go);
         tv_phone = (TextView) findViewById(R.id.ib_settle_invoice_go);
         tv_pwd = (TextView) findViewById(R.id.tv_pwd);
         iv_shopinfo_shopheader = (ImageView) findViewById(R.id.iv_shopinfo_shopheader);
@@ -99,10 +97,6 @@ public class ShopInfoActivity extends AppCompatActivity {
         btn_shopinfo_exit = (Button) findViewById(R.id.btn_shopinfo_exit);
         tv_tijiao = (TextView) findViewById(R.id.tv_tijiao);
 
-        tv_name.setText(ShopFragment.userName);
-        tv_phone.setText(ShopFragment.userPhone);
-//        Picasso.with(x.app()).load(QiNiuConfig.externalLinks + ShopFragment.userPhoto).into(iv_shopinfo_shopheader);
-//        iv_shopinfo_shopheader.setImageURI(Uri.parse(QiNiuConfig.externalLinks + ShopFragment.userPhoto));
         xiaZai();
 
         ib_shopinfo_back.setOnClickListener(new View.OnClickListener() {
@@ -138,65 +132,6 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
-        rly_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ShopInfoActivity.this);
-                LayoutInflater inflater = (LayoutInflater) ShopInfoActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialogview, null);
-                dialog.setView(layout);
-                et_search = (EditText) layout.findViewById(R.id.searchC);
-                dialog.setTitle("输入更改店铺名");
-                dialog.setIcon(android.R.drawable.btn_radio);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        searchC = et_search.getText().toString();
-                        tv_name.setText(searchC);
-                        sname = tv_name.getText().toString();
-                    }
-                });
-
-                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                dialog.show();
-            }
-        });
-
-        rly_phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ShopInfoActivity.this);
-                LayoutInflater inflater = (LayoutInflater) ShopInfoActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialogview, null);
-                dialog.setView(layout);
-                et_search = (EditText) layout.findViewById(R.id.searchC);
-                dialog.setTitle("输入更改的手机号码");
-                dialog.setIcon(android.R.drawable.btn_radio);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        searchC = et_search.getText().toString();
-                        tv_phone.setText(searchC);
-                        sphone = tv_phone.getText().toString();
-                    }
-                });
-
-                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                dialog.show();
-            }
-        });
-
         rly_mima.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,8 +157,6 @@ public class ShopInfoActivity extends AppCompatActivity {
                                 Log.i("mima", et_newpwd.getText().toString() + "  " + et_newpwd_algin.getText().toString());
                                 tv_pwd.setText(ns);
                                 smima = ns;
-
-
                             } else {
 
                                 Log.i("mima", et_newpwd.getText().toString() + " a " + et_newpwd_algin.getText().toString());
@@ -250,7 +183,6 @@ public class ShopInfoActivity extends AppCompatActivity {
         Log.i("ShopToken", t);
 
         String sqll = "select * from wst_user_token where token = '" + t + "'";
-//        String sql = "select * from wst_users where userId = " + sqll;
         String types = "/Api/exeQuery";
         HashMap<String, String> map = new HashMap<>();
         map.put("sql", sqll);
@@ -259,18 +191,6 @@ public class ShopInfoActivity extends AppCompatActivity {
             public void onSuccess(String s) {
 
                 Log.i("onSuccess", s.toString());
-//                try {
-//                    JSONObject jsonobject = new JSONObject(s);
-//                    String code = jsonobject.getString("code");
-//                    String message = jsonobject.getString("message");
-//                    JSONArray data = jsonobject.getJSONArray("data");
-//                    String userPhoto = jsonobject.getString("userPhoto");
-//                    String userName = jsonobject.getString("userName");
-//                    String userPhone = jsonobject.getString("userPhone");
-//                    String loginPwd = jsonobject.getString("userPwd");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
                 try {
 
                     JSONObject jsonobj = new JSONObject(s);
@@ -287,7 +207,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String sql = "select * from wst_users where userId = '" + id + "'";
+                String sql = "select * from wst_shops where userId = '" + id + "'";
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
                 maps.put("sql", sql);
@@ -302,12 +222,10 @@ public class ShopInfoActivity extends AppCompatActivity {
                             String code = jsonobject.getString("code");
                             String message = jsonobject.getString("message");
                             JSONArray data = jsonobject.getJSONArray("data");
-                            userName = jsonobject.getString("userName");
-                            userPhone = jsonobject.getString("userPhone");
-                            userPwd = jsonobject.getString("userPwd");
-                            userPhoto = jsonobject.getString("userPhoto");
+                            userName = jsonobject.getString("shopName");
+                            userPhone = jsonobject.getString("shopTel");
+                            userPhoto = jsonobject.getString("shopImg");
                             tv_name.setText(userName);
-                            tv_pwd.setText(userPwd);
                             tv_phone.setText(userPhone);
 
                         } catch (JSONException e) {
@@ -355,47 +273,10 @@ public class ShopInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (sname != null && sphone != null && smima != null) {
+                sname = tv_name.getText().toString();
+                sphone = tv_phone.getText().toString();
 
-//                    HttpUtils.httpPostImage(sURL, t, "/ApiUp/uploadImage", new Callback.CommonCallback<String>() {
-//                        @Override
-//                        public void onSuccess(String result) {
-//                            Log.i("iconurlss",result+ "11111图片地址："+dizhi+"  88888"+dizhi);
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(result);
-//                                String code = jsonObject.getString("code");
-//                                String message = jsonObject.getString("message");
-//                                JSONObject data = jsonObject.getJSONObject("data");
-//                                String srcpath = data.getString("srcpath");
-//
-//                                dizhi = "http://122.114.62.25:8686/" + srcpath;
-//                                Log.i("iconurlss", "11111图片地址："+dizhi+"  88888"+dizhi);
-//                                Log.i("update", sname + " " + sphone + " " + smima + " " + dizhi);
-//                                Log.i("iconurlss", "图片地址："+dizhi+"  88888  "+dizhi);
-//
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                                Log.i("iconurlss", "11111图片地址："+dizhi+"  catch88888"+dizhi);
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable ex, boolean isOnCallback) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(CancelledException cex) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFinished() {
-//
-//                        }
-//                    });
+                if (sname != null && sphone != null && smima != null) {
 
                     upLoadImage();
 
@@ -468,6 +349,16 @@ public class ShopInfoActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+
+    public void shopInfoExit(View view){
+        Intent intent = new Intent(ShopInfoActivity.this,LoginActivity.class);
+        SharedPreferences user = getSharedPreferences("user_info",0);
+        SharedPreferences.Editor edit = user.edit();
+        edit.putString("NAME", "");
+        edit.commit();
+        startActivity(intent);
     }
 
     private void doHandlerPhoto(int type) {
@@ -613,8 +504,11 @@ public class ShopInfoActivity extends AppCompatActivity {
                             Log.i("qiniu", key + " " + info + " " + response);
                             userPhoto = key;
 
-
-                            String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "',  userPhoto = '" + userPhoto + "' where userId = " + id;
+                            if (sname.equals(null))
+                                sname = tv_name.getText().toString();
+                            if (sphone.equals(null))
+                                sphone = tv_phone.toString();
+                            String sql = "update wst_shops set  shopName = '" + sname + "', shopTel = '" + sphone + "',  shopImg = '" + userPhoto + "' where userId = " + id;
                             String types = "/Api/exeQuery";
                             HashMap<String, String> map = new HashMap<>();
                             map.put("sql", sql);
@@ -669,7 +563,6 @@ public class ShopInfoActivity extends AppCompatActivity {
 
                 String url = "http://7xpmv7.com1.z0.glb.clouddn.com/Fj3g6jWLrUlRvm3TvcZviHbeM0YZ";
                 iv_shopinfo_shopheader.setImageBitmap(BitmapFactory.decodeFile(url));
-//                Picasso.with(ShopInfoActivity.this).load(url).into(iv_shopinfo_shopheader);
                 Log.i("showImage","走方法");
             }
         }).start();
@@ -677,7 +570,7 @@ public class ShopInfoActivity extends AppCompatActivity {
 
     public void xiaZai(){
 
-        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + id + "'";
+        String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + id + "'";
         String type = "/Api/exeQuery";
         HashMap<String, String> maps = new HashMap<>();
         maps.put("sql", sql);
@@ -693,7 +586,11 @@ public class ShopInfoActivity extends AppCompatActivity {
                     String message = jsonobj.getString("message");
                     JSONArray data = jsonobj.getJSONArray("data");
                     JSONObject info = data.getJSONObject(0);
-                    String images = info.getString("userPhoto");
+                    String images = info.getString("shopImg");
+                    String userName = info.getString("shopName");
+                    String userPhone = info.getString("shopTel");
+                    tv_name.setText(userName);
+                    tv_phone.setText(userPhone);
                     //图片外链地址（网络地址）
                     String url2 = QiNiuConfig.externalLinks + images;
                     //加载（下载）图片  iv_add4为ImageView

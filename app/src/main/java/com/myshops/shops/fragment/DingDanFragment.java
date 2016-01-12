@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -39,7 +41,10 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import me.xiaopan.psts.PagerSlidingTabStrip;
 
@@ -72,99 +77,314 @@ public class DingDanFragment extends Fragment {
 //    @ViewInject(R.id.viewPager)
 //    private ViewPager viewPager1;
     private String tokens;  //用户token
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private String[] mTitle = {"全部订单","待发货","已发货","已完成","退款中","已退款"};
+    private String[] mData = new String[6];
+    private boolean mHasLoadedOnce = true;
+    private static final int DEFAULT_OFFSCREEN_PAGES = 0;
 
+    int a = 0;
+//    private List<Integer> pos = new ArrayList<>();
+    private HashSet pos = new HashSet();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_ding_dan, container, false);
+        mTabLayout = (TabLayout) v.findViewById(R.id.tl);
+        mViewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
+//        setUserVisibleHint(true);
+
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        mTabLayout.setTabsFromPagerAdapter(mAdapter);
+        final TabLayout.TabLayoutOnPageChangeListener listener =
+                new TabLayout.TabLayoutOnPageChangeListener(mTabLayout);
+        mViewPager.addOnPageChangeListener(listener);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        chatoken();
 //        pd = ProgressDialog.show(getActivity(),"","正在加载中");
 
-        PagerSlidingTabStrip pagerSlidingTabStrip1 = (PagerSlidingTabStrip) v.findViewById(R.id.slidingTabStrip);
-        ViewPager viewPager1 = (ViewPager) v.findViewById(R.id.viewPager);
-        init(0, pagerSlidingTabStrip1, viewPager1);
+//        PagerSlidingTabStrip pagerSlidingTabStrip1 = (PagerSlidingTabStrip) v.findViewById(R.id.slidingTabStrip);
+//        ViewPager viewPager1 = (ViewPager) v.findViewById(R.id.viewPager);
+//        init(0, pagerSlidingTabStrip1, viewPager1);
+
 
         //listview 点击事件
-        all_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-        daifa_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-        daishou_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-        daiping_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-        tuikuanz_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-        tuikuan_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //调用具体方法
-                intents(position);
-            }
-        });
-
-
+//        all_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
+//        daifa_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
+//        daishou_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
+//        daiping_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
+//        tuikuanz_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
+//        tuikuan_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //调用具体方法
+//                intents(position);
+//            }
+//        });
 
         return v;
     }
 
+//
 //    @Override
-//    public void onViewCreated(View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        pd = ProgressDialog.show(getActivity(),"","正在加载中");
-//        PagerSlidingTabStrip pagerSlidingTabStrip1 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip);
-//        ViewPager viewPager1 = (ViewPager) findViewById(R.id.viewPager);
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        if (this.isVisible()) {
+//            // we check that the fragment is becoming visible
+//            if (isVisibleToUser && !mHasLoadedOnce && list==null) {
 //
-//        init(0, pagerSlidingTabStrip1, viewPager1);
-
-//        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-////                Log.i("onpagepos","onPageScrolled"+position);
+//                // async http request here
+//                mHasLoadedOnce = true;
 //            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                i = position;
-//                Log.i("onpagepos","onPageSelected"+position);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-////                Log.i("onpagepos","onPageScrollStateChanged"+state);
-//            }
-//        });
-//        pager.setOffscreenPageLimit(1);
-//        adapter = new DDMyPagerAdapter(getActivity().getSupportFragmentManager());
-//        pager.setAdapter(adapter);
-//        tabs.setViewPager(pager);
-
+//        }
+//        super.setUserVisibleHint(isVisibleToUser);
 //    }
+
+
+
+    private PagerAdapter mAdapter = new PagerAdapter() {
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Log.i("positionss","getPageTitle");
+            return mTitle[position];
+        }
+
+        @Override
+        public int getCount() {
+            Log.i("positionss","getCount");
+            return mData.length;
+        }
+
+        @Override
+        public Object instantiateItem(View container, final int position) {
+//            TextView tv = new TextView(getActivity());
+//            tv.setTextSize(30.f);
+//            tv.setText(mData[position]);
+//            ((ViewPager) container).addView(tv);
+            final ListView lv = new ListView(getActivity());
+//            if (pos.size() < 3 ) {
+//                pos.add(position);
+//            }
+
+            Log.i("ddFragment"," position： "+position);
+            if (pos.size()>2) {
+                Iterator it=pos.iterator();
+                while(it.hasNext()) {
+//                    Log.i("ddFragment","it.hasNext()"+it.next()+mHasLoadedOnce);
+                    a = (int) it.next();
+                    if (a == position) {
+                        mHasLoadedOnce = false;
+                        Log.i("ddFragment","mHasLoadedOnce："+mHasLoadedOnce);
+                    } else {
+                        Log.i("ddFragment","mHasLoadedOnce："+mHasLoadedOnce+"  a:"+a);
+                    }
+
+                }
+            }
+            pos.add(position);
+
+//            View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//            chashuju(position);
+            Log.i("ddFragment","结果"+mHasLoadedOnce);
+            if (mHasLoadedOnce) {
+
+                String types = "/AllOrders/allorder";
+                //String sql = "select * from wst_orders  join wst_order_goods  on wst_orders.orderId=wst_order_goods.orderId where userId in(select userId from wst_user_token where token='"+LoginActivity.token+"')";
+                HashMap<String, String> map = new HashMap<>();
+                map.put("token", tokens);
+                Log.i("token",tokens);
+                HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        System.out.println("onSuccess" + s.toString());
+                        Log.i("ddFragment","车成功"+s);
+                        Log.i("sss",s.toString());
+                        //解析JSON数据
+                        try {
+                            JSONObject data = new JSONObject(s);
+                            String code = data.get("code").toString();
+                            if ("200".equals(code)) {
+                                String nessage = data.get("message").toString();
+                                JSONArray datas = (JSONArray) data.get("data");
+                                List<Order> usersList = new ArrayList<Order>();
+                                for (int i = 0; i < datas.length(); i++) {
+                                    JSONObject info = datas.getJSONObject(i);
+                                    Order order = new Order();
+                                    //是否退款
+                                    order.setIsRefund(info.get("isRefund").toString());
+                                    //订单创建时间
+                                    order.setCreateTime(info.get("createTime").toString());
+                                    //商品缩略图
+                                    order.setGoodsThums(info.get("goodsThums").toString());
+                                    Log.i("img", info.get("goodsThums").toString());
+                                    //商品名称
+                                    order.setGoodsName(info.get("goodsName").toString());
+                                    //商品数量
+                                    order.setGoodsNums(info.get("goodsNums").toString());
+                                    //客户名称
+                                    order.setUsername(info.get("userName").toString());
+                                    //购买金额
+                                    order.setTotalMoney(info.get("totalMoney").toString());
+    //                        order.setGoodsThums(info.get("goodsThums").toString());
+                                    //付款状态
+                                    String os = info.get("orderStatus").toString();
+                                    Log.i("ostatus", "付款状态" + os);
+                                    if ("-1".equals(os)) {
+                                        order.setOrderStatus("待发货");
+                                    } else if ("0".equals(os)) {
+                                        order.setOrderStatus("已发货");
+                                    } else if ("1".equals(os)) {
+                                        order.setOrderStatus("已完成");
+                                    } else if ("2".equals(os)) {
+                                        order.setOrderStatus("退款中");
+                                    } else if ("3".equals(os)) {
+                                        order.setOrderStatus("已退款");
+                                    }
+
+    //                            Log.i("intentstring", "****商品缩略图" + GoodsThums + "商品名称" + GoodsName + "商品名称" + GoodsNums + "客户名称" + Username + "购买金额" + TotalMoney + "付款状态" + OrderStatus);
+
+                                    Log.i("orderstatus_ss", info.get("orderStatus").toString());
+    //                            Log.i("Logpos", "http: "+positions+" os:" + os);
+    //                            list.add(order);
+                                    if (position == 1) {  //全部订单
+                                        Log.i("Logpos","position = 1");
+                                        list.add(order);
+                                    } else if (position == 2 && "0".equals(os)){  //待发货
+                                        Log.i("Logpos","position = 2 os = -1");
+                                        list.add(order);
+                                    } else if (position == 3 && "3".equals(os)){  //已发货
+                                        Log.i("Logpos","position = 2 os = -1");
+                                        list.add(order);
+                                    } else if (position == 4 && "4".equals(os)){  //已完成
+                                        Log.i("Logpos","position = 2 os = -1");
+                                        list.add(order);
+                                    } else if (position == 5 && "-6".equals(os)){  //退款中
+                                        Log.i("Logpos","position = 2 os = -1");
+                                        list.add(order);
+                                    } else if (position == 6 && "-4".equals(os)){  //已退款
+                                        Log.i("Logpos","position = 2 os = -1");
+                                        list.add(order);
+                                    }
+
+                                }
+                                lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        a += 10;
+    //                        Log.i("listssize",lists.size()+"");
+                                Log.i("ddadapter","list的长度"+list.size());
+    //                        all_lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        daifa_lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        daishou_lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        daiping_lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        tuikuanz_lv.setAdapter(new OderAdpter(getActivity(), list));
+    //                        tuikuan_lv.setAdapter(new OderAdpter(getActivity(), list));
+
+    //                        mHasLoadedOnce = true;
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable, boolean b) {
+                        System.out.println("onError" + throwable.toString());
+                        Log.i("sser",throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException e) {
+                        Log.i("CancelledException",e.toString());
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+            } else {
+                mHasLoadedOnce = true;
+            }
+
+            Log.i("positionss","instantiateItem");
+            ((ViewPager)container).addView(lv);
+            return lv;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            Log.i("positionss","destroyItem");
+            ((ViewPager) container).removeView((View) object);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            Log.i("positionss","isViewFromObject");
+            return view == object;
+        }
+    };
 
     /**
      * 点击订单列表进入详情页
@@ -193,38 +413,23 @@ public class DingDanFragment extends Fragment {
         Log.i("intentstring","商品缩略图"+GoodsThums+"商品名称"+GoodsName+"商品数量"+GoodsNums+"客户名称"+Username+"购买金额"+TotalMoney+"付款状态"+OrderStatus);
     }
 
-
-    private void init(int index, PagerSlidingTabStrip pagerSlidingTabStrip, ViewPager viewPager) {
-        int length = pagerSlidingTabStrip.getTabCount();
-        final List<View> views = new ArrayList<View>(length);
-        View all = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
-        View daifa = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragmenta, null);
-        View daishou = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
-        View daiping = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
-        View tuikuanz = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
-        View tuikuan = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
-        views.add(all);
-        views.add(daifa);
-        views.add(daishou);
-        views.add(daiping);
-        views.add(tuikuanz);
-        views.add(tuikuan);
-        all_lv = (ListView) all.findViewById(R.id.list_view);
-        daifa_lv = (ListView) all.findViewById(R.id.list_view);
-        daishou_lv = (ListView) all.findViewById(R.id.list_view);
-        daiping_lv = (ListView) all.findViewById(R.id.list_view);
-        tuikuanz_lv = (ListView) all.findViewById(R.id.list_view);
-        tuikuan_lv = (ListView) all.findViewById(R.id.list_view);
-
+    /**
+     * 获取token
+     * */
+    public void chatoken() {
         if (LoginActivity.token == null) {
-            SharedPreferences user = getActivity().getSharedPreferences("user_info",0);
+            SharedPreferences user = getActivity().getSharedPreferences("user_info",Context.MODE_PRIVATE);
             tokens = user.getString("token","");
             Log.i("SharedPreferencesToken","SharedPreferences 本地保存"+tokens);
         } else {
             tokens = LoginActivity.token;
             Log.i("SharedPreferencesToken","登录获得："+tokens);
         }
-
+    }
+    /**
+     * 获取数据
+     * */
+    public void chashuju(final int pos) {
         String types = "/AllOrders/allorder";
         //String sql = "select * from wst_orders  join wst_order_goods  on wst_orders.orderId=wst_order_goods.orderId where userId in(select userId from wst_user_token where token='"+LoginActivity.token+"')";
         HashMap<String, String> map = new HashMap<>();
@@ -281,37 +486,38 @@ public class DingDanFragment extends Fragment {
 
                             Log.i("orderstatus_ss", info.get("orderStatus").toString());
 //                            Log.i("Logpos", "http: "+positions+" os:" + os);
-                            list.add(order);
-//                            if (positions == 1) {
-//                                Log.i("Logpos","position = 1");
-//                                lists.add(order);
-//                            } else if (positions == 2 && "-1".equals(os)){
-//                                Log.i("Logpos","position = 2 os = -1");
-//                                lists.add(order);
-//                            } else if (positions == 3 && "0".equals(os)){
-//                                Log.i("Logpos","position = 2 os = -1");
-//                                lists.add(order);
-//                            } else if (positions == 4 && "1".equals(os)){
-//                                Log.i("Logpos","position = 2 os = -1");
-//                                lists.add(order);
-//                            } else if (positions == 5 && "2".equals(os)){
-//                                Log.i("Logpos","position = 2 os = -1");
-//                                lists.add(order);
-//                            } else if (positions == 6 && "3".equals(os)){
-//                                Log.i("Logpos","position = 2 os = -1");
-//                                lists.add(order);
-//                            }
+//                            list.add(order);
+                            if (pos == 1) {  //全部订单
+                                Log.i("Logpos","position = 1");
+                                list.add(order);
+                            } else if (pos == 2 && "0".equals(os)){  //待发货
+                                Log.i("Logpos","position = 2 os = -1");
+                                list.add(order);
+                            } else if (pos == 3 && "3".equals(os)){  //已发货
+                                Log.i("Logpos","position = 2 os = -1");
+                                list.add(order);
+                            } else if (pos == 4 && "4".equals(os)){  //已完成
+                                Log.i("Logpos","position = 2 os = -1");
+                                list.add(order);
+                            } else if (pos == 5 && "-6".equals(os)){  //退款中
+                                Log.i("Logpos","position = 2 os = -1");
+                                list.add(order);
+                            } else if (pos == 6 && "-4".equals(os)){  //已退款
+                                Log.i("Logpos","position = 2 os = -1");
+                                list.add(order);
+                            }
 
                         }
+
 //                        a += 10;
 //                        Log.i("listssize",lists.size()+"");
                         Log.i("ddadapter","list的长度"+list.size());
-                        all_lv.setAdapter(new OderAdpter(getActivity(), list));
-                        daifa_lv.setAdapter(new OderAdpter(getActivity(), list));
-                        daishou_lv.setAdapter(new OderAdpter(getActivity(), list));
-                        daiping_lv.setAdapter(new OderAdpter(getActivity(), list));
-                        tuikuanz_lv.setAdapter(new OderAdpter(getActivity(), list));
-                        tuikuan_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        all_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daifa_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daishou_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daiping_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        tuikuanz_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        tuikuan_lv.setAdapter(new OderAdpter(getActivity(), list));
 
 //                        mHasLoadedOnce = true;
                     }
@@ -335,55 +541,232 @@ public class DingDanFragment extends Fragment {
 
             }
         });
-
-        viewPager.setAdapter(new ViewPagerAdapter(views));
-        viewPager.setCurrentItem(index < length ? index : length);
-        pagerSlidingTabStrip.setViewPager(viewPager);
     }
 
-    public class ViewPagerAdapter extends PagerAdapter {
-        private List<View> viewList;
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        pd = ProgressDialog.show(getActivity(),"","正在加载中");
+//        PagerSlidingTabStrip pagerSlidingTabStrip1 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip);
+//        ViewPager viewPager1 = (ViewPager) findViewById(R.id.viewPager);
+//
+//        init(0, pagerSlidingTabStrip1, viewPager1);
 
-        public ViewPagerAdapter(List<View> viewList){
-            Log.i("ddadapter","ViewPagerAdapter");
-            setViewList(viewList);
-        }
+//        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+////                Log.i("onpagepos","onPageScrolled"+position);
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                i = position;
+//                Log.i("onpagepos","onPageSelected"+position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+////                Log.i("onpagepos","onPageScrollStateChanged"+state);
+//            }
+//        });
+//        pager.setOffscreenPageLimit(1);
+//        adapter = new DDMyPagerAdapter(getActivity().getSupportFragmentManager());
+//        pager.setAdapter(adapter);
+//        tabs.setViewPager(pager);
 
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            Log.i("ddadapter","destroyItem");
-            container.removeView(viewList.get(position));
-        }
+//    }
 
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Log.i("ddadapter",position+"adapter");
-            container.addView(viewList.get(position), 0);
-            return viewList.get(position);
-        }
 
-        @Override
-        public int getCount() {
-            Log.i("ddadapter","getCount");
-            return viewList.size();
-        }
+//    private void init(int index, PagerSlidingTabStrip pagerSlidingTabStrip, ViewPager viewPager) {
+//        int length = pagerSlidingTabStrip.getTabCount();
+//        final List<View> views = new ArrayList<View>(length);
+//        View all = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//        View daifa = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragmenta, null);
+//        View daishou = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//        View daiping = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//        View tuikuanz = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//        View tuikuan = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_ddsuperawesomecardragment, null);
+//        views.add(all);
+//        views.add(daifa);
+//        views.add(daishou);
+//        views.add(daiping);
+//        views.add(tuikuanz);
+//        views.add(tuikuan);
+//        all_lv = (ListView) all.findViewById(R.id.list_view);
+//        daifa_lv = (ListView) all.findViewById(R.id.list_view);
+//        daishou_lv = (ListView) all.findViewById(R.id.list_view);
+//        daiping_lv = (ListView) all.findViewById(R.id.list_view);
+//        tuikuanz_lv = (ListView) all.findViewById(R.id.list_view);
+//        tuikuan_lv = (ListView) all.findViewById(R.id.list_view);
+//
+//        if (LoginActivity.token == null) {
+//            SharedPreferences user = getActivity().getSharedPreferences("user_info",0);
+//            tokens = user.getString("token","");
+//            Log.i("SharedPreferencesToken","SharedPreferences 本地保存"+tokens);
+//        } else {
+//            tokens = LoginActivity.token;
+//            Log.i("SharedPreferencesToken","登录获得："+tokens);
+//        }
+//
+//        String types = "/AllOrders/allorder";
+//        //String sql = "select * from wst_orders  join wst_order_goods  on wst_orders.orderId=wst_order_goods.orderId where userId in(select userId from wst_user_token where token='"+LoginActivity.token+"')";
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("token", tokens);
+//        Log.i("token",tokens);
+//        HttpUtils.httputilsGet(types, map, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String s) {
+//                System.out.println("onSuccess" + s.toString());
+//                Log.i("sss",s.toString());
+//                //解析JSON数据
+//                try {
+//                    JSONObject data = new JSONObject(s);
+//                    String code = data.get("code").toString();
+//                    if ("200".equals(code)) {
+//                        String nessage = data.get("message").toString();
+//                        JSONArray datas = (JSONArray) data.get("data");
+//                        List<Order> usersList = new ArrayList<Order>();
+//                        for (int i = 0; i < 10; i++) {
+//                            JSONObject info = datas.getJSONObject(i);
+//                            Order order = new Order();
+//                            //是否退款
+//                            order.setIsRefund(info.get("isRefund").toString());
+//                            //订单创建时间
+//                            order.setCreateTime(info.get("createTime").toString());
+//                            //商品缩略图
+//                            order.setGoodsThums(info.get("goodsThums").toString());
+//                            Log.i("img", info.get("goodsThums").toString());
+//                            //商品名称
+//                            order.setGoodsName(info.get("goodsName").toString());
+//                            //商品数量
+//                            order.setGoodsNums(info.get("goodsNums").toString());
+//                            //客户名称
+//                            order.setUsername(info.get("userName").toString());
+//                            //购买金额
+//                            order.setTotalMoney(info.get("totalMoney").toString());
+////                        order.setGoodsThums(info.get("goodsThums").toString());
+//                            //付款状态
+//                            String os = info.get("orderStatus").toString();
+//                            Log.i("ostatus", "付款状态" + os);
+//                            if ("-1".equals(os)) {
+//                                order.setOrderStatus("待发货");
+//                            } else if ("0".equals(os)) {
+//                                order.setOrderStatus("已发货");
+//                            } else if ("1".equals(os)) {
+//                                order.setOrderStatus("已完成");
+//                            } else if ("2".equals(os)) {
+//                                order.setOrderStatus("退款中");
+//                            } else if ("3".equals(os)) {
+//                                order.setOrderStatus("已退款");
+//                            }
+//
+////                            Log.i("intentstring", "****商品缩略图" + GoodsThums + "商品名称" + GoodsName + "商品名称" + GoodsNums + "客户名称" + Username + "购买金额" + TotalMoney + "付款状态" + OrderStatus);
+//
+//                            Log.i("orderstatus_ss", info.get("orderStatus").toString());
+////                            Log.i("Logpos", "http: "+positions+" os:" + os);
+//                            list.add(order);
+////                            if (positions == 1) {
+////                                Log.i("Logpos","position = 1");
+////                                lists.add(order);
+////                            } else if (positions == 2 && "-1".equals(os)){
+////                                Log.i("Logpos","position = 2 os = -1");
+////                                lists.add(order);
+////                            } else if (positions == 3 && "0".equals(os)){
+////                                Log.i("Logpos","position = 2 os = -1");
+////                                lists.add(order);
+////                            } else if (positions == 4 && "1".equals(os)){
+////                                Log.i("Logpos","position = 2 os = -1");
+////                                lists.add(order);
+////                            } else if (positions == 5 && "2".equals(os)){
+////                                Log.i("Logpos","position = 2 os = -1");
+////                                lists.add(order);
+////                            } else if (positions == 6 && "3".equals(os)){
+////                                Log.i("Logpos","position = 2 os = -1");
+////                                lists.add(order);
+////                            }
+//
+//                        }
+////                        a += 10;
+////                        Log.i("listssize",lists.size()+"");
+//                        Log.i("ddadapter","list的长度"+list.size());
+//                        all_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daifa_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daishou_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        daiping_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        tuikuanz_lv.setAdapter(new OderAdpter(getActivity(), list));
+//                        tuikuan_lv.setAdapter(new OderAdpter(getActivity(), list));
+//
+////                        mHasLoadedOnce = true;
+//                    }
+//                }catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            @Override
+//            public void onError(Throwable throwable, boolean b) {
+//                System.out.println("onError" + throwable.toString());
+//                Log.i("sser",throwable.getMessage());
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException e) {
+//                Log.i("CancelledException",e.toString());
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//
+//        viewPager.setAdapter(new ViewPagerAdapter(views));
+//        viewPager.setCurrentItem(index < length ? index : length);
+//        pagerSlidingTabStrip.setViewPager(viewPager);
+//    }
 
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            Log.i("ddadapter","isViewFromObject");
-            return arg0 == arg1;
-        }
-
-        public List<View> getViewList() {
-            Log.i("ddadapter","getViewList");
-            return viewList;
-        }
-
-        public void setViewList(List<View> viewList) {
-            Log.i("ddadapter","getViewList");
-            this.viewList = viewList;
-        }
-    }
+//    public class ViewPagerAdapter extends PagerAdapter {
+//        private List<View> viewList;
+//
+//        public ViewPagerAdapter(List<View> viewList){
+//            Log.i("ddadapter","ViewPagerAdapter");
+//            setViewList(viewList);
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+//            Log.i("ddadapter","destroyItem");
+//            container.removeView(viewList.get(position));
+//        }
+//
+//        @Override
+//        public Object instantiateItem(ViewGroup container, int position) {
+//            Log.i("ddadapter",position+"adapter");
+//            container.addView(viewList.get(position), 0);
+//            return viewList.get(position);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            Log.i("ddadapter","getCount");
+//            return viewList.size();
+//        }
+//
+//        @Override
+//        public boolean isViewFromObject(View arg0, Object arg1) {
+//            Log.i("ddadapter","isViewFromObject");
+//            return arg0 == arg1;
+//        }
+//
+//        public List<View> getViewList() {
+//            Log.i("ddadapter","getViewList");
+//            return viewList;
+//        }
+//
+//        public void setViewList(List<View> viewList) {
+//            Log.i("ddadapter","getViewList");
+//            this.viewList = viewList;
+//        }
+//    }
 
 
 

@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="wheelview">
         <attr name="gravity">
-            <enum name="center" value="17"/>
+            <enum name="center" value="17"/>     ds
             <enum name="left" value="3"/>
             <enum name="right" value="5"/>
         </attr>

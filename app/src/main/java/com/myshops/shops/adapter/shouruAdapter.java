@@ -55,13 +55,13 @@ public class shouruAdapter extends BaseAdapter {
             convertView.setTag(v);
         }
         v = (ViewHolder) convertView.getTag();
-        v.shangpin_img.setBackgroundResource(Integer.parseInt(list.get(position).getImg()));
+//        v.shangpin_img.setBackgroundResource(Integer.parseInt(list.get(position).getImg()));
         v.shangpin_title.setText(list.get(position).getShangpin_title());
         v.shangpin_color.setText(list.get(position).getShangpin_color());
         v.shangpin_size.setText(list.get(position).getShagpin_size());
         v.shangpin_price_new.setText(list.get(position).getShangpin_price_first());
         v.shangpin_price_old.setText(list.get(position).getShangpin_price_two());
-        v.shangpin_count.setText(list.get(position).getShangpin_count());
+        v.shangpin_count.setText("×"+list.get(position).getShangpin_count());
         v.shangpin_type.setText(list.get(position).getType());
         return convertView;
     }

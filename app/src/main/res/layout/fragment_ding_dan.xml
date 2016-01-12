@@ -29,48 +29,61 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <me.xiaopan.psts.PagerSlidingTabStrip
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/slidingTabStrip"
-                app:slidingBlock="@drawable/image_sliding_block"
-                app:allowWidthFull="true">
+                app:tabIndicatorColor="@color/style_color"
+                app:tabSelectedTextColor="@color/pickerview_topbar_title"
+                app:tabTextColor="#FF000000"
+                app:tabMode="scrollable"
+                app:tabGravity="center"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="全部订单"/>
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="待发货"/>
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="已发货"/>
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="已完成"/>
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="退款中"/>
-                    <TextView
-                        style="@style/text_slidingTabTitle"
-                        android:text="已退款"/>
-
-                </LinearLayout>
-            </me.xiaopan.psts.PagerSlidingTabStrip>
-
-            <FrameLayout
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </FrameLayout>
+                android:layout_height="match_parent"/>
+            <!--<me.xiaopan.psts.PagerSlidingTabStrip-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/slidingTabStrip"-->
+                <!--app:slidingBlock="@drawable/image_sliding_block"-->
+                <!--app:allowWidthFull="true">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content">-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="全部订单"/>-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="待发货"/>-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="已发货"/>-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="已完成"/>-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="退款中"/>-->
+                    <!--<TextView-->
+                        <!--style="@style/text_slidingTabTitle"-->
+                        <!--android:text="已退款"/>-->
+
+                <!--</LinearLayout>-->
+            <!--</me.xiaopan.psts.PagerSlidingTabStrip>-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1">-->
+                <!--<android.support.v4.view.ViewPager-->
+                    <!--android:id="@+id/viewPager"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
+            <!--</FrameLayout>-->
 
 
 
