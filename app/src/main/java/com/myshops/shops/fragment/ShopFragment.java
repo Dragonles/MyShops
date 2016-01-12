@@ -106,7 +106,7 @@ public class ShopFragment extends Fragment {
 
     public void xiaZai(){
 
-        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
+        String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + uid + "'";
         String type = "/Api/exeQuery";
         HashMap<String, String> maps = new HashMap<>();
         maps.put("sql", sql);
@@ -122,7 +122,7 @@ public class ShopFragment extends Fragment {
                     String message = jsonobj.getString("message");
                     JSONArray data = jsonobj.getJSONArray("data");
                     JSONObject info = data.getJSONObject(0);
-                    String images = info.getString("userPhoto");
+                    String images = info.getString("shopImg");
                     //图片外链地址（网络地址）
                     String url2 = QiNiuConfig.externalLinks + images;
                     //加载（下载）图片  iv_add4为ImageView
@@ -182,7 +182,7 @@ public class ShopFragment extends Fragment {
 
                 xiaZai();
 
-                String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
+                String sql = "select shopImg, shopName, shopTel from wst_shops  c userId = '" + uid + "'";
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
                 maps.put("sql", sql);
@@ -198,9 +198,9 @@ public class ShopFragment extends Fragment {
                             String message = jsonobj.getString("message");
                             JSONArray data = jsonobj.getJSONArray("data");
                             JSONObject info = data.getJSONObject(0);
-                            userPhoto = info.getString("userPhoto");
-                            userName = info.getString("userName");
-                            userPhone = info.getString("userPhone");
+                            userPhoto = info.getString("shopImg");
+                            userName = info.getString("shopName");
+                            userPhone = info.getString("shopTel");
                             tv_shop_username.setText(userName);
                             iv_userIcon.setBackgroundResource(0);
 

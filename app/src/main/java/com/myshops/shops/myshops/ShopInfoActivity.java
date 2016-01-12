@@ -207,7 +207,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String sql = "select * from wst_users where userId = '" + id + "'";
+                String sql = "select * from wst_shops where userId = '" + id + "'";
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
                 maps.put("sql", sql);
@@ -222,12 +222,10 @@ public class ShopInfoActivity extends AppCompatActivity {
                             String code = jsonobject.getString("code");
                             String message = jsonobject.getString("message");
                             JSONArray data = jsonobject.getJSONArray("data");
-                            userName = jsonobject.getString("userName");
-                            userPhone = jsonobject.getString("userPhone");
-                            userPwd = jsonobject.getString("userPwd");
-                            userPhoto = jsonobject.getString("userPhoto");
+                            userName = jsonobject.getString("shopName");
+                            userPhone = jsonobject.getString("shopTel");
+                            userPhoto = jsonobject.getString("shopImg");
                             tv_name.setText(userName);
-                            tv_pwd.setText(userPwd);
                             tv_phone.setText(userPhone);
 
                         } catch (JSONException e) {
@@ -510,7 +508,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                                 sname = tv_name.getText().toString();
                             if (sphone.equals(null))
                                 sphone = tv_phone.toString();
-                            String sql = "update wst_users set  userName = '" + sname + "', userPhone = '" + sphone + "',  userPhoto = '" + userPhoto + "' where userId = " + id;
+                            String sql = "update wst_shops set  shopName = '" + sname + "', shopTel = '" + sphone + "',  shopImg = '" + userPhoto + "' where userId = " + id;
                             String types = "/Api/exeQuery";
                             HashMap<String, String> map = new HashMap<>();
                             map.put("sql", sql);
@@ -572,7 +570,7 @@ public class ShopInfoActivity extends AppCompatActivity {
 
     public void xiaZai(){
 
-        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + id + "'";
+        String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + id + "'";
         String type = "/Api/exeQuery";
         HashMap<String, String> maps = new HashMap<>();
         maps.put("sql", sql);
@@ -588,9 +586,9 @@ public class ShopInfoActivity extends AppCompatActivity {
                     String message = jsonobj.getString("message");
                     JSONArray data = jsonobj.getJSONArray("data");
                     JSONObject info = data.getJSONObject(0);
-                    String images = info.getString("userPhoto");
-                    String userName = info.getString("userName");
-                    String userPhone = info.getString("userPhone");
+                    String images = info.getString("shopImg");
+                    String userName = info.getString("shopName");
+                    String userPhone = info.getString("shopTel");
                     tv_name.setText(userName);
                     tv_phone.setText(userPhone);
                     //图片外链地址（网络地址）

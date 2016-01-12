@@ -26,6 +26,11 @@ import com.mob.tools.network.HttpConnection;
 import com.myshops.shops.bean.Areas;
 import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
+import com.myshops.shops.untils.QiNiuConfig;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.util.Auth;
 
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -44,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.security.BasicPermission;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,8 +60,6 @@ import cn.qqtheme.framework.picker.WheelPicker;
 public class OpenActivity extends AppCompatActivity {
 
     String storepicture = "",userpicture = "",userstorename = "",userphonenum = "",storeplace = "",sendhowlong = "",userstore = "";
-    private  static  final int REQUEST_IMAGE=2;
-    private String mStoreFilePath = "",mUserFilePath = "";//图片路径
     static int where = 0; // 区分店铺图片和用户图片
     static boolean is_submit = false; // 判断是否可以提交信息
     private double WEIDU = 0 ,JINGDU = 0; // 经纬度
@@ -75,6 +79,7 @@ public class OpenActivity extends AppCompatActivity {
     private Uri photoUri;
     private final int PIC_FROM_CAMERA = 1;
     private final int PIC_FROM＿LOCALPHOTO = 0;
+    String photofile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +188,7 @@ public class OpenActivity extends AppCompatActivity {
                     String message = data.get("message").toString();
                     JSONArray datas = data.getJSONArray("data");
                     for (int i = 0; i < datas.length(); i++) {
-                        org.json.JSONObject datas2 = datas.getJSONObject(i);
+                        JSONObject datas2 = datas.getJSONObject(i);
                         String id = (String) datas2.get("areaId");
                         String name = (String) datas2.get("areaName");
                         Log.i("areas","ID:"+id+"-----名称："+name);
@@ -266,34 +271,38 @@ public class OpenActivity extends AppCompatActivity {
                 }
 
                 if ("200".equals(code)){
-                    Log.i("qing","if---"+province);
-                    areasList.clear();
-                    for (int i = 0; i < sheng.length(); i++) {
-                        JSONObject shengs = null;
-                        try {
-                            shengs = sheng.getJSONObject(i);
-                            String areaId = shengs.getString("areaId");
-                            String parentId = shengs.getString("parentId");
-                            String areaName = shengs.getString("areaName");
-                            String areaType = shengs.getString("areaType");
-                            Log.i("addresssheng","aaaaa"+areaName);
-                            areasList.add(new Areas(areaId,areaName));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                    dataset.clear();
-                    for (int i = 0; i < sheng.length(); i++) {
-                        Log.i("areascity","ID:"+areasList.get(i).getId()+"-----名称："+areasList.get(i).getName());
-                        dataset.add(areasList.get(i).getName());
-                    }
-                    addPick();
-                } else {
-
-                    choosename = String.valueOf(province);
+                    Log.i("qing","if---"+province+"-----date-----"+sheng);
                     Log.i("qing","choosename-----"+choosename);
-                    province.setLength(0);
+                    if (sheng.length() != 0){
+                        areasList.clear();
+                        for (int i = 0; i < sheng.length(); i++) {
+                            JSONObject shengs = null;
+                            try {
+                                shengs = sheng.getJSONObject(i);
+                                String areaId = shengs.getString("areaId");
+                                String parentId = shengs.getString("parentId");
+                                String areaName = shengs.getString("areaName");
+                                String areaType = shengs.getString("areaType");
+                                Log.i("addresssheng","aaaaa"+areaName);
+                                areasList.add(new Areas(areaId,areaName));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        dataset.clear();
+                        for (int i = 0; i < sheng.length(); i++) {
+                            Log.i("areascity","ID:"+areasList.get(i).getId()+"-----名称："+areasList.get(i).getName());
+                            dataset.add(areasList.get(i).getName());
+                        }
+                        addPick();
+                    } else {
+                        Log.i("qing","------走这里------");
+                        choosename = province.toString();
+                        Log.i("qing","choosename-----"+choosename);
+                        province.setLength(0);
+                    }
+
                 }
 
             }
@@ -390,8 +399,8 @@ public class OpenActivity extends AppCompatActivity {
     //提交信息
     public void openShop(){
         is_submit = false;
-        storepicture = mStoreFilePath;//店铺图片
-        userpicture = mUserFilePath;//用户身份证
+        //店铺图片   storepicture
+        //用户身份证   userpicture
         userstorename = et_open_userstorname.getText().toString();//店铺名称
         userphonenum = et_open_userphonenum.getText().toString();// 店铺手机号
         storeplace = choosename;//店铺地址
@@ -399,6 +408,22 @@ public class OpenActivity extends AppCompatActivity {
         //派送范围       sendhowlong
         userstore = et_open_userstore.getText().toString();// 店铺介绍
 
+        if (!("".equals(storepicture))){
+            is_submit = true;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----storepicture-----"+storepicture);
+            //店铺图片通过
+        } else {
+            is_submit = false;
+
+        }
+        if (!("".equals(userpicture))){
+            is_submit = true;
+            Log.i("issubmit","is_submit-----"+is_submit+"-----userpicture-----"+userpicture);
+            //用户图片通过
+        } else {
+            is_submit = false;
+
+        }
         if (!("".equals(userstorename))){
             is_submit = true ;
             Log.i("issubmit","is_submit-----"+is_submit+"-----userstorename-----"+userstorename);
@@ -447,7 +472,7 @@ public class OpenActivity extends AppCompatActivity {
             progressDialog.show();
             Log.i("issubmit","内容填写完毕  提交注册");
             // 内容填写完毕  提交注册
-            String sql = "INSERT INTO wst_shops (userId ,shopName ,shopTel ,shopAddress ,latitude ,longitude ,statusRemarks) VALUES ("+userIds+",'"+userstorename+"','"+userphonenum+"','"+storeplace+"','"+WEIDU+"','"+JINGDU+"','"+userstore+"')";
+            String sql = "INSERT INTO wst_shops (userId ,shopName ,shopImg ,shopTel ,shopAddress ,latitude ,longitude ,statusRemarks ,perimfo ,ranges) VALUES ("+userIds+",'"+userstorename+"','"+storepicture+"','"+userphonenum+"','"+storeplace+"','"+WEIDU+"','"+JINGDU+"','"+userstore+"','"+userpicture+"','"+sendhowlong+"')";
             String types = "/Api/exeInsertQuery";
             HashMap<String,String> map = new HashMap<>();
             map.put("sql",sql);
@@ -459,21 +484,28 @@ public class OpenActivity extends AppCompatActivity {
                     Log.i("submit",s.toString());
                     JSONObject jsonObject = null;
                     String code = null;
+                    String istrue = null;
                     try {
                         jsonObject = new JSONObject(s);
                         code = jsonObject.getString("code");
+                        istrue = jsonObject.getString("data");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     if ("200".equals(code)){
-                        Intent intent = new Intent(OpenActivity.this,MainActivity.class);
-                        SharedPreferences user = getSharedPreferences("user_info",0);
-                        SharedPreferences.Editor edit = user.edit();
-                        edit.putString("hasShops", "1");
-                        edit.commit();
-                        startActivity(intent);
-                        OpenActivity.this.finish();
-                        Toast.makeText(x.app(),"开店成功，等待认证！",Toast.LENGTH_SHORT).show();
+                        if ("1".equals(istrue)){
+                            Intent intent = new Intent(OpenActivity.this,MainActivity.class);
+                            SharedPreferences user = getSharedPreferences("user_info",0);
+                            SharedPreferences.Editor edit = user.edit();
+                            edit.putString("hasShops", "1");
+                            edit.commit();
+                            startActivity(intent);
+                            OpenActivity.this.finish();
+                            Toast.makeText(x.app(),"开店成功，等待认证！",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(x.app(),"请求失败，请重新提交！",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }
 
@@ -658,9 +690,12 @@ public class OpenActivity extends AppCompatActivity {
                     if (photoUri != null)
                     {
                         Bitmap bitmap = decodeUriAsBitmap(photoUri);
+                        photofile = photoUri.toString();
                         if (where == 1){
+                            upLoadImage(1);
                             iv_open_storepicture.setImageBitmap(bitmap);
                         } else if (where == 2){
+                            upLoadImage(2);
                             iv_open_userpicture.setImageBitmap(bitmap);
                         }
                     }
@@ -680,6 +715,65 @@ public class OpenActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    // 上传图片
+    /**
+     * 生成七牛上传token
+     * */
+    public String qiNiuUpToken(){
+        //七牛key
+        Auth auth = Auth.create(QiNiuConfig.ak,QiNiuConfig.sk);
+        //七牛空间名称
+        String bucketName = QiNiuConfig.bucketName;
+        //生成上传token
+        String token = auth.uploadToken(bucketName);
+        return token;
+    }
+
+    private void upLoadImage(final int forwhere){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                //开始上传文件
+                try {
+
+                    UploadManager uploadManager = new UploadManager();
+                    uploadManager.put(photofile, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo info, JSONObject response) {
+
+                            Log.i("qiniu", key + " " + info + " " + response);
+                            Log.i("photofile",photofile+"--------");
+                            if (forwhere == 1){
+                                storepicture = key;
+                            } else if (forwhere == 2) {
+                                userpicture = key;
+                            }
+
+
+                        }
+                    }, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    public String suiJiName(){
+        //随机数
+        String s = "";
+        Random ran =new Random(System.currentTimeMillis());
+        for (int i = 0; i < 10; i++) {
+            s = s + ran.nextInt(100);
+        }
+        //上传的文件名
+        String keyname = "wst_"+s+".jpg";
+        return  keyname;
     }
 
 }
