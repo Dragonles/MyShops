@@ -50,5 +50,4 @@ dependencies {
     compile files('libs/gradle-wrapper.jar')
     compile files('libs/gradle-wrapper.jar')
     compile 'me.xiaopan:pagerslidingtabstrip:1.6.0'
-    compile files('libs/ViewpagerIndicator_1.0.2.jar')
 }
