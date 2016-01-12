@@ -76,6 +76,8 @@ public class OpenActivity extends AppCompatActivity {
     private final int PIC_FROM＿LOCALPHOTO = 0;
     static File stopicFile,userpicFile;
 
+    public static String token,shopId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -493,6 +495,7 @@ public class OpenActivity extends AppCompatActivity {
                     }
                     if ("200".equals(code)){
                         if ("1".equals(istrue)){
+                            getShops();
                             Intent intent = new Intent(OpenActivity.this,MainActivity.class);
                             SharedPreferences user = getSharedPreferences("user_info",0);
                             SharedPreferences.Editor edit = user.edit();
@@ -779,6 +782,50 @@ public class OpenActivity extends AppCompatActivity {
         //上传的文件名
         String keyname = "wst_"+s+".jpg";
         return  keyname;
+    }
+
+    //获取用户的ShopId
+    public void getShops(){
+        HashMap<String,String> hashMap_shopid = new HashMap<>();
+        Log.i("GG","TOKEN"+token);
+        hashMap_shopid.put("token",token);
+        hashMap_shopid.remove("sign");
+        HttpUtils.httputilsGet("/Long/returnshopid", hashMap_shopid, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("GG","成功de数据"+result);
+                try {
+                    JSONObject res = new JSONObject(result);
+                    String code = res.getString("code");
+                    if("200".equals(code)){
+                        String data = res.getString("data");
+                        shopId = data;
+                        SharedPreferences preferences = getSharedPreferences("user_info", 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("shopId",data);
+                        editor.commit();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("GG","错误"+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
 }
