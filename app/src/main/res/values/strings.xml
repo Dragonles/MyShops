@@ -57,9 +57,11 @@
     <string name="wancheng">完成</string>
     <string name="shangpinguige">商品规格</string>
     <string name="sahngpinleixing">商品类型</string>
+    <string name="shangpinfenlei">商品分类</string>
 
     <string name="tianjia_">添加商品规格</string>
     <string name="yanse_guige">（如颜色尺码等）</string>
     <string name="shezhiyunfei">设置运费</string>
     <string name="shangpinleixing">店铺规格</string>
+    <string name="title_activity_classify">ClassifyActivity</string>
 </resources>

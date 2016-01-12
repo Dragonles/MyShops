@@ -66,7 +66,7 @@ public class Goods_chushou_Fragment extends Fragment {
         Tv_kucun = (TextView) v.findViewById(R.id.text_kucun);
         btn_add = (Button) v.findViewById(R.id.btn_add_shangpins);
         tianjiaShangpinAdapter = new TianjiaShangpinAdapter(getActivity(),add_list);
-        getShuju_data(null,1);
+        getShuju(null,1);
         Tv_data.setTextColor(getResources().getColorStateList(R.color.style_color));
       //添加事件点击事件
         Ln_data.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +76,7 @@ public class Goods_chushou_Fragment extends Fragment {
                 list_shu = 10;
                 shangti = 0;
                 add_list.clear();
-                getShuju_data(null,1);
+                getShuju(null,1);
                 Tv_data.setTextColor(getResources().getColorStateList(R.color.style_color));
                 Tv_kucun.setTextColor(getResources().getColorStateList(R.color.fontcolor));
                 Tv_xiaoliang.setTextColor(getResources().getColorStateList(R.color.fontcolor));
@@ -89,7 +89,7 @@ public class Goods_chushou_Fragment extends Fragment {
                 list_shu = 10;
                 shangti = 0;
                 add_list.clear();
-                getShuju_data(null,2);
+                getShuju(null,2);
                 Tv_data.setTextColor(getResources().getColorStateList(R.color.fontcolor));
                 Tv_kucun.setTextColor(getResources().getColorStateList(R.color.fontcolor));
                 Tv_xiaoliang.setTextColor(getResources().getColorStateList(R.color.style_color));
@@ -102,7 +102,7 @@ public class Goods_chushou_Fragment extends Fragment {
                 shangti = 0;
                 list_shu = 10;
                 add_list.clear();
-                getShuju_data(null,3);
+                getShuju(null,3);
                 Tv_data.setTextColor(getResources().getColorStateList(R.color.fontcolor));
                 Tv_kucun.setTextColor(getResources().getColorStateList(R.color.style_color));
                 Tv_xiaoliang.setTextColor(getResources().getColorStateList(R.color.fontcolor));
@@ -116,6 +116,7 @@ public class Goods_chushou_Fragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return v;
     }
     @Override
@@ -123,7 +124,6 @@ public class Goods_chushou_Fragment extends Fragment {
         outState.putString("asda","dddf");
         super.onSaveInstanceState(outState);
     }
-    //下拉和上提
     /***
      * 下拉刷新 上提加载
      */
@@ -141,15 +141,15 @@ public class Goods_chushou_Fragment extends Fragment {
                     add_list.clear();
                     shangti = 0;
                     if(aa ==1){
-                        getShuju_data(null,1);
+                        getShuju(null,1);
                         mprogresssdialog.dismiss();
                     }
                     if(bb ==2){
-                        getShuju_data(null,2);
+                        getShuju(null,2);
                         mprogresssdialog.dismiss();
                     }
                     if(cc ==3){
-                        getShuju_data(null,3);
+                        getShuju(null,3);
                         mprogresssdialog.dismiss();
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
@@ -166,17 +166,16 @@ public class Goods_chushou_Fragment extends Fragment {
                 public void handleMessage(Message msg)
                 {
                     list_shu+=5;
-                    Log.i("GG","!!!!!!!!MaD的值"+shangti);
                     if(aa ==1){
-                        getShuju_data(pullToRefreshLayout,1);
+                        getShuju(pullToRefreshLayout,1);
                         mprogresssdialog.dismiss();
                     }
                     if(bb ==2){
-                        getShuju_data(pullToRefreshLayout,2);
+                        getShuju(pullToRefreshLayout,2);
                         mprogresssdialog.dismiss();
                     }
                     if(cc ==3){
-                        getShuju_data(pullToRefreshLayout,3);
+                        getShuju(pullToRefreshLayout,3);
                         mprogresssdialog.dismiss();
                     }
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
@@ -184,22 +183,20 @@ public class Goods_chushou_Fragment extends Fragment {
             }.sendEmptyMessageDelayed(0, 1000);
         }
     }
-    //获取数据
-    public void getShuju_data(final PullToRefreshLayout pullToRefreshLayout,int w){
+    //得到数据
+    public void getShuju(final PullToRefreshLayout pullToRefreshLayout,int w){
         HashMap<String,String> hashMap_data = new HashMap<>();
         hashMap_data.put("token",spf.getString("token",""));
         hashMap_data.remove("sign");
+        String shopIds = spf.getString("shopId","");
         if(w == 1){
-            hashMap_data.put("sql","select * from wst_goods order by createTime limit 0,11");
-            Log.i("GG","1");
+            hashMap_data.put("sql","select * from wst_goods where shopId = "+ shopIds +" order by createTime");
         }
         if(w == 2){
-            hashMap_data.put("sql","select * from wst_goods order by saleCount limit 0,5");
-            Log.i("GG","2");
+            hashMap_data.put("sql","select * from wst_goods where shopId = "+ shopIds+" order by saleCount");
         }
         if(w == 3){
-            hashMap_data.put("sql","select * from wst_goods order by goodsStock limit 0,5");
-            Log.i("GG","3");
+            hashMap_data.put("sql","select * from wst_goods where shopId = "+ shopIds +" order by goodsStock");
         }
         mprogresssdialog = ProgressDialog.show(getActivity(),"","正在加载...");
         HttpUtils.httputilsGet("/Api/extQueryByToken", hashMap_data, new Callback.CommonCallback<String>() {
@@ -212,6 +209,7 @@ public class Goods_chushou_Fragment extends Fragment {
                     if("200".equals(code)){
                         JSONArray list = res.getJSONArray("data");
                         if(list_shu > list.length()){
+                            list_shu = list.length();
                             Toast.makeText(getActivity(), "数据已到最后一条", Toast.LENGTH_SHORT).show();
                         }
                         for(int i=0;i<list_shu;i++) {

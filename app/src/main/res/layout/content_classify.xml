@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.myshops.shops.myshops.ClassifyActivity"
+    tools:showIn="@layout/activity_classify">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/gouwuche_top"
+        android:layout_height="@dimen/fenlei_height"
+        android:orientation="horizontal"
+        android:background="@color/toolbar">
+        <LinearLayout
+            android:layout_width="40dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="-20dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="-20dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/goBacks"
+                android:src="@drawable/backs"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/fenlei"
+                android:text="@string/shangpinfenlei"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ziti_color"
+                android:textSize="@dimen/ziti_Size"></TextView>
+</LinearLayout>
+    </LinearLayout>
+    <com.myshops.shops.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/rotate_header_web_view_frame_classifys"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <include layout="@layout/refresh_head" />
+        <com.myshops.shops.pulltorefresh.pullableview.PullableListView
+            android:id="@+id/classify_listviews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@color/list_button_xian"
+            android:dividerHeight="0.2dp" />
+        <include layout="@layout/load_more" />
+    </com.myshops.shops.pulltorefresh.PullToRefreshLayout>
+</LinearLayout>

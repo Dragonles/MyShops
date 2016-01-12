@@ -1,8 +1,6 @@
 package com.myshops.shops.myshops;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +12,7 @@ import android.widget.Toast;
 
 import com.myshops.shops.untils.HttpUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
@@ -21,13 +20,12 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
-    public static String token;
+    public static String token,shopId;
     ProgressDialog pd;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -101,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("userType",userType);
                             editor.putString("token",token);
                             isShopNull();
-
+                            getShops();
                         } else{
                             Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
                         }
@@ -139,11 +137,9 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("aaaa",token);
         map.put("token", token);
 
-        Log.i("aaaa","走着步1");
         HttpUtils.httputilsGet(pa,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i("aaaa","走着步2"+result+"------------");
              //   Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
                 pd.dismiss();
@@ -207,6 +203,46 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    //获取用户的ShopId
+    public void getShops(){
+        HashMap<String,String> hashMap_shopid = new HashMap<>();
+        Log.i("GG","TOKEN"+token);
+        hashMap_shopid.put("token",token);
+        hashMap_shopid.remove("sign");
+        HttpUtils.httputilsGet("/Long/returnshopid", hashMap_shopid, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("GG","成功de数据"+result);
+                try {
+                    JSONObject res = new JSONObject(result);
+                    String code = res.getString("code");
+                    if("200".equals(code)){
+                        String data = res.getString("data");
+                        shopId = data;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("shopId",data);
+                        editor.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("GG","错误"+ex);
+            }
 
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
 }
