@@ -83,15 +83,19 @@ public class LoginActivity extends AppCompatActivity {
                 public void onSuccess(String result) {
                     //  Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                     Log.i("aaaa", result + "");
-
+                    String code = null;
+                    String message = null;
+                    JSONObject data;
+                    String username = null;
+                    String userType = null;
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        String code = jsonObject.getString("code");
-                        String message = jsonObject.getString("message");
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String username = data.getString("username");
-                        token = data.getString("token");
-                        String userType = data.getString("userType");
+                        code = jsonObject.getString("code");
+                        message = jsonObject.getString("message");
+                        data = jsonObject.getJSONObject("data");
+                        username = data.getString("username");
+                       token = data.getString("token");
+                        userType = data.getString("userType");
 
                         if ("200".equals(code)){
                             //存入数据
