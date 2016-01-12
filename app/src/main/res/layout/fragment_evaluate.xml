@@ -12,15 +12,19 @@
         android:layout_height="match_parent">
 
         <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            android:layout_centerHorizontal="true"
+        android:id="@+id/tabs"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="48dip"
+        android:layout_alignParentTop="true"
+        app:pstsIndicatorHeight="2dp"
+
+        />
+
+        <ListView
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="48dip"
-            android:layout_alignParentTop="true"
-            app:pstsIndicatorHeight="2dp"
-            app:pstsIndicatorColor="#e9461a"
-            />
+            android:layout_height="wrap_content"></ListView>
 
         <android.support.v4.view.ViewPager
             android:layout_centerInParent="true"

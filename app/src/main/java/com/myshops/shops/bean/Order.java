@@ -12,6 +12,16 @@ public class Order  {
     private String goodsThums;//商品图片
     private String createTime;  //订单创建时间
     private String isRefund;   //是否退款  0:退款  1不退款
+    private String orderId; //订单ID
+
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public String getIsRefund() {
         return isRefund;
@@ -86,6 +96,18 @@ public class Order  {
         this.goodsThums = goodsThums;
         this.createTime = createTime;
         this.isRefund = isRefund;
+    }
+
+    public Order(String username, String goodsName, String goodsNums, String totalMoney, String orderStatus, String goodsThums, String createTime, String isRefund, String orderId) {
+        this.username = username;
+        this.goodsName = goodsName;
+        this.goodsNums = goodsNums;
+        this.totalMoney = totalMoney;
+        this.orderStatus = orderStatus;
+        this.goodsThums = goodsThums;
+        this.createTime = createTime;
+        this.isRefund = isRefund;
+        this.orderId = orderId;
     }
 
     public Order() {

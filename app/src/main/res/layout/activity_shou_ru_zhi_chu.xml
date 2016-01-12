@@ -114,7 +114,7 @@
             <CheckBox
                 android:id="@+id/check_xy"
                 android:layout_width="wrap_content"
-                android:layout_height="33dp"
+                android:layout_height="wrap_content"
                 android:button="@null"
                 android:background="@drawable/shouru_flag"/>
         </LinearLayout>
