@@ -3,13 +3,16 @@ package com.myshops.shops.untils;
 import android.content.Context;
 import android.util.Log;
 
+import com.mob.tools.network.HttpConnection;
+
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.xutils.common.Callback;
 import org.xutils.common.util.MD5;
-import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.io.File;
+import java.security.BasicPermission;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +51,8 @@ public class HttpUtils {
             qingqiu+=Config.siyao;
             //发送http请求
             RequestParams params = new RequestParams(url);
+            params.setConnectTimeout(5000);//设置连接超时
+
             for(int j=0;j<map.size();j++){
                 params.addQueryStringParameter(list.get(j),map.get(list.get(j)));
             }
@@ -99,20 +104,6 @@ public class HttpUtils {
         params.addQueryStringParameter("sign",map.get("sign"));
         //返回JSON数据
         x.http().get(params,callback);
-
-    }
-
-    public static void httpPostImage(String path,String token,String url,Callback.CommonCallback<String> callback){
-
-        RequestParams params = new RequestParams(Config.url+url);
-        params.addQueryStringParameter("token",token);
-        params.setMethod(HttpMethod.POST);
-        params.setMultipart(true);
-        params.addBodyParameter("image",new File(path));
-        x.http().post(params,callback);
-
-
-
 
     }
 

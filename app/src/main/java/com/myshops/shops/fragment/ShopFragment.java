@@ -80,7 +80,79 @@ public class ShopFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        xianShi();
 
+        mgoinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getActivity(), ShopInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+       // Activity.setSupportActionBar(toolbar);
+        return v;
+    }
+
+
+    public void onResume() {
+        super.onResume();
+        Log.i("onResume","onResume");
+        MobclickAgent.onResume(getContext());       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(getContext());
+    }
+
+    public void xiaZai(){
+
+        String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + uid + "'";
+        String type = "/Api/exeQuery";
+        HashMap<String, String> maps = new HashMap<>();
+        maps.put("sql", sql);
+        HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+                Log.i("userphoto", s.toString());
+
+                try {
+                    JSONObject jsonobj = new JSONObject(s);
+                    String code = jsonobj.getString("code");
+                    String message = jsonobj.getString("message");
+                    JSONArray data = jsonobj.getJSONArray("data");
+                    JSONObject info = data.getJSONObject(0);
+                    String images = info.getString("shopImg");
+                    //图片外链地址（网络地址）
+                    String url2 = QiNiuConfig.externalLinks + images;
+                    //加载（下载）图片  iv_add4为ImageView
+                    Log.i("url2", url2);
+                    Glide.with(ShopFragment.this).load(url2).into(iv_userIcon);
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+                Log.i("onError", throwable.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
+    public void xianShi(){
         String t = LoginActivity.token;
         String sqll = "select * from wst_user_token where token = '" + t + "'";
         String types = "/Api/exeQuery";
@@ -110,7 +182,7 @@ public class ShopFragment extends Fragment {
 
                 xiaZai();
 
-                String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
+                String sql = "select shopImg, shopName, shopTel from wst_shops  c userId = '" + uid + "'";
                 String type = "/Api/exeQuery";
                 HashMap<String, String> maps = new HashMap<>();
                 maps.put("sql", sql);
@@ -126,28 +198,15 @@ public class ShopFragment extends Fragment {
                             String message = jsonobj.getString("message");
                             JSONArray data = jsonobj.getJSONArray("data");
                             JSONObject info = data.getJSONObject(0);
-                            userPhoto = info.getString("userPhoto");
-                            userName = info.getString("userName");
-                            userPhone = info.getString("userPhone");
-                            Log.i("userPhoto",userPhoto + " " + userName + " 1");
+                            userPhoto = info.getString("shopImg");
+                            userName = info.getString("shopName");
+                            userPhone = info.getString("shopTel");
                             tv_shop_username.setText(userName);
-                            Log.i("userPhoto",userPhoto + " " + userName + " 2");
                             iv_userIcon.setBackgroundResource(0);
-//                            Picasso.with(getContext()).load(userPhoto).into(iv_userIcon);
 
                         }catch (Exception e){
-                        
+
                         }
-
-//                        Log.i("userPhoto",userPhoto + " " + userName + " 1");
-//                        tv_shop_username.setText(userName);
-//                        iv_userIcon.setImageBitmap(BitmapFactory.decodeFile(QiNiuConfig.externalLinks + userPhoto));
-                        Log.i("userPhoto",QiNiuConfig.externalLinks + userPhoto);
-//                        iv_userIcon.setImageURI(Uri.parse(userPhoto));
-                        Picasso.with(getContext()).load(QiNiuConfig.externalLinks + userPhoto).into(iv_userIcon);
-//                        Log.i("userPhoto",userPhoto + " " + userName + " ''3");
-
-
                     }
 
                     @Override
@@ -167,74 +226,6 @@ public class ShopFragment extends Fragment {
                 });
 
 
-            }
-
-            @Override
-            public void onError(Throwable throwable, boolean b) {
-                Log.i("onError", throwable.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException e) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
-
-        mgoinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(getActivity(), ShopInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-       // Activity.setSupportActionBar(toolbar);
-        return v;
-    }
-
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(getContext());       //统计时长
-    }
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(getContext());
-    }
-
-    public void xiaZai(){
-
-        String sql = "select userPhoto, userName, userPhone from wst_users where userId = '" + uid + "'";
-        String type = "/Api/exeQuery";
-        HashMap<String, String> maps = new HashMap<>();
-        maps.put("sql", sql);
-        HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String s) {
-
-                Log.i("userphoto", s.toString());
-
-                try {
-                    JSONObject jsonobj = new JSONObject(s);
-                    String code = jsonobj.getString("code");
-                    String message = jsonobj.getString("message");
-                    JSONArray data = jsonobj.getJSONArray("data");
-                    JSONObject info = data.getJSONObject(0);
-                    String images = info.getString("userPhoto");
-                    //图片外链地址（网络地址）
-                    String url2 = QiNiuConfig.externalLinks + images;
-                    //加载（下载）图片  iv_add4为ImageView
-                    Log.i("url2", url2);
-                    Glide.with(ShopFragment.this).load(url2).into(iv_userIcon);
-
-                }catch (Exception e){
-
-                }
             }
 
             @Override
