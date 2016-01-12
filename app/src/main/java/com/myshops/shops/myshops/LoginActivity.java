@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.myshops.shops.untils.HttpUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.view.annotation.ContentView;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
-    public static String token;
+    public static String token,shopId;
     ProgressDialog pd;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -171,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                         //存在店铺信息跳转主界面
                         //存入数据
                         editor.putString("hasShops",date);
-
+                        getShops();
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                     } else {
@@ -214,6 +215,48 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("aa",x.app()+"");
             }
         });
+    }
+    //获取用户的ShopId
+    public void getShops(){
+        HashMap<String,String> hashMap_shopid = new HashMap<>();
+        Log.i("GG","TOKEN"+token);
+        hashMap_shopid.put("token",token);
+        hashMap_shopid.remove("sign");
+        HttpUtils.httputilsGet("/Long/returnshopid", hashMap_shopid, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("GG","成功de数据"+result);
+                try {
+                    JSONObject res = new JSONObject(result);
+                    String code = res.getString("code");
+                    if("200".equals(code)){
+                        String data = res.getString("data");
+                        shopId = data;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("shopId",data);
+                        editor.commit();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("GG","错误"+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
 
