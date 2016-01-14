@@ -33,7 +33,7 @@ public class Goods_xiajia_Fragment extends Fragment {
     ListView Lv_xiajia;
     PullToRefreshLayout layout_data;
     SharedPreferences spf;
-    int list_shu = 10,shangti=0;
+    int list_shu = 10,shangti=0,shopId;
     private ProgressDialog mprogresssdialog;
     TianjiaShangpinAdapter tianjiaShangpinAdapter;
     List<Tianjiashangpin> xiajia_list = new ArrayList<>();
@@ -87,7 +87,7 @@ public class Goods_xiajia_Fragment extends Fragment {
                 @Override
                 public void handleMessage(Message msg)
                 {
-                    list_shu+=10;
+                    list_shu+=5;
                         getXiajiaShuju(pullToRefreshLayout);
 //                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -99,7 +99,8 @@ public class Goods_xiajia_Fragment extends Fragment {
         HashMap<String,String> hashMap_xiajia = new HashMap<>();
         hashMap_xiajia.put("token",spf.getString("token",""));
         hashMap_xiajia.remove("sign");
-        hashMap_xiajia.put("sql","select * from wst_goods where goodsStatus = 1");
+        String shopId = spf.getString("shopId","");
+        hashMap_xiajia.put("sql","select * from wst_goods where goodsStatus = 1 and shopId = "+shopId+"");
         mprogresssdialog = ProgressDialog.show(getActivity(),"","正在加载...");
         HttpUtils.httputilsGet("/Api/extQueryByToken", hashMap_xiajia, new Callback.CommonCallback<String>() {
             @Override
@@ -111,6 +112,7 @@ public class Goods_xiajia_Fragment extends Fragment {
                     if("200".equals(code)){
                         JSONArray list = res.getJSONArray("data");
                         if(list_shu > list.length()){
+                            list_shu = list.length();
                             Toast.makeText(getActivity(), "数据已到最后一条", Toast.LENGTH_SHORT).show();
                         }
                         for(int i=0;i<list_shu;i++) {

@@ -71,4 +71,6 @@
     <!--商品-->
     <dimen name="top_tubiao_zi_margintop">3dp</dimen>
     <dimen name="sousuo_K">40dp</dimen>
+
+    <dimen name="tab_top_fontsize">15sp</dimen>
 </resources>

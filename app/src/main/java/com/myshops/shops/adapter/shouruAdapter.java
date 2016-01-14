@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/18.
  */
-public class ShouruAdapter extends BaseAdapter {
+public class shouruAdapter extends BaseAdapter {
     Context context;
     List<Shouruyuzhichu> list;
-    public ShouruAdapter(Context context, List list){
+    public shouruAdapter(Context context, List list){
         this.context = context;
         this.list = list;
     }
@@ -55,13 +55,13 @@ public class ShouruAdapter extends BaseAdapter {
             convertView.setTag(v);
         }
         v = (ViewHolder) convertView.getTag();
-        v.shangpin_img.setBackgroundResource(Integer.parseInt(list.get(position).getImg()));
+//        v.shangpin_img.setBackgroundResource(Integer.parseInt(list.get(position).getImg()));
         v.shangpin_title.setText(list.get(position).getShangpin_title());
         v.shangpin_color.setText(list.get(position).getShangpin_color());
         v.shangpin_size.setText(list.get(position).getShagpin_size());
         v.shangpin_price_new.setText(list.get(position).getShangpin_price_first());
         v.shangpin_price_old.setText(list.get(position).getShangpin_price_two());
-        v.shangpin_count.setText(list.get(position).getShangpin_count());
+        v.shangpin_count.setText("×"+list.get(position).getShangpin_count());
         v.shangpin_type.setText(list.get(position).getType());
         return convertView;
     }

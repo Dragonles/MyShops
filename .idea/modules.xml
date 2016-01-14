@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyShops.iml" filepath="$PROJECT_DIR$/MyShops.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myshops.iml" filepath="$PROJECT_DIR$/myshops.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sellerShop.iml" filepath="$PROJECT_DIR$/sellerShop.iml" />
       <module fileurl="file://$PROJECT_DIR$/smssdk/smssdk.iml" filepath="$PROJECT_DIR$/smssdk/smssdk.iml" />
     </modules>
   </component>

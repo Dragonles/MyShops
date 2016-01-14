@@ -3,6 +3,7 @@ package com.myshops.shops.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.myshops.shops.adapter.ClassifyAdapter;
 import com.myshops.shops.bean.Goods_classify;
+import com.myshops.shops.myshops.ClassifyActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.pulltorefresh.PullToRefreshLayout;
 import com.myshops.shops.untils.HttpUtils;
@@ -64,7 +66,6 @@ public class Goods_fenlei_Fragment extends Fragment {
                 View longinDialogView = layoutInflater.inflate(R.layout.logindialog_layout, null);
                 //获取布局中的控件
                 editText = (EditText)longinDialogView.findViewById(R.id.edit_dialog);
-                //创建一个AlertDialog对话框
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                         .setTitle("新建分类")
                         .setView(longinDialogView)                //加载自定义的对话框式样
@@ -114,6 +115,9 @@ public class Goods_fenlei_Fragment extends Fragment {
                 Log.i("GG","该项的cartId是"+classify_list.get(position).getCatId());
                 if(a == 0){
                     Toast.makeText(getActivity(),"该分类暂时没有商品",Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent(getActivity(), ClassifyActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -151,7 +155,7 @@ public class Goods_fenlei_Fragment extends Fragment {
                 @Override
                 public void handleMessage(Message msg)
                 {
-                    list_shu+=10;
+                    list_shu+=5;
                     getClassify(pullToRefreshLayout);
 //                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -161,14 +165,16 @@ public class Goods_fenlei_Fragment extends Fragment {
     //获取数据
     public void getClassify(final PullToRefreshLayout pullToRefreshLayout){
         HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("token",spf.getString("token",""));
+//        hashMap.put("token",spf.getString("token",""));
         hashMap.remove("sign");
+        String shopId = spf.getString("shopId","");
+//        Log.i("GG","分类中shoId的值是"+shopId);
         mprogresssdialog = ProgressDialog.show(getActivity(),"","正在加载...");
-        hashMap.put("sql","select * from wst_goods_cats order by catSort");
-        HttpUtils.httputilsGet("/Api/extQueryByToken", hashMap, new Callback.CommonCallback<String>() {
+        hashMap.put("sql","select catId,catName,COUNT(*) from wst_goods_cats as a JOIN wst_goods as b on a.catId = b.goodsCatId1 where b.shopId = "+shopId+"");
+        HttpUtils.httputilsGet("/Api/exeQuery", hashMap, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i("GG","结果"+result);
+                Log.i("GG","获取分类的结果结果"+result);
                 try {
                     JSONObject res = new JSONObject(result);
                     String code = res.getString("code");
@@ -176,15 +182,17 @@ public class Goods_fenlei_Fragment extends Fragment {
                         JSONArray list = res.getJSONArray("data");
                         Log.i("GG","长度"+list.length());
                         if(list_shu > list.length()){
+                            list_shu = list.length();
                             Toast.makeText(getActivity(), "数据已到最后一条", Toast.LENGTH_SHORT).show();
                         }
                         for(int i =0;i<list_shu;i++){
                             JSONObject res_list = list.getJSONObject(i);
                             String classify_name = res_list.getString("catName");
-                            String classsify_count = res_list.getString("catSort");
+                            String classsify_count = res_list.getString("COUNT(*)");
                             String classify_catId = res_list.getString("catId");
                             catId = Integer.parseInt(classify_catId);
                             a = Integer.parseInt(classsify_count);
+                            Log.i("GG",classsify_count+"sfsdf"+list_shu);
                             if (i >= shangti){
                                 classify_list.add(new Goods_classify(classify_name,classsify_count,classify_catId));
                             }
