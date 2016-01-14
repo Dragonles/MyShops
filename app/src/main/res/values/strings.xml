@@ -45,8 +45,9 @@
     <string name="dianpufenlei">店铺分类</string>
     <string name="weifenlei">未分类（选填）</string>
     <string name="shangpinname">商品名称</string>
-    <string name="quming">取个响亮的商品名称吧</string>
-    <string name="shangpinImg">商品图片:</string>
+    <string name="quming">输入商品名称</string>
+    <string name="shangpinImg">商品封面图片</string>
+    <string name="shangpinSuoLueImg">商品缩略图</string>
     <string name="tu_number"> (  /3 )</string>
     <string name="shangpinjiage">商品价格</string>
     <string name="dingjia">给商品定个好价格</string>
@@ -57,6 +58,7 @@
     <string name="wancheng">完成</string>
     <string name="shangpinguige">商品规格</string>
     <string name="sahngpinleixing">商品类型</string>
+    <string name="dianpuleixing">店铺类型</string>
     <string name="shangpinfenlei">商品分类</string>
 
     <string name="tianjia_">添加商品规格</string>

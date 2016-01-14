@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/buju"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <EditText
+        android:textColor="#656565"
+        android:textColorHint="#656565"
+        android:textSize="16sp"
+        android:id="@+id/shuxingming"
+        android:hint="属性名"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/button2"
+        android:layout_marginBottom="10dp"/>
+
+        <TextView
+        android:id="@+id/maohao"
+        android:layout_toRightOf="@+id/shuxingming"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="："/>
+
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:layout_toRightOf="@+id/maohao"
+            android:id="@+id/id_flowlayout"
+            zhy:max_select="-1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+        <Button
+            android:layout_marginRight="15dp"
+            android:id="@+id/add"
+            android:layout_toRightOf="@+id/id_flowlayout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/add"/>
+
+    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:id="@+id/r"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!-- -->
+    <!--</RelativeLayout>-->
+
+    <TextView
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/buju"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"/>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/qu_tu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/qu_tu"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

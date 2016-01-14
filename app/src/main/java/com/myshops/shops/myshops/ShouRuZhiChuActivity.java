@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.myshops.shops.adapter.ShouruAdapter;
+import com.myshops.shops.adapter.shouruAdapter;
 import com.myshops.shops.bean.Shouruyuzhichu;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.ToastUtil;
@@ -29,7 +29,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
     List<Shouruyuzhichu> list = new ArrayList<>();
     private String tokens;
     ListView listView;
-    ShouruAdapter srAdapter;
+    shouruAdapter srAdapter;
     private TextView txt_shouru, txt_zhichu, txt_shourus; //收入总额   支出总额  隐藏收入总额
     private CheckBox check_xy; //显示隐藏按钮
     private List<Float> prices = new ArrayList<>();
@@ -43,7 +43,8 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
         check_xy = (CheckBox) findViewById(R.id.check_xy);  //显示隐藏按钮
         txt_shourus = (TextView) findViewById(R.id.txt_shourus); //隐藏总额
         listView = (ListView) findViewById(R.id.shouru_listView);
-
+        //  设置中划线
+//        txt_shouru.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         check_xy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +135,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
                         Log.i("pricess","结束总价格："+a);
                         txt_shouru.setText(a+"/元");
 //                        Log.i("srzclog","Json数据: "+a);
-                        srAdapter = new ShouruAdapter(getApplicationContext(),list);
+                        srAdapter = new shouruAdapter(getApplicationContext(),list);
                         listView.setAdapter(srAdapter);
 
                     }

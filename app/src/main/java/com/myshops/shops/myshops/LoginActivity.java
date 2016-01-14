@@ -24,7 +24,6 @@ import java.util.HashMap;
 
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
-
     public static String token,shopId;
     ProgressDialog pd;
     SharedPreferences preferences;
@@ -103,7 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("userType",userType);
                             editor.putString("token",token);
                             isShopNull();
-                            getShops();
                         } else{
                             Toast.makeText(x.app(), "登陆失败，"+message, Toast.LENGTH_SHORT).show();
                         }
@@ -161,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                             //存在店铺信息跳转主界面
                             //存入数据
                             editor.putString("hasShops",date);
-
+                            getShops();
                             intent = new Intent(LoginActivity.this,MainActivity.class);
                             Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
                         } else {

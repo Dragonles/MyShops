@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/Top"
         android:background="@color/white"
@@ -58,6 +57,8 @@
         android:layout_height="1dp"
         android:background="@color/xian"/>
 
+
+
     <ScrollView
         android:layout_marginTop="@dimen/margin_top"
         android:layout_below="@+id/Top"
@@ -67,6 +68,69 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:gravity="center"
+                android:paddingLeft="@dimen/add_left_right"
+                android:paddingRight="@dimen/add_left_right"
+                android:layout_marginBottom="1dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/add_K_height">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:gravity="center_vertical"
+                    android:text="商品编号"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:id="@+id/goods_number"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:gravity="center_vertical"
+                    android:text="品牌ID"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:id="@+id/goods_Id"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:gravity="center"-->
+                <!--android:paddingLeft="@dimen/add_left_right"-->
+                <!--android:paddingRight="@dimen/add_left_right"-->
+                <!--android:layout_marginBottom="1dp"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="@dimen/add_K_height" >-->
+                <!--<TextView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="left"-->
+                    <!--android:textSize="@dimen/Left_title_text_size"-->
+                    <!--android:textColor="@color/Left_title_color"-->
+                    <!--android:text="@string/shangpinname"/>-->
+                <!--<EditText-->
+                    <!--android:textSize="@dimen/Right_neirong_text_size"-->
+                    <!--android:id="@+id/shangpinname"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:background="@null"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="right|center"-->
+                    <!--android:textColor="@color/Right_neirong_color"-->
+                    <!--android:hint="@string/quming"/>-->
+
+            <!--</LinearLayout>-->
             <LinearLayout
                 android:gravity="center"
                 android:paddingLeft="@dimen/add_left_right"
@@ -87,138 +151,222 @@
                 <TextView
                     android:textSize="@dimen/Right_neirong_text_size"
                     android:layout_weight="1"
-                    android:id="@+id/shangpinleimu"
+                    android:id="@+id/shangpinleimu_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:textColor="@color/Right_neirong_color"
                     android:text="@string/weixuanze"/>
+                <Button
+                    android:id="@+id/shangpinLeimu_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/xiala"
+                    />
             </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:paddingLeft="@dimen/add_left_right"-->
+                <!--android:paddingRight="@dimen/add_left_right"-->
+                <!--android:layout_marginBottom="1dp"-->
+                <!--android:orientation="vertical"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="@dimen/img_neirong" >-->
+                <!--<LinearLayout-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="@dimen/add_K_height">-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="left"-->
+                        <!--android:textSize="@dimen/Left_title_text_size"-->
+                        <!--android:textColor="@color/Left_title_color"-->
+                        <!--android:text="@string/shangpinImg"/>-->
+                    <!--<TextView-->
+                        <!--android:textSize="@dimen/Left_title_text_size"-->
+                        <!--android:textColor="@color/Left_title_color"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"/>-->
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_marginBottom="1dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/add_img2"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/imgs2"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_img2"-->
+                            <!--android:layout_toRightOf="@+id/imgs2"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/add_img3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/imgs3"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_img3"-->
+                            <!--android:layout_toRightOf="@+id/imgs3"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/add_img"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/imgs"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_img"-->
+                            <!--android:layout_toRightOf="@+id/imgs"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:src="@drawable/add"-->
+                        <!--android:id="@+id/tjimg"-->
+                        <!--android:layout_gravity="center_vertical"/>-->
+                <!--</LinearLayout>-->
 
+            <!--</LinearLayout>-->
+            <!--<LinearLayout-->
+                <!--android:paddingLeft="@dimen/add_left_right"-->
+                <!--android:paddingRight="@dimen/add_left_right"-->
+                <!--android:layout_marginBottom="1dp"-->
+                <!--android:orientation="vertical"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="@dimen/img_neirong" >-->
+                <!--<LinearLayout-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="@dimen/add_K_height">-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="left"-->
+                        <!--android:textSize="@dimen/Left_title_text_size"-->
+                        <!--android:textColor="@color/Left_title_color"-->
+                        <!--android:text="@string/shangpinSuoLueImg"/>-->
+                    <!--<TextView-->
+                        <!--android:textSize="@dimen/Left_title_text_size"-->
+                        <!--android:textColor="@color/Left_title_color"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"/>-->
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_marginBottom="1dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/layout_suolueimg3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/suolueimg3"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_suolueimg3"-->
+                            <!--android:layout_toRightOf="@+id/suolueimg3"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/layout_suolueimg2"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/suolueimg2"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_suolueimg2"-->
+                            <!--android:layout_toRightOf="@+id/suolueimg2"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<RelativeLayout-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/layout_suolueimg1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent">-->
+                        <!--<ImageView-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:id="@+id/suolueimg1"/>-->
+                        <!--<ImageView-->
+                            <!--android:src="@drawable/qu_tu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:id="@+id/qu_suolueimg1"-->
+                            <!--android:layout_toRightOf="@+id/suolueimg1"/>-->
+                    <!--</RelativeLayout>-->
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:src="@drawable/add"-->
+                        <!--android:id="@+id/tj_suolueImg"-->
+                        <!--android:layout_gravity="center_vertical"/>-->
+                <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
             <LinearLayout
-                android:layout_marginTop="@dimen/margin_top"
-                android:gravity="center"
                 android:paddingLeft="@dimen/add_left_right"
                 android:paddingRight="@dimen/add_left_right"
                 android:layout_marginBottom="1dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_width="fill_parent"
-                android:layout_height="@dimen/add_K_height" >
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:textSize="@dimen/Left_title_text_size"
-                    android:textColor="@color/Left_title_color"
-                    android:text="@string/shangpinname"/>
+                android:layout_height="@dimen/img_neirong2" >
                 <EditText
-                    android:textSize="@dimen/Right_neirong_text_size"
-                    android:id="@+id/shangpinname"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:padding="8dp"
                     android:background="@null"
-                    android:layout_height="match_parent"
-                    android:gravity="right|center"
-                    android:textColor="@color/Right_neirong_color"
-                    android:hint="@string/quming"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:paddingLeft="@dimen/add_left_right"
-                android:paddingRight="@dimen/add_left_right"
-                android:layout_marginBottom="1dp"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/img_neirong" >
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_weight="1"
+                    android:gravity="top"
+                    android:id="@+id/shangpinmiaoshu"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:textSize="@dimen/Left_title_text_size"
-                        android:textColor="@color/Left_title_color"
-                        android:text="@string/shangpinImg"/>
-                    <TextView
-                        android:textSize="@dimen/Left_title_text_size"
-                        android:textColor="@color/Left_title_color"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="1dp"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/add_img2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_centerVertical="true"
-                            android:layout_height="50dp"
-                            android:id="@+id/imgs2"/>
-                        <ImageView
-                            android:src="@drawable/qu_tu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/qu_img2"
-                            android:layout_toRightOf="@+id/imgs2"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/add_img3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_centerVertical="true"
-                            android:layout_height="50dp"
-                            android:id="@+id/imgs3"/>
-                        <ImageView
-                            android:src="@drawable/qu_tu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/qu_img3"
-                            android:layout_toRightOf="@+id/imgs3"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/add_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_centerVertical="true"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:id="@+id/imgs"/>
-                        <ImageView
-                            android:src="@drawable/qu_tu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/qu_img"
-                            android:layout_toRightOf="@+id/imgs"/>
-                    </RelativeLayout>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/add"
-                        android:id="@+id/tjimg"
-                        android:layout_gravity="center_vertical"/>
-                </LinearLayout>
-
+                    android:layout_height="fill_parent"
+                    android:hint="商品描述"/>
             </LinearLayout>
-
             <LinearLayout
                 android:paddingLeft="@dimen/add_left_right"
                 android:paddingRight="@dimen/add_left_right"
@@ -227,8 +375,8 @@
                 android:background="@color/white"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/img_neirong" >
-
                 <EditText
+                    android:padding="8dp"
                     android:background="@null"
                     android:gravity="top"
                     android:id="@+id/shangpinjieshao"
@@ -236,807 +384,225 @@
                     android:layout_height="fill_parent"
                     android:hint="商品介绍"/>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_marginTop="@dimen/margin_top"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/guige_1"
-                    android:background="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:id="@+id/delete_guige1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delete"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@color/xian"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinguige"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinjiage"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinkucun"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinleixing"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:visibility="gone"
-                    android:id="@+id/guige_2"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:id="@+id/delete_guige2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delete"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@color/xian"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinguige"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinjiage"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinkucun"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinleixing"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:id="@+id/guige_3"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/delete_guige3"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delete"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@color/xian"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinguige"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinjiage"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinkucun"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinleixing"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delete"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@color/xian"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinguige"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinjiage"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinkucun"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinleixing"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delete"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@color/xian"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinguige"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinjiage"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinkucun"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/xian"/>
-
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/add_left_right"
-                            android:paddingRight="@dimen/add_left_right"
-                            android:layout_marginBottom="1dp"
-                            android:orientation="horizontal"
-                            android:background="@color/white"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/add_K_height" >
-                            <TextView
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textSize="@dimen/Left_title_text_size"
-                                android:textColor="@color/Left_title_color"
-                                android:text="@string/shangpinleixing"/>
-                            <EditText
-                                android:textSize="@dimen/Right_neirong_text_size"
-                                android:background="@null"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="right|center"
-                                android:textColor="@color/Right_neirong_color" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_marginTop="@dimen/margin_top"
-                android:gravity="center"
                 android:paddingLeft="@dimen/add_left_right"
                 android:paddingRight="@dimen/add_left_right"
                 android:layout_marginBottom="1dp"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:id="@+id/add_guige"
                 android:background="@color/white"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/add_K_height" >
-                <ImageView
-                    android:src="@drawable/add_"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
                 <TextView
-                    android:layout_marginLeft="10dp"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:textSize="@dimen/Left_title_text_size"
                     android:textColor="@color/Left_title_color"
-                    android:text="@string/tianjia_"/>
+                    android:text="@string/shangpinguige"/>
+
                 <TextView
-                    android:textSize="@dimen/Right_neirong_text_size"
-                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/shangpin_text"
+                    android:layout_gravity="right"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/Right_neirong_color"
-                    android:text="@string/yanse_guige"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/guige"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:id="@+id/linearLayout"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"></LinearLayout>-->
+
+                <!--<Button-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_below="@+id/linearLayout"-->
+                    <!--android:id="@+id/tianjia0"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:background="@drawable/add"/>-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/xian"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:layout_below="@+id/tianjia0"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#ccc"/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/jia_ku"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:layout_below="@+id/xian"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="0.5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="市场价："/>-->
+                    <!--<EditText-->
+                        <!--android:inputType="number"-->
+                        <!--android:id="@+id/shichangjiage"-->
+                        <!--android:hint="默认单位元"-->
+                        <!--android:background="@drawable/button2"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="0.5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="店铺价："/>-->
+                    <!--<EditText-->
+                        <!--android:inputType="number"-->
+                        <!--android:hint="默认单位元"-->
+                        <!--android:id="@+id/dianpujiage"-->
+                        <!--android:background="@drawable/button2"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/kucun_count"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:layout_below="@+id/jia_ku"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="0.5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="库存："/>-->
+                    <!--<EditText-->
+                        <!--android:inputType="number"-->
+                        <!--android:id="@+id/kucun"-->
+                        <!--android:hint="默认单位个"-->
+                        <!--android:background="@drawable/button2"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="0.5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="商品单位："/>-->
+                    <!--<EditText-->
+                        <!--android:inputType="text"-->
+                        <!--android:hint="默认单位个"-->
+                        <!--android:id="@+id/shangpindanwei"-->
+                        <!--android:background="@drawable/button2"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+                <!--</LinearLayout>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/xian2"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_below="@+id/kucun_count"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#ccc"/>-->
+
+
+                <!--<Button-->
+                    <!--android:id="@+id/queding"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:text="确定添加"-->
+                    <!--android:layout_marginLeft="15dp"-->
+                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/button"-->
+                    <!--android:layout_below="@+id/xian2"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="40dp" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/xian3"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_below="@+id/queding"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#ccc"/>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_below="@+id/xian3"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:id="@+id/xuanzhong"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                <!--</LinearLayout>-->
+
+            <!--</RelativeLayout>-->
+
+            <!-- 是否出售   -->
             <RelativeLayout
                 android:layout_marginTop="@dimen/margin_top"
                 android:paddingLeft="@dimen/add_left_right"
                 android:paddingRight="@dimen/add_left_right"
                 android:layout_marginBottom="1dp"
-                android:id="@+id/shezhiyunfei"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:id="@+id/layout_isSale"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/add_K_height" >
-
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="@dimen/Left_title_text_size"
-                    android:textColor="@color/Left_title_color"
-                    android:text="@string/shezhiyunfei"/>
-                <ImageView
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="是否出售"/>
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_arrow_red"
-                    android:layout_gravity="right|center_vertical"/>
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentRight="true">
+                    <CheckBox
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:button="@null"
+                        android:id="@+id/isSale"
+                        android:background="@drawable/checkbox_xml"
+                        />
+                </LinearLayout>
             </RelativeLayout>
+            <EditText
+                android:layout_marginTop="@dimen/margin_top"
+                android:paddingLeft="@dimen/add_left_right"
+                android:paddingRight="@dimen/add_left_right"
+                android:layout_marginBottom="1dp"
+                android:orientation="horizontal"
+                android:id="@+id/simple"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_K_height"
+                android:hint="相同属性">
+            </EditText>
             <Button
                 android:id="@+id/tianjiasp"
                 android:layout_marginTop="@dimen/margin_top"

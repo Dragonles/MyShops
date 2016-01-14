@@ -579,7 +579,6 @@ public class ShopInfoActivity extends AppCompatActivity {
             public void onSuccess(String s) {
 
                 Log.i("userphoto", s.toString());
-
                 try {
                     JSONObject jsonobj = new JSONObject(s);
                     String code = jsonobj.getString("code");

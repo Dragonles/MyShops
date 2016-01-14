@@ -15,6 +15,7 @@ import java.util.List;
 public class GouwucheActivity extends AppCompatActivity {
     ListView listView;
     ImageView iv_back;
+//    CheckBox check_all;
     List<Gouwuche> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,8 @@ public class GouwucheActivity extends AppCompatActivity {
         setContentView(R.layout.content_gouwuche);
 
         iv_back = (ImageView) findViewById(R.id.goBacks);
+//        check_all = (CheckBox) findViewById(R.id.check_all);
+//        check_all.setChecked(true);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -745,9 +745,9 @@ public class OpenActivity extends AppCompatActivity {
                     uploadManager.put(picFile1, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
-
                             Log.i("qiniu", key + " " + info + " " + response);
                             storepicture = key;
+
                             UploadManager uploadManager = new UploadManager();
                             uploadManager.put(picFile2, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
                                 @Override
