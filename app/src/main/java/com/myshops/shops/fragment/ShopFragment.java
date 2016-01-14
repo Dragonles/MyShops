@@ -1,6 +1,7 @@
 package com.myshops.shops.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,7 +65,8 @@ public class ShopFragment extends Fragment {
         tv_shop_username = (TextView) v.findViewById(R.id.tv_shop_username);
         lly_xiaoshou = (LinearLayout) v.findViewById(R.id.lly_xiaoshou);
         lly_shouru = (LinearLayout) v.findViewById(R.id.lly_shouru);
-
+//        xiaZai();
+        xianShi();
         lly_xiaoshou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +82,7 @@ public class ShopFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        xianShi();
+
 
         mgoinfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +108,7 @@ public class ShopFragment extends Fragment {
 
     public void xiaZai(){
 
+        Log.i("xiazai","走方法!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + uid + "'";
         String type = "/Api/exeQuery";
         HashMap<String, String> maps = new HashMap<>();
@@ -119,15 +122,23 @@ public class ShopFragment extends Fragment {
                 try {
                     JSONObject jsonobj = new JSONObject(s);
                     String code = jsonobj.getString("code");
-                    String message = jsonobj.getString("message");
-                    JSONArray data = jsonobj.getJSONArray("data");
-                    JSONObject info = data.getJSONObject(0);
-                    String images = info.getString("shopImg");
-                    //图片外链地址（网络地址）
-                    String url2 = QiNiuConfig.externalLinks + images;
-                    //加载（下载）图片  iv_add4为ImageView
-                    Log.i("url2", url2);
-                    Glide.with(ShopFragment.this).load(url2).into(iv_userIcon);
+
+                    if ("200".equals(code)){
+                        JSONArray data = jsonobj.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++){
+
+                            JSONObject info = data.getJSONObject(i);
+                            String images = info.getString("shopImg");
+                            String name = info.getString("shopName");
+                            Log.i("xiazai","走方法~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                            tv_shop_username.setText(name);
+                            //图片外链地址（网络地址）
+                            String url2 = QiNiuConfig.externalLinks + images;
+                            //加载（下载）图片  iv_add4为ImageView
+                            Log.i("url2", url2);
+                            Glide.with(ShopFragment.this).load(url2).into(iv_userIcon);
+                        }
+                    }
 
                 }catch (Exception e){
 
@@ -153,7 +164,8 @@ public class ShopFragment extends Fragment {
     }
 
     public void xianShi(){
-        String t = LoginActivity.token;
+        final SharedPreferences token = getActivity().getSharedPreferences("user_info", 0);
+        final String t = token.getString("token", "");
         String sqll = "select * from wst_user_token where token = '" + t + "'";
         String types = "/Api/exeQuery";
         HashMap<String, String> map = new HashMap<>();
@@ -182,48 +194,48 @@ public class ShopFragment extends Fragment {
 
                 xiaZai();
 
-                String sql = "select shopImg, shopName, shopTel from wst_shops  c userId = '" + uid + "'";
-                String type = "/Api/exeQuery";
-                HashMap<String, String> maps = new HashMap<>();
-                maps.put("sql", sql);
-                HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-
-                        Log.i("userphoto", s.toString());
-
-                        try {
-                            JSONObject jsonobj = new JSONObject(s);
-                            String code = jsonobj.getString("code");
-                            String message = jsonobj.getString("message");
-                            JSONArray data = jsonobj.getJSONArray("data");
-                            JSONObject info = data.getJSONObject(0);
-                            userPhoto = info.getString("shopImg");
-                            userName = info.getString("shopName");
-                            userPhone = info.getString("shopTel");
-                            tv_shop_username.setText(userName);
-                            iv_userIcon.setBackgroundResource(0);
-
-                        }catch (Exception e){
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable, boolean b) {
-                        Log.i("onError", throwable.toString());
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException e) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
+//                String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + uid + "'";
+//                String type = "/Api/exeQuery";
+//                HashMap<String, String> maps = new HashMap<>();
+//                maps.put("sql", sql);
+//                HttpUtils.httputilsGet(type, maps, new Callback.CommonCallback<String>() {
+//                    @Override
+//                    public void onSuccess(String s) {
+//
+//                        Log.i("userphoto", s.toString());
+//
+//                        try {
+//                            JSONObject jsonobj = new JSONObject(s);
+//                            String code = jsonobj.getString("code");
+//                            String message = jsonobj.getString("message");
+//                            JSONArray data = jsonobj.getJSONArray("data");
+//                            JSONObject info = data.getJSONObject(0);
+//                            userPhoto = info.getString("shopImg");
+//                            userPhone = info.getString("shopTel");
+//                            userName = info.getString("shopName");
+//                            tv_shop_username.setText(userName);
+//                            iv_userIcon.setBackgroundResource(0);
+//
+//                        }catch (Exception e){
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable throwable, boolean b) {
+//                        Log.i("onError", throwable.toString());
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(CancelledException e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinished() {
+//
+//                    }
+//                });
 
 
             }

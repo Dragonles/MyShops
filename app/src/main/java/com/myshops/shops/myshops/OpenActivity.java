@@ -22,7 +22,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.mob.tools.network.HttpConnection;
 import com.myshops.shops.bean.Areas;
 import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
@@ -714,7 +713,7 @@ public class OpenActivity extends AppCompatActivity {
                 }
                 break;
         }
-
+530401826
     }
 
     // 上传图片
