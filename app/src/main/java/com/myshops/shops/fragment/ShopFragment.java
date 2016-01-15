@@ -26,13 +26,11 @@ import com.myshops.shops.myshops.ShouRuZhiChuActivity;
 import com.myshops.shops.myshops.XiaoShouJiLuActivity;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.QiNiuConfig;
-import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 

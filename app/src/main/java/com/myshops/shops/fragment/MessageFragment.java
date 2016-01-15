@@ -80,7 +80,6 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
 
         }
 
-
         return v;
     }
 
