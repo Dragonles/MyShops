@@ -58,6 +58,10 @@ public class TianjiaShangpinAdapter extends BaseAdapter {
             convertView.setTag(v);
         }
         v = (ViewHolder) convertView.getTag();
+        //图片外链地址（网络地址）
+//        String url2 = QiNiuConfig.externalLinks + goodsImg;
+        //加载（下载）图片  iv_add4为ImageView
+//        Glide.with(context).load(url2).into(v.add_img);
 //        Picasso.with(context).load(tj.getAdd_img()).into(v.add_img);
         v.add_name.setText(tj.getAdd_name());
         v.add_marketPrice.setText(tj.getAdd_marketPrice());

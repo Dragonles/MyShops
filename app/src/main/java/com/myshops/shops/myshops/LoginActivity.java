@@ -97,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                         data = jsonObject.getJSONObject("data");
                         username = data.getString("username");
                         token = data.getString("token");
+                        Log.i("GG","登录页面的TOKEN"+data.getString("token"));
+
                         userType = data.getString("userType");
 
                     } catch (Exception e) {
@@ -141,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
     public void isShopNull(){
         String pa = "/AllOrders/shopisnull";
         HashMap<String, String> map = new HashMap<>();
-        Log.i("aaaa","token"+token);
         map.put("token", token);
 
         Log.i("aaaa","走着步1");
@@ -219,7 +220,6 @@ public class LoginActivity extends AppCompatActivity {
     //获取用户的ShopId
     public void getShops(){
         HashMap<String,String> hashMap_shopid = new HashMap<>();
-        Log.i("GG","TOKEN"+token);
         hashMap_shopid.put("token",token);
         hashMap_shopid.remove("sign");
         HttpUtils.httputilsGet("/Long/returnshopid", hashMap_shopid, new Callback.CommonCallback<String>() {

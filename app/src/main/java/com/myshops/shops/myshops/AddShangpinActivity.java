@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,6 +72,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     private final int PIC_FROM_CAMERA_SUO = 5;
     private final int PIC_FROM＿LOCALPHOTO_SUO = 6;
     private ProgressDialog mProgressDialog;
+    final List<String> classify_nameList = new ArrayList<>();
     public static String choosename = "";
     private Uri photoUri;
     private ArrayList<Goods_classify> classifyList = new ArrayList<>();
@@ -136,9 +138,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     @ViewInject(R.id.shangpinLeimu_btn)
     private Button shangpinLeimu;
 
-//    @ViewInject(R.id.shangpinDialog)
-//    private Button shangpinDialog;
-
     @ViewInject(R.id.add_img3)
     private RelativeLayout add_img3;
 
@@ -186,8 +185,17 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     @ViewInject(R.id.kucun)
     private EditText kucun;
 
+    @ViewInject(R.id.isSale)
+    private CheckBox isSales;
+
     @ViewInject(R.id.shangpindanwei)
     private EditText shangpindanwei;
+
+    @ViewInject(R.id.shangpinmiaoshu)
+    private EditText shangpinmiaoshu;
+
+    @ViewInject(R.id.simple)
+    private EditText goods_simple;
 
     int a = 0;
     int dian;
@@ -229,7 +237,8 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        spf = getSharedPreferences("user_info",Context.MODE_PRIVATE);
+        spf = getSharedPreferences("user_info",0);
+        Log.i("GG","哈哈Token"+spf.getString("token",""));
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
@@ -263,9 +272,8 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                 li.add(jiage.getText().toString());
                 li.add(kucun.getText().toString());
                 li.add(shangpindanwei.getText().toString());
-                Log.i("GG","jiae  "+jiage.getText().toString());
-                if ("".equals(jiage.getText().toString()) || "".equals(kucun.getText().toString())){
-                    Toast.makeText(AddShangpinActivity.this,"价格或者库存不能为空",Toast.LENGTH_SHORT).show();
+                if ("".equals(jiage.getText().toString()) && "".equals(kucun.getText().toString()) && "".equals(dianpujiage.getText().toString()) && "".equals(shangpindanwei.getText().toString())){
+                    Toast.makeText(AddShangpinActivity.this,"规格不能为空",Toast.LENGTH_SHORT).show();
                 }else {
                     addzhi(xuanzhong, cishu);
                 }
@@ -296,12 +304,13 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         myFlowLayout.setMaxSelectCount(1);
         final LayoutInflater myInflater = LayoutInflater.from(otherView.getContext());
 
-        Log.i("GG","mmmmmmmm"+m.get("li"+a));
+        Log.i("GG","规格"+m.get("li"+a));
 
         final TagAdapter tagAdapter = new TagAdapter<String>(m.get("li"+a)) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) myInflater.inflate(R.layout.tv,
+                TextView
+                        tv = (TextView) myInflater.inflate(R.layout.tv,
                         myFlowLayout, false);
                 tv.setText(s);
                 return tv;
@@ -411,7 +420,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                     }else {
                         for (int i= 0; i<list_view.size();i++){
                             if (list_view.get(i).equals(list_view0) && ma.size()==list_view.size()){
-                                Log.i("GG","list:"+ma.get("list"+a));
                                 a = i;
                                 ma.get("list"+a).add(zhi);
                             }
@@ -498,7 +506,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         HttpUtils.httputilsGet(types, mp , new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i("aaa","规格+成功"+result.toString());
                 try {
                     //第一步
                     JSONObject json1 = new JSONObject(result);
@@ -512,11 +519,9 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                     //开始正式解析 第二层 属性
                     for(int j = 0;j<jsonObjectList.size();j++){
                         JSONObject json4 = jsonObjectList.get(j);
-                        Log.i("GG","  json4="+json4.toString());
                         //本层属性：specId,createTime,specName,specContent
                         //返回第一层属性数据*************************************！！！！！--ss
                         String specName = json4.getString("specName");
-                        Log.i("GG"," 第一层数据："+specName);
                         //specContent  数组 详细属性解析
                         //判断数组是否为空
                         if(json4.optJSONArray("specContent") != null){
@@ -529,13 +534,11 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                                 JSONArray jsonArray1 = json5.getJSONArray(m);
                                 //返回第二层属性数据*************************************！！！！！--ss
                                 String ss = ""+jsonArray1.get(0);
-                                Log.i("GG"," 第二层数据："+ss);
                                 for(int n = 1;n<jsonArray1.length();n++){
                                     //第三层属性数据*************************************！！！！！--s6
                                     JSONArray json6 = jsonArray1.getJSONArray(n);
                                     for(int x = 0;x<json6.length();x++){
                                         String s6 = ""+json6.get(x);
-                                        Log.i("aaa","  第三层数据："+s6);
                                     }
                                 }
                             }
@@ -598,7 +601,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     //  商品类目的点击事件  下拉
     @Event(R.id.shangpinLeimu_btn)
     private void fenlei(View view){
-        Log.i("GG","GGFanWei"+FanWei);
 //        OptionPicker picker = new OptionPicker(AddShangpinActivity.this);
 //        picker.setOptions(FanWei);
 //        picker.setSelectedOption(2);
@@ -700,7 +702,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         HttpUtils.httputilsGet(types,map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String s) {
-                Log.i("GG","onSuccess:::商品修改信息:::"+s.toString());
+                Log.i("GG","商品修改信息"+s.toString());
 
                 String ct = null;
                 try {
@@ -760,7 +762,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                     if("200".equals(code)){
                         JSONArray list = jsonObject.getJSONArray("data");
                         FanWei = new String[list.length()];
-                        Log.i("GG","管罗苍分类的长度"+list.length());
                         shuju = list.length();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject list_dahu = list.getJSONObject(i);
@@ -815,7 +816,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                 picFile.createNewFile();
             }
             photoUri = Uri.fromFile(picFile);
-            Log.i("img",photoUri.toString());
+            Log.i("GG",photoUri.toString());
             if (type == PIC_FROM＿LOCALPHOTO) {
                 Intent intent = getCropImageIntent();
                 startActivityForResult(intent, PIC_FROM＿LOCALPHOTO);
@@ -827,7 +828,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
             }
 
         } catch (Exception e) {
-            Log.i("HandlerPicError", "处理图片出现错误");
+            Log.i("GG", "处理图片出现错误");
         }
     }
     //  产品缩略图
@@ -856,7 +857,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
             }
 
         } catch (Exception e) {
-            Log.i("HandlerPicError", "处理图片出现错误");
+            Log.i("GG", "处理图片出现错误");
         }
     }
     /**
@@ -993,27 +994,37 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         mProgressDialog = ProgressDialog.show(AddShangpinActivity.this, "", "正在加载...");
         String types = "/Api/addGoodsByToken";
         HashMap<String,String> map_finish = new HashMap<>();
-        map_finish.put("token", spf.getString("tokn",""));
+        map_finish.put("token", spf.getString("token",""));
+        Log.i("GG","添加商品页面的TOKEN"+spf.getString("token",""));
         map_finish.put("shopId",spf.getString("shopId",""));
         map_finish.put("goodsSn",goods_number.getText().toString());
         map_finish.put("goodsName",shangpinname.getText().toString());
-        map_finish.put("goodsImg",s1+"");
-        map_finish.put("goodsThumbs",s2+"");
+        map_finish.put("goodsImg",QiNiuConfig.externalLinks+s1);
+        map_finish.put("goodsThumbs",QiNiuConfig.externalLinks+s2);
         map_finish.put("marketPrice",jiage.getText().toString());
         map_finish.put("shopPrice",dianpujiage.getText().toString());
         map_finish.put("goodsStock",kucun.getText().toString());
         map_finish.put("goodsUnit",shangpindanwei.getText().toString());
-        map_finish.put("isSale","1");
-//        map_finish.put("goodsCatId1");
-//        map_finish.put("goodsCatId2");
-//        map_finish.put("goodsCatId3");
-//        map_finish.put("shopCatId1");
-//        map_finish.put("shopCatId2");
-        map_finish.put("goodsDesc","四季的风思考的合法化速度速度");
-//        map_finish.put("defaultSpec");
-//        map_finish.put("selectSpec");
-//        map_finish.put("sameSpec");
-//        map_finish.put("gallery");
+        if(isSales.isChecked()){
+            //  出售
+            map_finish.put("isSale","1");
+        }else{
+            //   仓库
+            map_finish.put("isSale","0");
+        }
+        map_finish.put("goodsCatId1",classify_nameList.get(0));
+        map_finish.put("goodsCatId2",classify_nameList.get(1));
+        if("".equals(classify_nameList.get(2))){
+            map_finish.put("goodsCatId3",null);
+        }else{
+            map_finish.put("goodsCatId3",classify_nameList.get(2));
+        }
+        map_finish.put("shopCatId1","周胜刚");
+        map_finish.put("shopCatId2","周胜刚");
+        map_finish.put("goodsDesc",shangpinmiaoshu.getText().toString());
+        map_finish.put("defaultSpec","{\"版本\":\"全网通,移动4G,联通4G\",\"容量\":\"16G,128G\"}");
+        map_finish.put("selectSpec","{\"版本\":\"全网通\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"},{\"版本\":\"移动4G\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"},{\"版本\":\"联通4G\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"}, {\"版本\":\"全网通\",\"容量\":\"128G\",\"stock\":\"99\",\"price\":\"100.00\"}");
+        map_finish.put("sameSpec",goods_simple.getText().toString());
         String sguige = "{'"+types+"'}";
         HttpUtils.httputilsGet(types, map_finish, new Callback.CommonCallback<String>() {
             @Override
@@ -1023,7 +1034,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.i("GG","-----onError");
+                Log.i("GG","错误");
                 mProgressDialog.dismiss();
             }
 
@@ -1047,6 +1058,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
             @Override
             public void onSubmit(int[] result) {
+                classify_nameList.add(fenlei_list.get(result[0]).getClassify_name());
                 first = dataset.get(result[0]);
                 province.append(first);
                 Jsonjiexi("/Api/exeQuery",fenlei_list.get(result[0]).getCatId());
@@ -1059,11 +1071,8 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     }
 //    下一级城市查询
     private void Jsonjiexi(String d,String zhi){
-        Log.i("GG","0000"+zhi);
         String sql = "select catId,catName from wst_goods_cats where parentId = "+zhi;
-        Log.i("GG","9999");
         HashMap<String,String> map = new HashMap<>();
-        Log.i("GG","8888");
         if("/Api/exeQuery".equals(d)){
             map.put("sql",sql);
         }
@@ -1080,7 +1089,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                     code = jsonObject.getString("code");
                     message = jsonObject.getString("message");
                     sheng = jsonObject.getJSONArray("data");
-                    Log.i("GG","^^^^^");
                     if ("200".equals(code)){
                         if(sheng.length() != 0){
                         Log.i("GG","if---"+province);
@@ -1092,7 +1100,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                                 String areaId = shengs.getString("catId");
 //                            String parentId = shengs.getString("parentId");
                                 String areaName = shengs.getString("catName");
-                                Log.i("GG","aaaaa"+areaName);
                                 fenlei_list.add(new Goods_classify(areaName,areaId));
                             } catch (JSONException e) {
                                 e.printStackTrace();

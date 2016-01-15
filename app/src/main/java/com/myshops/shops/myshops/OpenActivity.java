@@ -718,7 +718,6 @@ public class OpenActivity extends AppCompatActivity {
                 }
                 break;
         }
-530401826
     }
 
     // 上传图片

@@ -38,6 +38,7 @@ dependencies {
     compile files('libs/ijkmediaplayer.jar')
     compile files('libs/pldroid-player-1.1.0.jar')
     compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.zhy:flowlayout-lib:1.0.0'
     //    compile files('libs/ijkmediaplayer.jar')
 
     //    compile files('libs/pldroid-player-1.1.0.jar')
@@ -48,11 +49,5 @@ dependencies {
     //网络地址下载
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile files('libs/gradle-wrapper.jar')
-    compile files('libs/gradle-wrapper.jar')
-<<<<<<< HEAD
-    compile 'me.xiaopan:pagersliding' +
-            'tabstrip:1.6.0'
-=======
     compile 'me.xiaopan:pagerslidingtabstrip:1.6.0'
->>>>>>> dd6da1e95daff830acb35f6adae808c9cfa2e7db
 }
