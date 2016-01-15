@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.myshops.shops.adapter.shouruAdapter;
+import com.myshops.shops.adapter.ShouruAdapter;
 import com.myshops.shops.bean.Shouruyuzhichu;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.ToastUtil;
@@ -29,7 +29,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
     List<Shouruyuzhichu> list = new ArrayList<>();
     private String tokens;
     ListView listView;
-    shouruAdapter srAdapter;
+    ShouruAdapter srAdapter;
     private TextView txt_shouru, txt_zhichu, txt_shourus; //收入总额   支出总额  隐藏收入总额
     private CheckBox check_xy; //显示隐藏按钮
     private List<Float> prices = new ArrayList<>();
@@ -135,7 +135,7 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
                         Log.i("pricess","结束总价格："+a);
                         txt_shouru.setText(a+"/元");
 //                        Log.i("srzclog","Json数据: "+a);
-                        srAdapter = new shouruAdapter(getApplicationContext(),list);
+                        srAdapter = new ShouruAdapter(getApplicationContext(),list);
                         listView.setAdapter(srAdapter);
 
                     }
