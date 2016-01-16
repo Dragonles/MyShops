@@ -67,6 +67,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
     final ArrayList<String> dataset = new ArrayList<String>();
     String first = "",sFile,sFiles;
     SharedPreferences spf;
+    String xuanzhongleixing;
     private final int PIC_FROM_CAMERA = 1;
     private final int PIC_FROM＿LOCALPHOTO = 0;
     private final int PIC_FROM_CAMERA_SUO = 5;
@@ -150,8 +151,10 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
 
     @ViewInject(R.id.shangpinjieshao)
     private EditText shangpinjieshao;
-    @ViewInject(R.id.shangpin_text)
+
+    @ViewInject(R.id.shangpinguige_txt)
     private TextView shangpin_text;
+
     @ViewInject(R.id.goods_number)
     private EditText goods_number;
     @ViewInject(R.id.goods_Id)
@@ -320,7 +323,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-
     //添加属性名那一条
     public void addOtherLayout(int b, final LinearLayout otherLayout) {
         final View otherView = View.inflate(this, R.layout.activity_main2, null);
@@ -347,16 +349,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
-
-        //属性名长按事件
-//        shuxingming.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                qu_tu.setVisibility(View.VISIBLE);
-//                return true;
-//            }
-//        });
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -500,7 +492,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
 
     //属性规格模板
     public void setShuxing(){
-
         HashMap<String ,String> mp = new HashMap<>();
         String types = "/Api/getSpecInfo";
         HttpUtils.httputilsGet(types, mp , new Callback.CommonCallback<String>() {
@@ -521,7 +512,13 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                         JSONObject json4 = jsonObjectList.get(j);
                         //本层属性：specId,createTime,specName,specContent
                         //返回第一层属性数据*************************************！！！！！--ss
+                        Log.i("GG","第一层的数据"+json4.getString("specName"));
                         String specName = json4.getString("specName");
+                        if(c == 0){
+                            shuxing_leixing = new String[json4.length()+1];
+                            c++;
+                        }
+                        shuxing_leixing[j]= specName;
                         //specContent  数组 详细属性解析
                         //判断数组是否为空
                         if(json4.optJSONArray("specContent") != null){
@@ -534,11 +531,13 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                                 JSONArray jsonArray1 = json5.getJSONArray(m);
                                 //返回第二层属性数据*************************************！！！！！--ss
                                 String ss = ""+jsonArray1.get(0);
+                                Log.i("GG","第二层的数据"+ss);
                                 for(int n = 1;n<jsonArray1.length();n++){
                                     //第三层属性数据*************************************！！！！！--s6
                                     JSONArray json6 = jsonArray1.getJSONArray(n);
                                     for(int x = 0;x<json6.length();x++){
                                         String s6 = ""+json6.get(x);
+                                        Log.i("GG","第三层的数据"+s6);
                                     }
                                 }
                             }
@@ -566,20 +565,22 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         });
     }
             //  商品类型
-//    @Event(R.id.shangpinDialog)
-//    private void addDia(View view) {
-//
-//        OptionPicker picker = new OptionPicker(AddShangpinActivity.this);
-//        picker.setOptions(shuxing_leixing);
-//        picker.setSelectedOption(2);
-//        picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
-//            @Override
-//            public void onSubmit(int[] result) {
-//                shangpin_text.setText(shuxing_leixing[result[0]]);
-//            }
-//        });
-//        picker.showAtBottom();
-//    }
+    @Event(R.id.shangpinGuige_btn)
+    private void addDia(View view) {
+        //  获取商品规格的接口
+        OptionPicker picker = new OptionPicker(AddShangpinActivity.this);
+        picker.setOptions(shuxing_leixing);
+        picker.setSelectedOption(2);
+        picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
+            @Override
+            public void onSubmit(int[] result) {
+                shangpin_text.setText(shuxing_leixing[result[0]]);
+                xuanzhongleixing = shuxing_leixing[result[0]];
+                tianjia0.setVisibility(View.VISIBLE);
+            }
+        });
+        picker.showAtBottom();
+    }
 
     //   完成的点击事件
     @Event(R.id.tianjiasp)
@@ -592,26 +593,10 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         Log.i("GG","上传的方法执行完毕");
 
     }
-// 运费 的点击事件
-//    @Event(R.id.shezhiyunfei)
-//    private void szyfClick(View view){
-//        startActivity(new Intent(AddShangpinActivity.this,YunfeiActivity.class));
-//    }
 
     //  商品类目的点击事件  下拉
     @Event(R.id.shangpinLeimu_btn)
     private void fenlei(View view){
-//        OptionPicker picker = new OptionPicker(AddShangpinActivity.this);
-//        picker.setOptions(FanWei);
-//        picker.setSelectedOption(2);
-//        picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
-//            @Override
-//            public void onSubmit(int[] result) {
-//                shangpinleimu_txt.setText(FanWei[result[0]]);
-//            }
-//        });
-//        picker.showAtBottom();
-//        addPick();
         addFenLei();
     }
 
@@ -746,7 +731,6 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
-
     //获取商品的分类
     public void addFenLei(){
         //属性
@@ -769,9 +753,9 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
                             String catName = list_dahu.getString("catName");
                             Goods_classify shangpinFenLei = new Goods_classify(catName,catId);
                             fenlei_list.add(shangpinFenLei);
-                            Log.i("GG","分类执行完成");
                         }
                         for (int i =0 ; i< fenlei_list.size(); i ++){
+
                             dataset.add(fenlei_list.get(i).getClassify_name());
                         }
                         addPick();
@@ -1022,13 +1006,26 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         map_finish.put("shopCatId1","周胜刚");
         map_finish.put("shopCatId2","周胜刚");
         map_finish.put("goodsDesc",shangpinmiaoshu.getText().toString());
-        map_finish.put("defaultSpec","{\"版本\":\"全网通,移动4G,联通4G\",\"容量\":\"16G,128G\"}");
-        map_finish.put("selectSpec","{\"版本\":\"全网通\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"},{\"版本\":\"移动4G\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"},{\"版本\":\"联通4G\",\"容量\":\"16G\",\"stock\":\"99\",\"price\":\"100.00\"}, {\"版本\":\"全网通\",\"容量\":\"128G\",\"stock\":\"99\",\"price\":\"100.00\"}");
+        map_finish.put("defaultSpec","{\"版本\":\"全网通,移动4G,联通4G\",\"容量\":\"16G,128G\"}");  //  默认的规格
+//        ccc = "{\"0\":{\""+"颜色"+"\":\""+"红"+"\",\""+stock+"\":\""+99+"\",\""+price+"\":\""+66+"\"}}";
+        String ccc = "{\"0\":{\""+"颜色"+"\":\""+"红"+"\",\""+kucun.getText().toString()+"\":\""+99+"\",\""+jiage.getText().toString()+"\":\""+66+"\"}}";
+        map_finish.put("selectSpec","{ \"0\":{\""+"版本"+"\":\""+"全网通"+"\",\""+"容量"+"\":\"16G\",\""+"库存"+"\":\""+kucun.getText().toString()+"\",\""+"价格"+"\":\""+jiage.getText().toString()+"\"}");
+        map_finish.put("selectSpec",ccc);
         map_finish.put("sameSpec",goods_simple.getText().toString());
         String sguige = "{'"+types+"'}";
         HttpUtils.httputilsGet(types, map_finish, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                try {
+                    JSONObject res = new JSONObject(result);
+                    String code = res.getString("code");
+                    if("200".equals(code)){
+                        Toast.makeText(getApplicationContext(),"添加完成",Toast.LENGTH_LONG).show();
+                        AddShangpinActivity.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.i("GG","管罗苍添加商品返回的数据"+result);
                 mProgressDialog.dismiss();
             }
@@ -1058,7 +1055,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         picker.setOnWheelListener(new WheelPicker.OnWheelListener<int[]>() {
             @Override
             public void onSubmit(int[] result) {
-                classify_nameList.add(fenlei_list.get(result[0]).getClassify_name());
+                classify_nameList.add(fenlei_list.get(result[0]).getCatId());
                 first = dataset.get(result[0]);
                 province.append(first);
                 Jsonjiexi("/Api/exeQuery",fenlei_list.get(result[0]).getCatId());
@@ -1069,7 +1066,7 @@ public class AddShangpinActivity extends BaseActivity implements View.OnClickLis
         });
         picker.showAtBottom();
     }
-//    下一级城市查询
+//    下一级查询
     private void Jsonjiexi(String d,String zhi){
         String sql = "select catId,catName from wst_goods_cats where parentId = "+zhi;
         HashMap<String,String> map = new HashMap<>();

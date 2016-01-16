@@ -41,6 +41,7 @@
     <!--添加商品-->
     <string name="addShangpin">添加商品</string>
     <string name="shangpinLeimu">商品类目</string>
+    <string name="shangpinguige">商品规格</string>
     <string name="weixuanze">未选择</string>
     <string name="dianpufenlei">店铺分类</string>
     <string name="weifenlei">未分类（选填）</string>
@@ -56,7 +57,6 @@
     <string name="shangpinbianma">商品编码</string>
     <string name="xuantian">（选填）</string>
     <string name="wancheng">完成</string>
-    <string name="shangpinguige">商品规格</string>
     <string name="sahngpinleixing">商品类型</string>
     <string name="dianpuleixing">店铺类型</string>
     <string name="shangpinfenlei">商品分类</string>
