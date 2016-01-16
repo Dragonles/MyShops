@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.myshops.shops.bean.MyUserInfo;
 import com.myshops.shops.untils.HttpUtils;
 
 import org.json.JSONException;
@@ -26,9 +28,10 @@ import java.util.HashMap;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements RongIM.UserInfoProvider {
 
     /**
      * 软键盘的控制
@@ -41,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     //用户头像
     String image="";
     String TEMPS = "登陆异常，请重试！";
+    MyUserInfo us = new MyUserInfo();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("NAME",username );
                         editor.putString("userType",userType);
                         editor.putString("token",token);
+                        editor.putString("userPhoto",image);
+                        us.setName(username);
+                        us.setUserPoto(image);
                         rongyun();
 
                     } else{
@@ -187,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                         //存在店铺信息跳转主界面
                         //存入数据
                         editor.putString("hasShops",date);
+                        RongIM.setUserInfoProvider(LoginActivity.this, true);
                         getShops();
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
@@ -294,6 +303,7 @@ public class LoginActivity extends AppCompatActivity {
                     String rongyunToken = data.getString("token");
                     editor.putString("rongyuntoken",rongyunToken);
                     editor.putString("userId",rongyunid);
+                    us.setId(rongyunid);
                     rong(rongyunToken);
                     Log.i("rongyun","----rongyunid----"+rongyunid+"----rongyunToken----"+rongyunToken);
 
@@ -371,5 +381,12 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("LoginActivitys", "--onError" + errorCode);
             }
         });
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+
+        return new UserInfo(us.getId(), us.getName(), Uri.parse("http://7xpmv7.com1.z0.glb.clouddn.com/"+us.getUserPoto()));
+
     }
 }

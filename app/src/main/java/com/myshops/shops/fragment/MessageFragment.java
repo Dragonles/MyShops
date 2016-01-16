@@ -1,6 +1,6 @@
 package com.myshops.shops.fragment;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,30 +14,18 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.myshops.shops.myshops.R;
+import com.myshops.shops.untils.QiNiuConfig;
 
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 消息框架
  * */
 
-//@ContentView(R.layout.fragment_message)
 public class MessageFragment extends Fragment implements View.OnClickListener {
 
-//    @ViewInject(R.id.rb_mesg)
-//    private RadioButton rb_mesg;
-//    @ViewInject(R.id.rb_circle)
-//    private RadioButton rb_circle;
-//    @ViewInject(R.id.rb_evaluate)
-//    private RadioButton rb_evaluate;
-//    @ViewInject(R.id.rb_client)
-//    private RadioButton rb_client;
-
-    public MessageFragment() {
-        // Required empty public constructor
-    }
-
+    public String strName,userid,userPhoto;
     FragmentManager fm;
     RadioButton rb_mesg, rb_circle, rb_evaluate, rb_client; //聊天消息  微店商圈  评价管理 客户管理
     ColorStateList dian, nodian;
@@ -49,10 +37,9 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_message, container, false);
         View v = inflater.inflate(R.layout.fragment_message, container, false);
 
+        ReadSharedPreferences();
         rb_mesg = (RadioButton) v.findViewById(R.id.rb_mesg);     //聊天消息
         rb_circle = (RadioButton) v.findViewById(R.id.rb_circle);   //微店商圈
         rb_evaluate = (RadioButton) v.findViewById(R.id.rb_evaluate);  //评价管理
@@ -163,5 +150,18 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         }
 
         ftt.commit();
+    }
+    // 读取本地保存用户信息
+    void ReadSharedPreferences(){
+        SharedPreferences user = getActivity().getSharedPreferences("user_info",0);
+        strName = user.getString("NAME","");
+        userid = user.getString("userId","");
+        userPhoto = user.getString("userPhoto","");
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String s) {
+                return new UserInfo(userid,strName, Uri.parse(QiNiuConfig.externalLinks+userPhoto));
+            }
+        },true);
     }
 }

@@ -12,6 +12,7 @@ import com.myshops.shops.bean.XiaoXi;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -31,9 +32,6 @@ public class MaijiaxiaoxiActivity extends AppCompatActivity{
     List<XiaoXi> list = new ArrayList<XiaoXi>();
     String userName;
 
-    //listview初始化
-//    @ViewInject(R.id.list_message)
-//    private ListView list_xiaoxi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +55,6 @@ public class MaijiaxiaoxiActivity extends AppCompatActivity{
     private void messageClick(View v) {
         finish();
     }
-
     public Fragment cha(){
         if (mConvesationFragment == null) {
             //RongIM.getInstance().startPrivateChat(MaijiaxiaoxiActivity.this, "26594", "title");
