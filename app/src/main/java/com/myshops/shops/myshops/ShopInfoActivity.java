@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.myshops.shops.fragment.ShopFragment;
 import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.QiNiuConfig;
@@ -35,15 +33,11 @@ import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.util.Auth;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.x;
-
-import org.xutils.view.annotation.Event;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -152,7 +146,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         os = et_oldpwd.getText().toString();
-                        ns = et_newpwd.getText().toString();
+                          ns = et_newpwd.getText().toString();
                         nsa = et_newpwd_algin.getText().toString();
                         if (ns != "") {
 

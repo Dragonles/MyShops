@@ -2,37 +2,29 @@ package com.myshops.shops.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.myshops.shops.bean.CircleImageView;
-import com.myshops.shops.myshops.LoginActivity;
 import com.myshops.shops.myshops.R;
 import com.myshops.shops.myshops.ShopInfoActivity;
 import com.myshops.shops.myshops.ShouRuZhiChuActivity;
 import com.myshops.shops.myshops.XiaoShouJiLuActivity;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.QiNiuConfig;
-import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 

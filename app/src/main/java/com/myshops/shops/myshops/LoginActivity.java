@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog pd;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    long exitTime=0;// 退出时间
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -259,5 +261,31 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO 按两次返回键退出应用程序
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            // 判断间隔时间 大于2秒就退出应用
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                // 应用名
+                String applicationName = getResources().getString(
+                        R.string.app_name);
+                String msg = "再按一次返回键退出" + applicationName;
+                //String msg1 = "再按一次返回键回到桌面";
+                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                // 计算两次返回键按下的时间差
+                exitTime = System.currentTimeMillis();
+            } else {
+                // 关闭应用程序
+                //finish();
+                // 返回桌面操作
+                 Intent home = new Intent(Intent.ACTION_MAIN);
+                 home.addCategory(Intent.CATEGORY_HOME);
+                 startActivity(home);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }
