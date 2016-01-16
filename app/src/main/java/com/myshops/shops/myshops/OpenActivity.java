@@ -361,7 +361,7 @@ public class OpenActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     if ("200".equals(code)){
-                        upLoadImage(stopicFile,userpicFile);
+                        //upLoadImage(stopicFile,userpicFile);
 
                     } else {
                         progressDialog.dismiss();
