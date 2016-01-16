@@ -19,12 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+<<<<<<< HEAD
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+=======
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
 import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.QiNiuConfig;
@@ -127,7 +131,7 @@ public class ShopInfoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         os = et_oldpwd.getText().toString();
-                        ns = et_newpwd.getText().toString();
+                          ns = et_newpwd.getText().toString();
                         nsa = et_newpwd_algin.getText().toString();
                         if (ns != "") {
 
