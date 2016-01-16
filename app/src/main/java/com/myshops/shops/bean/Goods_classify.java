@@ -18,9 +18,9 @@ public class Goods_classify {
         this.catId = catId;
     }
 
-    public Goods_classify(String classify_name, String classify_count) {
+    public Goods_classify(String classify_name, String catId) {
         this.classify_name = classify_name;
-        this.classify_count = classify_count;
+        this.catId = catId;
     }
 
     public String getClassify_name() {

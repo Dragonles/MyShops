@@ -1,16 +1,20 @@
 package com.myshops.shops.myshops;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.myshops.shops.bean.MyUserInfo;
 import com.myshops.shops.untils.HttpUtils;
 
 import org.json.JSONException;
@@ -23,14 +27,30 @@ import org.xutils.x;
 
 import java.util.HashMap;
 
-@ContentView(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
+@ContentView(R.layout.activity_login)
+public class LoginActivity extends AppCompatActivity implements RongIM.UserInfoProvider {
+
+    /**
+     * 软键盘的控制
+     */
+    private InputMethodManager mSoftManager;
     public static String token,shopId;
     ProgressDialog pd;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+<<<<<<< HEAD
     long exitTime=0;// 退出时间
+=======
+    //用户头像
+    String image="";
+    String TEMPS = "登陆异常，请重试！";
+    MyUserInfo us = new MyUserInfo();
+
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         data = jsonObject.getJSONObject("data");
                         username = data.getString("username");
                         token = data.getString("token");
+                        image = data.getString("userPhoto");
                         userType = data.getString("userType");
 
                     } catch (Exception e) {
@@ -110,7 +131,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("NAME",username );
                         editor.putString("userType",userType);
                         editor.putString("token",token);
-                        isShopNull();
+                        editor.putString("userPhoto",image);
+                        us.setName(username);
+                        us.setUserPoto(image);
+                        rongyun();
 
                     } else{
                         pd.dismiss();
@@ -123,6 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onError(Throwable ex, boolean isOnCallback) {
                     //Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                     Log.i("aa","onerror"+ex.getMessage() + "");
+                    pd.dismiss();
+                    Toast.makeText(x.app(), TEMPS, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -151,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 Log.i("aaaa","走着步2"+result+"------------");
-             //   Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+                //   Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
                 Log.i("aaaa", result + "");
                 pd.dismiss();
                 Intent intent;
@@ -174,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                         //存在店铺信息跳转主界面
                         //存入数据
                         editor.putString("hasShops",date);
+                        RongIM.setUserInfoProvider(LoginActivity.this, true);
                         getShops();
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         Toast.makeText(x.app(), "登陆成功", Toast.LENGTH_SHORT).show();
@@ -260,7 +287,38 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    // 获取融云 Token
+    public void rongyun(){
+        String params = "/AllOrders/getRongyunToken";
+        String loginName = et_login_phonenum.getText().toString();
+        HashMap<String ,String> map = new HashMap<String,String>();
+        map.put("token",token);
+        map.put("name",loginName);
+        map.put("userImage",image);
+        map.put("appKey","p5tvi9dstzq54");
+        map.put("AppSecret","3wrHOYn2n3MV");
+        HttpUtils.httputilsPost(params, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("androids","onSuccess————"+result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String rongyunid = data.getString("userId");
+                    String rongyunToken = data.getString("token");
+                    editor.putString("rongyuntoken",rongyunToken);
+                    editor.putString("userId",rongyunid);
+                    us.setId(rongyunid);
+                    rong(rongyunToken);
+                    Log.i("rongyun","----rongyunid----"+rongyunid+"----rongyunToken----"+rongyunToken);
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+<<<<<<< HEAD
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO 按两次返回键退出应用程序
@@ -287,5 +345,82 @@ public class LoginActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+=======
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("onSuccess","onError————"+ex.getMessage());
+            }
 
+            @Override
+            public void onCancelled(CancelledException cex) {
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+    protected void onPause() {
+        super.onPause();
+        if (mSoftManager == null) {
+            mSoftManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+        if (getCurrentFocus() != null) {
+            mSoftManager.hideSoftInputFromWindow(getCurrentFocus()
+                    .getWindowToken(), 0);// 隐藏软键盘
+        }
+    }
+    /**
+     * 建立与融云服务器的连接
+     *
+     * @param token
+     */
+    private void rong(String token) {
+        /**
+         * IMKit SDK调用第二步,建立与服务器的连接
+         */
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+            /**
+             * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
+             */
+            @Override
+            public void onTokenIncorrect() {
+
+                Log.d("LoginActivitys", "--onTokenIncorrect");
+            }
+
+            /**
+             * 连接融云成功
+             * @param userid 当前 token
+             */
+            @Override
+            public void onSuccess(String userid) {
+
+                Log.d("LoginActivitys", "--onSuccess" + userid);
+                isShopNull();
+            }
+
+            /**
+             * 连接融云失败
+             * @param errorCode 错误码，可到官网 查看错误码对应的注释
+             *                  http://www.rongcloud.cn/docs/android.html#常见错误码
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                Log.d("LoginActivitys", "--onError" + errorCode);
+            }
+        });
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+
+        return new UserInfo(us.getId(), us.getName(), Uri.parse("http://7xpmv7.com1.z0.glb.clouddn.com/"+us.getUserPoto()));
+
+    }
 }

@@ -361,7 +361,7 @@ public class OpenActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     if ("200".equals(code)){
-                        upLoadImage(stopicFile,userpicFile);
+                        //upLoadImage(stopicFile,userpicFile);
 
                     } else {
                         progressDialog.dismiss();
@@ -718,7 +718,10 @@ public class OpenActivity extends AppCompatActivity {
                 }
                 break;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
     }
 
     // 上传图片
@@ -748,9 +751,9 @@ public class OpenActivity extends AppCompatActivity {
                     uploadManager.put(picFile1, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
-
                             Log.i("qiniu", key + " " + info + " " + response);
                             storepicture = key;
+
                             UploadManager uploadManager = new UploadManager();
                             uploadManager.put(picFile2, suiJiName(), qiNiuUpToken(), new UpCompletionHandler() {
                                 @Override

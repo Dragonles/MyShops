@@ -1,7 +1,6 @@
 package com.myshops.shops.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -55,7 +54,7 @@ public class Goods_chushou_Fragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_goods_chushou_, container, false);
         ((PullToRefreshLayout) v.findViewById(R.id.rotate_header_web_view_frame))
                 .setOnRefreshListener(new MyListener());
-        spf = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        spf = getActivity().getSharedPreferences("user_info", 0);
         Ln_data = (LinearLayout) v.findViewById(R.id.linearout_data);
         Ln_xiaoliang = (LinearLayout) v.findViewById(R.id.linearout_xiaoliang);
         Ln_kucun = (LinearLayout) v.findViewById(R.id.linearout_kucun);
@@ -186,6 +185,7 @@ public class Goods_chushou_Fragment extends Fragment {
     //得到数据
     public void getShuju(final PullToRefreshLayout pullToRefreshLayout,int w){
         HashMap<String,String> hashMap_data = new HashMap<>();
+        Log.i("GG","出售页面的TOKEN"+spf.getString("token",""));
         hashMap_data.put("token",spf.getString("token",""));
         hashMap_data.remove("sign");
         String shopIds = spf.getString("shopId","");
@@ -222,6 +222,10 @@ public class Goods_chushou_Fragment extends Fragment {
                             String isBook = res_list.getString("isBook");
                             String goodsStock = res_list.getString("goodsStock");
                             String createTime = res_list.getString("createTime");
+//                            //图片外链地址（网络地址）
+//                            String url2 = QiNiuConfig.externalLinks + goodsImg;
+//                            //加载（下载）图片  iv_add4为ImageView
+//                            Glide.with(getActivity()).load(url2).into(iv_shopinfo_shopheader);
                             if (i >= shangti){
                                 add_list.add(new Tianjiashangpin(goodsImg, goodsName, marketPrice, shopPrice, saleCount, isBook, goodsStock, createTime));
                             }

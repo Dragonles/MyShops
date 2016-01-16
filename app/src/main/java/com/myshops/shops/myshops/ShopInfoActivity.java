@@ -24,8 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+<<<<<<< HEAD
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+=======
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
 import com.myshops.shops.untils.ActionSheetDialog;
 import com.myshops.shops.untils.HttpUtils;
 import com.myshops.shops.untils.QiNiuConfig;
@@ -60,24 +63,6 @@ public class ShopInfoActivity extends AppCompatActivity {
     static File picFile;
 
     EditText et_oldpwd, et_newpwd, et_newpwd_algin;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-//    private GoogleApiClient client;
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +78,8 @@ public class ShopInfoActivity extends AppCompatActivity {
         ib_shopinfo_back = (ImageButton) findViewById(R.id.ib_shopinfo_back);
         btn_shopinfo_exit = (Button) findViewById(R.id.btn_shopinfo_exit);
         tv_tijiao = (TextView) findViewById(R.id.tv_tijiao);
-        xiaZai();
 
+        xiaZai();
 
         ib_shopinfo_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,25 +197,18 @@ public class ShopInfoActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String s) {
 
-                        Log.i("GG", s.toString());
+                        Log.i("userphoto", s.toString());
 
                         try {
                             JSONObject jsonobject = new JSONObject(s);
                             String code = jsonobject.getString("code");
                             String message = jsonobject.getString("message");
                             JSONArray data = jsonobject.getJSONArray("data");
-                            JSONObject info = data.getJSONObject(0);
-                            userName = info.getString("shopName");
-                            userPhone = info.getString("shopTel");
-                            userPhoto = info.getString("shopImg");
+                            userName = jsonobject.getString("shopName");
+                            userPhone = jsonobject.getString("shopTel");
+                            userPhoto = jsonobject.getString("shopImg");
                             tv_name.setText(userName);
                             tv_phone.setText(userPhone);
-                            //图片外链地址（网络地址）
-                            String url2 = QiNiuConfig.externalLinks + userPhoto;
-                            //加载（下载）图片  iv_add4为ImageView
-                            Log.i("url2", url2);
-                            Glide.with(ShopInfoActivity.this).load(url2).into(iv_shopinfo_shopheader);
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -270,6 +248,8 @@ public class ShopInfoActivity extends AppCompatActivity {
 
             }
         });
+
+        showImage();
 
         tv_tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,12 +325,6 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        // client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -495,7 +469,7 @@ public class ShopInfoActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                    //开始上传文件
+                //开始上传文件
                 try {
 
                     UploadManager uploadManager = new UploadManager();
@@ -558,9 +532,20 @@ public class ShopInfoActivity extends AppCompatActivity {
         return  keyname;
     }
 
+    public void showImage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String url = "http://7xpmv7.com1.z0.glb.clouddn.com/Fj3g6jWLrUlRvm3TvcZviHbeM0YZ";
+                iv_shopinfo_shopheader.setImageBitmap(BitmapFactory.decodeFile(url));
+                Log.i("showImage","走方法");
+            }
+        }).start();
+    }
+
     public void xiaZai(){
 
-        Log.i("xiazai","走方法");
         String sql = "select shopImg, shopName, shopTel from wst_shops where userId = '" + id + "'";
         String type = "/Api/exeQuery";
         HashMap<String, String> maps = new HashMap<>();
@@ -609,5 +594,4 @@ public class ShopInfoActivity extends AppCompatActivity {
             }
         });
     }
-
 }

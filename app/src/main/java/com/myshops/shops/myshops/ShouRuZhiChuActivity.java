@@ -43,7 +43,8 @@ public class ShouRuZhiChuActivity extends AppCompatActivity {
         check_xy = (CheckBox) findViewById(R.id.check_xy);  //显示隐藏按钮
         txt_shourus = (TextView) findViewById(R.id.txt_shourus); //隐藏总额
         listView = (ListView) findViewById(R.id.shouru_listView);
-
+        //  设置中划线
+//        txt_shouru.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         check_xy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

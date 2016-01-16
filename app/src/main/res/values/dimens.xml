@@ -23,7 +23,8 @@
     <dimen name="add_K_height">50dp</dimen>
     <dimen name="Left_title_text_size">16sp</dimen>
     <dimen name="Right_neirong_text_size">14sp</dimen>
-    <dimen name="img_neirong">150dp</dimen>
+    <dimen name="img_neirong">100dp</dimen>
+    <dimen name="img_neirong2">60dp</dimen>
     <dimen name="img_left">5dp</dimen>
     <!--字体的公共样式-->
     <dimen name="biaoti">20sp</dimen>

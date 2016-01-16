@@ -5,10 +5,15 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
         <option name="gradleHome" value="D:\新建文件夹 (3)\android-studio\gradle\gradle-2.8" />
+=======
+        <option name="gradleHome" value="E:\Program Files\Android\Android Studio\gradle\gradle-2.8" />
+>>>>>>> f1d07ec82dfaef7387d7618eb8381553f2f6ce90
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/IMKit" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/smssdk" />
           </set>
@@ -16,6 +21,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/IMKit" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/smssdk" />
           </set>
